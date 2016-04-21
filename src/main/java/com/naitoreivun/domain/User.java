@@ -25,6 +25,12 @@ public class User {
     @OneToMany(mappedBy = "user")
     private Set<UserGroup> userGroups;
 
+    @OneToMany(mappedBy = "user")
+    private Set<Image> images;
+
+    @OneToMany(mappedBy = "user")
+    private Set<Vote> votes;
+
     public User(String username, String password, AppRole appRole) {
         this.username = username;
         this.password = encode(password);
@@ -56,5 +62,17 @@ public class User {
 
     public Set<UserGroup> getUserGroups() {
         return userGroups;
+    }
+
+    public AppRole getAppRole() {
+        return appRole;
+    }
+
+    public Set<Image> getImages() {
+        return images;
+    }
+
+    public Set<Vote> getVotes() {
+        return votes;
     }
 }

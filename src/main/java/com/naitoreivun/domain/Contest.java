@@ -1,6 +1,7 @@
 package com.naitoreivun.domain;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity(name = "contests")
 public class Contest {
@@ -13,6 +14,9 @@ public class Contest {
     @ManyToOne
     @JoinColumn(name = "season_id")
     private Season season;
+
+    @OneToMany(mappedBy = "contest")
+    private Set<Image> images;
 
     public Contest() {
     }

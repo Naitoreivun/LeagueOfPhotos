@@ -1,9 +1,6 @@
 package com.naitoreivun.domain;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.util.Set;
 
 @Entity(name = "seasons")
@@ -16,6 +13,10 @@ public class Season {
 
     @OneToMany(mappedBy = "season")
     private Set<Contest> contests;
+
+    @ManyToOne
+    @JoinColumn(name = "group_id")
+    private Group group;
 
     public Season() {
     }
@@ -34,5 +35,9 @@ public class Season {
 
     public Set<Contest> getContests() {
         return contests;
+    }
+
+    public Group getGroup() {
+        return group;
     }
 }

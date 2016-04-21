@@ -19,6 +19,9 @@ public class Group {
     @OneToMany(mappedBy = "group", cascade = CascadeType.ALL)
     private Set<UserGroup> userGroups;
 
+    @OneToMany(mappedBy = "group")
+    private Set<Season> seasons;
+
     public Group() {
     }
 
@@ -42,5 +45,9 @@ public class Group {
 
     public Set<UserGroup> getUserGroups() {
         return userGroups;
+    }
+
+    public Set<Season> getSeasons() {
+        return seasons;
     }
 }
