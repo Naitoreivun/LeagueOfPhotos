@@ -35,8 +35,8 @@ public class LeagueOfPhotosApplication implements CommandLineRunner {
     public void run(String... args) throws Exception {
         System.out.println("\n\n\n@@@@@@@@@@@@@@@@@@@@@\n\n\n");
 
-        AppRole userRole = new AppRole("USER");
-        AppRole adminRole = new AppRole("ADMIN");
+        AppRole userRole = new AppRole("ROLE_USER");
+        AppRole adminRole = new AppRole("ROLE_ADMIN");
         GroupType privateGroup = new GroupType("PRIVATE");
         GroupType publicGroup = new GroupType("PUBLIC");
         MemberStatus member = new MemberStatus("MEMBER");
@@ -96,6 +96,8 @@ public class LeagueOfPhotosApplication implements CommandLineRunner {
 
 //        Set<User> res = userDAO.gimmy();
         System.out.println(userDAO.xd("opos4").get().getId());
+
+        userDAO.save(new User("testSUer", "1234", appRoleDAO.findOne(1L)));
 
         System.out.println("\n\n\n@@@@@@@@@@@@@@@@@@@@@\n\n\n");
     }

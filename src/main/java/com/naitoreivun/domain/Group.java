@@ -1,5 +1,7 @@
 package com.naitoreivun.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
@@ -11,14 +13,18 @@ public class Group {
     private Long id;
 
     private String name;
+    private String description;
+    // TODO: 2016-04-21 creation date
 
     @ManyToOne
     @JoinColumn(name = "group_type_id")
     private GroupType groupType;
 
-    @OneToMany(mappedBy = "group", cascade = CascadeType.ALL)
+    @JsonIgnore
+    @OneToMany(mappedBy = "group", cascade = CascadeType.PERSIST)
     private Set<UserGroup> userGroups;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "group")
     private Set<Season> seasons;
 
@@ -26,8 +32,13 @@ public class Group {
     }
 
     public Group(String name, GroupType groupType) {
+        this(name, groupType, "");
+    }
+
+    public Group(String name, GroupType groupType, String description) {
         this.name = name;
         this.groupType = groupType;
+        this.description = description;
         this.userGroups = new HashSet<>();
     }
 
@@ -49,5 +60,9 @@ public class Group {
 
     public Set<Season> getSeasons() {
         return seasons;
+    }
+
+    public String getDescription() {
+        return description;
     }
 }

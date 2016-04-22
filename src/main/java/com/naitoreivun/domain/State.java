@@ -1,22 +1,14 @@
 package com.naitoreivun.domain;
 
-import javax.persistence.*;
-import java.util.Set;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 
 @Entity(name = "states")
 public class State {
     @Id
     @GeneratedValue
     private Long id;
-
-    @OneToMany
-    @JoinColumn(name = "state_id")
-    private Set<Contest> contests;
-
-    @OneToMany
-    @JoinColumn(name = "state_id")
-    private Set<Season> seasons;
-
 
     private String state;
 
@@ -33,13 +25,5 @@ public class State {
 
     public String getState() {
         return state;
-    }
-
-    public Set<Contest> getContests() {
-        return contests;
-    }
-
-    public Set<Season> getSeasons() {
-        return seasons;
     }
 }

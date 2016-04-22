@@ -11,9 +11,6 @@ public class AppRole {
 
     private String role;
 
-    @OneToMany(mappedBy = "appRole")
-    private Set<User> users;
-
     public AppRole() {
     }
 

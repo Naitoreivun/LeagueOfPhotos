@@ -1,5 +1,8 @@
 package com.naitoreivun.domain;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -14,9 +17,6 @@ public class MemberStatus {
 
     private String status;
 
-    @OneToMany(mappedBy = "memberStatus")
-    private Set<UserGroup> userGroup;
-
     public MemberStatus() {
     }
 
@@ -30,9 +30,5 @@ public class MemberStatus {
 
     public String getStatus() {
         return status;
-    }
-
-    public Set<UserGroup> getUserGroup() {
-        return userGroup;
     }
 }

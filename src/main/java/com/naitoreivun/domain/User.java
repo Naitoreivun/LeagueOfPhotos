@@ -3,7 +3,6 @@ package com.naitoreivun.domain;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
-import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -22,14 +21,15 @@ public class User {
     @JoinColumn(name = "app_role_id")
     private AppRole appRole;
 
+    // TODO: 2016-04-21 creation date
+
+    @JsonIgnore
     @OneToMany(mappedBy = "user")
     private Set<UserGroup> userGroups;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "user")
     private Set<Image> images;
-
-    @OneToMany(mappedBy = "user")
-    private Set<Vote> votes;
 
     public User(String username, String password, AppRole appRole) {
         this.username = username;
@@ -70,9 +70,5 @@ public class User {
 
     public Set<Image> getImages() {
         return images;
-    }
-
-    public Set<Vote> getVotes() {
-        return votes;
     }
 }

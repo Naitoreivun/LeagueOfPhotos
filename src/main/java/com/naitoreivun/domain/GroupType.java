@@ -1,5 +1,8 @@
 package com.naitoreivun.domain;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -14,9 +17,6 @@ public class GroupType {
 
     private String type;
 
-    @OneToMany(mappedBy = "groupType")
-    private Set<Group> groups;
-
     public GroupType() {
     }
 
@@ -30,9 +30,5 @@ public class GroupType {
 
     public String getType() {
         return type;
-    }
-
-    public Set<Group> getGroups() {
-        return groups;
     }
 }
