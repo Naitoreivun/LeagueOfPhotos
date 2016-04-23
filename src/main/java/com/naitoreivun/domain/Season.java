@@ -23,10 +23,6 @@ public class Season {
     @JoinColumn(name = "group_id")
     private Group group;
 
-    @ManyToOne
-    @JoinColumn(name = "state_id")
-    private State state;
-
     public Season() {
     }
 

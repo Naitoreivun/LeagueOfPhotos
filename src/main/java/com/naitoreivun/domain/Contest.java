@@ -24,10 +24,6 @@ public class Contest {
     @OneToMany(mappedBy = "contest")
     private Set<Image> images;
 
-    @ManyToOne
-    @JoinColumn(name = "state_id")
-    private State state;
-
     public Contest() {
     }
 
@@ -59,9 +55,5 @@ public class Contest {
 
     public Set<Image> getImages() {
         return images;
-    }
-
-    public State getState() {
-        return state;
     }
 }

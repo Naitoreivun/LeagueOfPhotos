@@ -3,10 +3,13 @@ package com.naitoreivun.rest;
 import com.naitoreivun.dao.GroupDAO;
 import com.naitoreivun.domain.Group;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import java.util.Set;
 
 @RestController
@@ -21,6 +24,7 @@ public class GroupRest {
     public Set<Group> getAll() {
         return groupDAO.findAll();
     }
+
 
     @RequestMapping("/{id}")
     public Group getAll(@PathVariable Long id) {
