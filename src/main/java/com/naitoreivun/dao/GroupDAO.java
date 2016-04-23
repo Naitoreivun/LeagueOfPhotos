@@ -11,6 +11,5 @@ public interface GroupDAO extends CrudRepository<Group, Long> {
     @Override
     Set<Group> findAll();
 
-    @Query("select g from groups g where g.id = 1")
-    Group test();
+
 }

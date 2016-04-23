@@ -1,6 +1,7 @@
 package com.naitoreivun.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.joda.time.DateTime;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -15,7 +16,7 @@ public class Image {
     private String title;
     private String path;
 
-    // TODO: 2016-04-21 creation date
+    private DateTime creationDate;
 
     @ManyToOne
     @JoinColumn(name = "contest_id")
@@ -37,6 +38,7 @@ public class Image {
         this.path = path;
         this.contest = contest;
         this.user = user;
+        this.creationDate = DateTime.now();
         this.votes = new HashSet<>();
     }
 
@@ -62,5 +64,9 @@ public class Image {
 
     public Set<Vote> getVotes() {
         return votes;
+    }
+
+    public DateTime getCreationDate() {
+        return creationDate;
     }
 }

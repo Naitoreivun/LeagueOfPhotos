@@ -1,6 +1,8 @@
 package com.naitoreivun.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -14,7 +16,7 @@ public class Group {
 
     private String name;
     private String description;
-    // TODO: 2016-04-21 creation date
+    private DateTime creationDate;
 
     @ManyToOne
     @JoinColumn(name = "group_type_id")
@@ -39,6 +41,7 @@ public class Group {
         this.name = name;
         this.groupType = groupType;
         this.description = description;
+        this.creationDate = DateTime.now();
         this.userGroups = new HashSet<>();
     }
 
@@ -64,5 +67,9 @@ public class Group {
 
     public String getDescription() {
         return description;
+    }
+
+    public DateTime getCreationDate() {
+        return creationDate;
     }
 }

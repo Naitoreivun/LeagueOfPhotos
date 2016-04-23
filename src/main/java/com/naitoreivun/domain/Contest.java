@@ -1,6 +1,7 @@
 package com.naitoreivun.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.joda.time.DateTime;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -13,7 +14,10 @@ public class Contest {
 
     private String name;
     private String description;
-    // TODO: 2016-04-21 data_rozp, data_zak, dak_zak_glosowania, data_stworzenia
+    private DateTime creationDate;
+    private DateTime startDate;
+    private DateTime finishDate;
+    private DateTime finishVotingDate;
 
 
     @ManyToOne
@@ -27,14 +31,18 @@ public class Contest {
     public Contest() {
     }
 
-    public Contest(String name, Season season) {
-        this(name, season, "");
+    public Contest(String name, Season season, DateTime startDate, DateTime finishDate, DateTime finishVotingDate) {
+        this(name, season, "", startDate, finishDate, finishVotingDate);
     }
 
-    public Contest(String name, Season season, String description) {
+    public Contest(String name, Season season, String description, DateTime startDate, DateTime finishDate, DateTime finishVotingDate) {
         this.name = name;
         this.season = season;
         this.description = description;
+        this.startDate = startDate;
+        this.finishDate = finishDate;
+        this.finishVotingDate = finishVotingDate;
+        this.creationDate = DateTime.now();
     }
 
     public Long getId() {
@@ -55,5 +63,21 @@ public class Contest {
 
     public Set<Image> getImages() {
         return images;
+    }
+
+    public DateTime getCreationDate() {
+        return creationDate;
+    }
+
+    public DateTime getStartDate() {
+        return startDate;
+    }
+
+    public DateTime getFinishDate() {
+        return finishDate;
+    }
+
+    public DateTime getFinishVotingDate() {
+        return finishVotingDate;
     }
 }

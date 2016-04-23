@@ -1,6 +1,7 @@
 package com.naitoreivun.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.joda.time.DateTime;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -21,7 +22,7 @@ public class User {
     @JoinColumn(name = "app_role_id")
     private AppRole appRole;
 
-    // TODO: 2016-04-21 creation date
+    private DateTime creationDate;
 
     @JsonIgnore
     @OneToMany(mappedBy = "user")
@@ -35,6 +36,7 @@ public class User {
         this.username = username;
         this.password = encode(password);
         this.appRole = appRole;
+        this.creationDate = DateTime.now();
     }
 
     public User() {
@@ -70,5 +72,9 @@ public class User {
 
     public Set<Image> getImages() {
         return images;
+    }
+
+    public DateTime getCreationDate() {
+        return creationDate;
     }
 }
