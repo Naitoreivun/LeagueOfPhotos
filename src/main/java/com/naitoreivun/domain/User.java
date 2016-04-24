@@ -1,6 +1,8 @@
 package com.naitoreivun.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.naitoreivun.domain.dto.SignupForm;
+import org.hibernate.validator.constraints.Email;
 import org.joda.time.DateTime;
 
 import javax.persistence.*;
@@ -18,6 +20,10 @@ public class User {
     @JsonIgnore
     private String password;
 
+    @Email
+    private String email;
+
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "app_role_id")
     private AppRole appRole;
@@ -32,11 +38,16 @@ public class User {
     @OneToMany(mappedBy = "user")
     private Set<Image> images;
 
-    public User(String username, String password, AppRole appRole) {
+    public User(String username, String password, String email, AppRole appRole) {
         this.username = username;
         this.password = encode(password);
+        this.email = email;
         this.appRole = appRole;
         this.creationDate = DateTime.now();
+    }
+
+    public User(SignupForm signupForm, AppRole appRole) {
+        this(signupForm.getUsername(), signupForm.getPassword(), signupForm.getEmail(), appRole);
     }
 
     public User() {
@@ -76,5 +87,9 @@ public class User {
 
     public DateTime getCreationDate() {
         return creationDate;
+    }
+
+    public String getEmail() {
+        return email;
     }
 }

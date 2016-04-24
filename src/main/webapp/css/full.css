@@ -1,0 +1,36 @@
+.full {
+    background: url('../img/background.jpg') no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    background-size: cover;
+    -o-background-size: cover;
+    height: 100vh
+}
+
+.full .jumbotron {
+    padding: 50px;
+    background: none;
+    color: white;
+    text-align: right;
+}
+
+.full .hello {
+    margin-top: 50px;
+    padding-bottom: 25px;
+    float: right !important;
+    width: auto;
+    background-color: rgb(64, 64, 64);
+    background-color: rgba(64, 64, 64, 0.5);
+    border-radius: 1px 1px 1px 1px;
+    -moz-border-radius: 1px 1px 1px 1px;
+    -webkit-border-radius: 1px 1px 1px 1px;
+    -webkit-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.5);
+    -moz-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.5);
+    box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.5);
+    /*border: 1px solid #2c2c2c;*/
+}
+
+.sign-nav {
+    background-color: rgba(34, 34, 34, 0.8);
+    border: none;
+}

@@ -56,14 +56,14 @@ public class LeagueOfPhotosApplication implements CommandLineRunner {
         memberStatusDAO.save(leaver);
         memberStatusDAO.save(requester);
 
-        User user1 = new User("naitoreivun", "XD", adminRole);
-        User user2 = new User("stefan", "stefan", userRole);
-        User user3 = new User("opos3", "haslo123", userRole);
-        User user4 = new User("opos4", "haslo123", userRole);
-        User user5 = new User("opos5", "haslo123", userRole);
-        User user6 = new User("opos6", "haslo123", userRole);
-        User user7 = new User("opos7", "haslo123", userRole);
-        User user8 = new User("opos8", "haslo123", userRole);
+        User user1 = new User("naitoreivun", "XD", "user1@email.com", adminRole);
+        User user2 = new User("stefan", "stefan", "user2@email.com", userRole);
+        User user3 = new User("opos3", "haslo123", "user3@email.com", userRole);
+        User user4 = new User("opos4", "haslo123", "user4@email.com", userRole);
+        User user5 = new User("opos5", "haslo123", "user5@email.com", userRole);
+        User user6 = new User("opos6", "haslo123", "user6@email.com", userRole);
+        User user7 = new User("opos7", "haslo123", "user7@email.com", userRole);
+        User user8 = new User("opos8", "haslo123", "user8@email.com", userRole);
 
         Group group1 = new Group("grupaNr1-prywatna", privateGroup);
         group1.getUserGroups().add(new UserGroup(user2, group1, member));
@@ -95,9 +95,9 @@ public class LeagueOfPhotosApplication implements CommandLineRunner {
         groupDAO.save(group3);
 
 //        Set<User> res = userDAO.gimmy();
-        System.out.println(userDAO.xd("opos4").get().getId());
+        System.out.println(userDAO.findByUsername("opos4").get().getId());
 
-        userDAO.save(new User("testSUer", "1234", appRoleDAO.findOne(1L)));
+        userDAO.save(new User("testSUer", "1234", "test@email.com", appRoleDAO.findOne(1L)));
 
         System.out.println("\n\n\n@@@@@@@@@@@@@@@@@@@@@\n\n\n");
     }
