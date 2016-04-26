@@ -10,18 +10,8 @@
             </button>
             <a class="navbar-brand" href="#">League of Photos</a>
         </div>
-        <div id="navbar" class="navbar-collapse collapse">
-            <form ng-if="!vm.afterSignUp" class="navbar-form navbar-right" ng-submit="vm.logIn()">
-                <div class="form-group">
-                    <input type="text" placeholder="username" class="form-control"
-                           ng-model="vm.loginForm.username" required>
-                </div>
-                <div class="form-group">
-                    <input type="password" placeholder="password" class="form-control"
-                           ng-model="vm.loginForm.password" required>
-                </div>
-                <button type="submit" class="btn btn-success">Sign in</button>
-            </form>
+        <div ng-if="!vm.afterSignUp" id="navbar" class="navbar-collapse collapse">
+            <login-form form-class="navbar-form navbar-right"></login-form>
         </div><!--/.navbar-collapse -->
     </div>
 </nav>
@@ -33,44 +23,12 @@
                 <h1>League of Photos</h1>
                 <p>Do not wait! Sign up for free and join us right now!</p>
                 <br>
-                <form ng-submit="vm.createUser()">
-                    <div class="form-group">
-                        <!--<label for="username">Username</label>-->
-                        <input type="text" class="form-control" id="username" placeholder="username"
-                               ng-model="vm.signupForm.username" required>
-                    </div>
-                    <div class="form-group">
-                        <!--<label for="email">Email</label>-->
-                        <input type="email" class="form-control" id="email" placeholder="email"
-                               ng-model="vm.signupForm.email" required>
-                    </div>
-                    <div class="form-group">
-                        <!--<label for="password">Password</label>-->
-                        <input type="password" class="form-control" id="password" placeholder="password"
-                               ng-model="vm.signupForm.password" required>
-                    </div>
-                    <div class="form-group">
-                        <!--<label for="confirm-password">Confirm password</label>-->
-                        <input type="password" class="form-control" id="confirm-password" placeholder="confirm password"
-                               ng-model="vm.signupForm.confirmPassword" required>
-                    </div>
-                    <button type="submit" class="btn btn-success btn-lg">Sign up</button>
-                </form>
+                <signup-form after-sign-up="vm.afterSignUp"></signup-form>
             </div>
             <div ng-if="vm.afterSignUp">
                 <h1>Registration successful</h1>
                 <p>Sign in below</p>
-                <form ng-submit="vm.logIn()">
-                    <div class="form-group">
-                        <input type="text" placeholder="username" class="form-control"
-                               ng-model="vm.loginForm.username" required>
-                    </div>
-                    <div class="form-group">
-                        <input type="password" placeholder="password" class="form-control"
-                               ng-model="vm.loginForm.password" id="login-form-password" required>
-                    </div>
-                    <button type="submit" class="btn btn-success btn-lg">Sign in</button>
-                </form>
+                <login-form btn-size="btn-lg"></login-form>
             </div>
         </div>
     </div>

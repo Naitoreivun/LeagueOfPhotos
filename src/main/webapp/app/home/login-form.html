@@ -1,0 +1,11 @@
+<form class="{{vm.formClass}}" ng-submit="vm.logIn()">
+    <div class="form-group">
+        <input type="text" placeholder="username" class="form-control"
+               ng-model="vm.loginForm.username" id="login-form-username" required>
+    </div>
+    <div class="form-group">
+        <input type="password" placeholder="password" class="form-control"
+               ng-model="vm.loginForm.password" id="login-form-password" required>
+    </div>
+    <button type="submit" class="btn btn-success {{vm.btnSize}}">Sign in</button>
+</form>

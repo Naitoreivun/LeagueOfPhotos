@@ -34,12 +34,12 @@ public class UserRest {
     }
 
     @RequestMapping(value = "", method = RequestMethod.POST)
-    public ResponseEntity add(@RequestBody SignupForm signupForm) {
+    public ResponseEntity<?> add(@RequestBody SignupForm signupForm) {
 //        if(!signupForm.isValid()) { } // TODO: 2016-04-24 exception
 
         User user = new User(signupForm, appRoleDAO.getByRole("ROLE_USER").get());
         userDAO.save(user);
-        return new ResponseEntity(HttpStatus.CREATED);
+        return new ResponseEntity<>(null, HttpStatus.CREATED);
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)

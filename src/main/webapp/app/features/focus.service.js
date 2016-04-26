@@ -1,5 +1,6 @@
 "use strict";
-angular.module('leagueOfPhotos')
+angular
+    .module('leagueOfPhotos')
     .factory('focus', focus);
 
 function focus($timeout, $window) {
@@ -10,8 +11,9 @@ function focus($timeout, $window) {
         // are triggered.
         $timeout(function () {
             var element = $window.document.getElementById(id);
-            if (element)
+            if (element) {
                 element.focus();
+            }
         });
     };
 }
