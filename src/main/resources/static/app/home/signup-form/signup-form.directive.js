@@ -1,12 +1,12 @@
 "use strict";
 angular
     .module('leagueOfPhotos')
-    .directive('signupForm', signupForm);
+    .directive('lopSignupForm', lopSignupForm);
 
-function signupForm() {
+function lopSignupForm() {
     var directive = {
         restrict: 'E',
-        templateUrl: "app/home/signup-form.html",
+        templateUrl: "app/home/signup-form/signup-form.html",
         scope: {
             afterSignUp: '='
         },

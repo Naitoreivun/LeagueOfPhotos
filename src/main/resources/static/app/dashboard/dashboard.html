@@ -1,1 +1,43 @@
-<h1 class="page-header">{{vm.text}}</h1>
+<lop-navbar></lop-navbar>
+
+<div class="container-fluid">
+    <div class="row">
+        <lop-sidebar></lop-sidebar>
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+            <h1 class="page-header">{{vm.text}}</h1>
+
+            <div class="row placeholders">
+                <div class="col-xs-6 col-sm-3 placeholder">
+                    <img ng-src="/img/background2.jpg" width="5000" height="500" class="img-thumbnail"
+                         alt="Generic placeholder thumbnail">
+                    <h4>Label</h4>
+                    <span class="text-muted">Something else</span>
+                </div>
+            </div>
+
+            <h2 class="sub-header">Groups</h2>
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th>id</th>
+                        <th>name</th>
+                        <th>description</th>
+                        <th>creation date</th>
+                        <th>type</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr  ng-repeat="group in vm.groups">
+                        <td ng-bind="group.id"></td>
+                        <td ng-bind="group.name"></td>
+                        <td ng-bind="group.description"></td>
+                        <td ng-bind="group.creationDate"></td>
+                        <td ng-bind="group.type"></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

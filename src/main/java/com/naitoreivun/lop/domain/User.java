@@ -6,6 +6,8 @@ import org.hibernate.validator.constraints.Email;
 import org.joda.time.DateTime;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -95,5 +97,16 @@ public class User {
 
     public boolean validatePassword(String password) {
         return this.password.equals(encode(password));
+    }
+
+    public List<String> getRoles() {
+        List<String> roles = new ArrayList<>();
+        if(AppRole.USER.equals(appRole.getRole())) {
+            roles.add(AppRole.USER);
+        } else if (AppRole.ADMIN.equals(appRole.getRole())) {
+            roles.add(AppRole.USER);
+            roles.add(AppRole.ADMIN);
+        }
+        return roles;
     }
 }

@@ -78,7 +78,7 @@ public class LeagueOfPhotosApplication implements CommandLineRunner {
         User user3 = new User("opos3", "haslo123", "user3@email.com", userRole);
         User user4 = new User("opos4", "haslo123", "user4@email.com", userRole);
         User user5 = new User("opos5", "haslo123", "user5@email.com", userRole);
-        User user6 = new User("opos6", "haslo123", "user6@email.com", userRole);
+        User user6 = new User("a", "a", "a6@email.com", userRole);
         User user7 = new User("opos7", "haslo123", "user7@email.com", userRole);
         User user8 = new User("opos8", "haslo123", "user8@email.com", userRole);
 

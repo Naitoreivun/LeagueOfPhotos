@@ -4,6 +4,8 @@
     <title>League of Photos</title>
     <meta charset="utf-8"/>
     <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css"/>
+    <link rel="stylesheet" href="css/ie10-viewport-bug-workaround.css"/>
+    <link rel="stylesheet" href="css/dashboard.css"/>
     <link rel="stylesheet" href="css/full.css"/>
     <style type="text/css">
         [ng\:cloak], [ng-cloak], .ng-cloak {
@@ -20,9 +22,13 @@
 <script type="text/javascript" src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
 <script type="text/javascript" src="bower_components/lodash/dist/lodash.js"></script>
 <script type="text/javascript" src="bower_components/restangular/dist/restangular.js"></script>
+<script type="text/javascript" src="bower_components/angular-jwt/dist/angular-jwt.js"></script>
+<script type="text/javascript" src="bower_components/a0-angular-storage/dist/angular-storage.js"></script>
 
 
 <script type="text/javascript" src="app/league-of-photos.module.js"></script>
+<script type="text/javascript" src="app/constants.js"></script>
+<script type="text/javascript" src="app/init-run.js"></script>
 <script type="text/javascript" src="app/route-config.js"></script>
 <script type="text/javascript" src="app/rest-config.js"></script>
 <script type="text/javascript" src="app/features/focus.service.js"></script>
@@ -30,11 +36,19 @@
 
 <script type="text/javascript" src="app/auth/auth.service.js"></script>
 <script type="text/javascript" src="app/auth/AuthRestangular.js"></script>
+
 <script type="text/javascript" src="app/users/users.service.js"></script>
+<script type="text/javascript" src="app/dashboard/groups/groups.service.js"></script>
+
+
 <script type="text/javascript" src="app/home/home.controller.js"></script>
-<script type="text/javascript" src="app/home/login-form.directive.js"></script>
-<script type="text/javascript" src="app/home/signup-form.directive.js"></script>
+<script type="text/javascript" src="app/home/login-form/login-form.directive.js"></script>
+<script type="text/javascript" src="app/home/signup-form/signup-form.directive.js"></script>
+
 <script type="text/javascript" src="app/dashboard/dashboard.controller.js"></script>
+<script type="text/javascript" src="app/dashboard/navbar/navbar.directive.js"></script>
+<script type="text/javascript" src="app/dashboard/sidebar/sidebar.directive.js"></script>
+
 
 </body>
 </html>

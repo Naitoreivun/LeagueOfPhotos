@@ -1,12 +1,12 @@
 "use strict";
 angular
     .module('leagueOfPhotos')
-    .directive('loginForm', loginForm);
+    .directive('lopLoginForm', lopLoginForm);
 
-function loginForm() {
+function lopLoginForm() {
     var directive = {
         restrict: 'E',
-        templateUrl: "app/home/login-form.html",
+        templateUrl: "app/home/login-form/login-form.html",
         scope: {
             formClass: '@',
             btnSize: '@'
@@ -19,9 +19,9 @@ function loginForm() {
     return directive;
 }
 
-LoginFormController.$inject = ['authService', '$state', '$rootScope'];
+LoginFormController.$inject = ['auth', '$state'];
 
-function LoginFormController(authService, $state) {
+function LoginFormController(auth, $state) {
     var vm = this;
 
     vm.error = false;
@@ -42,8 +42,7 @@ function LoginFormController(authService, $state) {
     }
 
     function logIn() {
-        authService
-            .login(vm.loginForm)
+        auth.login(vm.loginForm)
             .then(function (value) {
                 if (value) {
                     vm.error = false;

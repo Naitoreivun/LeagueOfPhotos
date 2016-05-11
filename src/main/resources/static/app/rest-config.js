@@ -3,7 +3,7 @@ angular
     .module('leagueOfPhotos')
     .config(restConfig);
 
-restConfig.$inject = ['RestangularProvider', '$httpProvider'];
+restConfig.$inject = ['RestangularProvider'];
 
 function restConfig(RestangularProvider) {
     RestangularProvider.setBaseUrl('api');

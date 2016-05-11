@@ -1,12 +1,11 @@
 "use strict";
 angular
     .module('leagueOfPhotos')
-    .factory('authService', authService);
+    .factory('auth', auth);
 
-authService.$inject = ['AuthRestangular', 'Restangular', '$q'];
+auth.$inject = ['AuthRestangular', 'Restangular', '$q', 'jwtHelper', 'store', 'authConst'];
 
-function authService(AuthRestangular, Restangular, $q) {
-    var token = null;
+function auth(AuthRestangular, Restangular, $q, jwtHelper, store, authConst) {
     var auth = AuthRestangular.one('/');
 
     return {
@@ -16,7 +15,8 @@ function authService(AuthRestangular, Restangular, $q) {
             auth.customPOST(loginForm, 'login')
                 .then(
                     function (response) {
-                        token = response.token;
+                        var token = response.token;
+                        store.set(authConst.TOKEN, token);
                         Restangular.setDefaultHeaders({Authorization: 'Bearer ' + token});
                         defer.resolve(true);
                     },
@@ -28,10 +28,18 @@ function authService(AuthRestangular, Restangular, $q) {
             return defer.promise;
         },
         logout: function () {
-            token = null;
-            Restangular.setDefaultHeaders({Authorization: ''})
+            store.remove(authConst.TOKEN);
+            Restangular.setDefaultHeaders({Authorization: ''});
+            //todo remove token from server
         },
         isLoggedIn: function () {
+            var token = store.get(authConst.TOKEN);
+            console.log('token: ', token);
+            if(token) {
+                console.log(jwtHelper.decodeToken(token));
+                console.log(jwtHelper.getTokenExpirationDate(token));
+                console.log(jwtHelper.isTokenExpired(token));
+            }
             return token !== null;
         }
     };

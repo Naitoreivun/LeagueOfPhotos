@@ -1,3 +1,7 @@
+.home-page {
+    margin-top: -50px;
+}
+
 .full {
     background: url('../img/background.jpg') no-repeat center center fixed;
     -webkit-background-size: cover;
@@ -24,9 +28,9 @@
     border-radius: 1px 1px 1px 1px;
     -moz-border-radius: 1px 1px 1px 1px;
     -webkit-border-radius: 1px 1px 1px 1px;
-    -webkit-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.5);
-    -moz-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.5);
-    box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.5);
+    -webkit-box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.5);
+    -moz-box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.5);
+    box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.5);
     /*border: 1px solid #2c2c2c;*/
 }
 
