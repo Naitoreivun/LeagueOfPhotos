@@ -7,6 +7,7 @@ import org.joda.time.DateTime;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -33,8 +34,8 @@ public class User {
     private DateTime creationDate;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "user")
-    private Set<UserGroup> userGroups;
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "user", cascade = CascadeType.PERSIST)
+    private Set<UserGroup> usersGroups;
 
     @JsonIgnore
     @OneToMany(mappedBy = "user")
@@ -46,6 +47,7 @@ public class User {
         this.email = email;
         this.appRole = appRole;
         this.creationDate = DateTime.now();
+        this.usersGroups = new HashSet<>();
     }
 
     public User(SignupForm signupForm, AppRole appRole) {
@@ -75,8 +77,8 @@ public class User {
         return password;
     }
 
-    public Set<UserGroup> getUserGroups() {
-        return userGroups;
+    public Set<UserGroup> getUsersGroups() {
+        return usersGroups;
     }
 
     public AppRole getAppRole() {
@@ -101,7 +103,7 @@ public class User {
 
     public List<String> getRoles() {
         List<String> roles = new ArrayList<>();
-        if(AppRole.USER.equals(appRole.getRole())) {
+        if (AppRole.USER.equals(appRole.getRole())) {
             roles.add(AppRole.USER);
         } else if (AppRole.ADMIN.equals(appRole.getRole())) {
             roles.add(AppRole.USER);

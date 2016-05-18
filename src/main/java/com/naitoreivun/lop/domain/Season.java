@@ -1,6 +1,7 @@
 package com.naitoreivun.lop.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.naitoreivun.lop.domain.dto.NewSeason;
 import org.joda.time.DateTime;
 
 import javax.persistence.*;
@@ -40,6 +41,11 @@ public class Season {
         this.startDate = startDate;
         this.finishDate = finishDate;
         this.creationDate = DateTime.now();
+    }
+
+    public Season(NewSeason newSeason, Group group) {
+        this(newSeason.getName(), group, newSeason.getDescription(),
+                newSeason.getStartDate(), newSeason.getFinishDate());
     }
 
     public Long getId() {

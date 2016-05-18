@@ -43,9 +43,10 @@ public class AuthRest {
 
         final String token = Jwts.builder()
                 .setSubject(user.getUsername())
+                .claim("id", user.getId())
                 .claim("roles", user.getRoles())
                 .setIssuedAt(new DateTime().toDate())
-                .setExpiration(new DateTime().plusMinutes(1).toDate())
+                .setExpiration(new DateTime().plusMinutes(30).toDate())
                 .signWith(SignatureAlgorithm.HS256, properties.getSecretKey())
                 .compact();
 

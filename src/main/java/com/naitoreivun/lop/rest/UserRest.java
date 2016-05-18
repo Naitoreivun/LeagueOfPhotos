@@ -2,6 +2,7 @@ package com.naitoreivun.lop.rest;
 
 import com.naitoreivun.lop.dao.AppRoleDAO;
 import com.naitoreivun.lop.dao.UserDAO;
+import com.naitoreivun.lop.domain.AppRole;
 import com.naitoreivun.lop.domain.User;
 import com.naitoreivun.lop.domain.dto.SignupForm;
 import io.jsonwebtoken.Claims;
@@ -40,7 +41,7 @@ public class UserRest {
     public ResponseEntity<?> add(@RequestBody SignupForm signupForm) {
 //        if(!signupForm.isValid()) { } // TODO: 2016-04-24 exception
 
-        User user = new User(signupForm, appRoleDAO.getByRole("ROLE_USER").get());
+        User user = new User(signupForm, appRoleDAO.getByRole(AppRole.USER).get());
         userDAO.save(user);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }

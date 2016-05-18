@@ -8,7 +8,7 @@ spring:
     jpa:
         show-sql: false # Show or not log for each sql query
         hibernate:
-            ddl-auto: create
+            ddl-auto: validate
             naming-strategy: org.hibernate.cfg.ImprovedNamingStrategy
         properties:
             hibernate.dialect: org.hibernate.dialect.MySQL5Dialect

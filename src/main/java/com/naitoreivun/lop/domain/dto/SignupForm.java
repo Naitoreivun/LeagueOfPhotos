@@ -22,7 +22,7 @@ public class SignupForm extends LoginForm {
     }
 
     public boolean isValid() {
-        //// TODO: 2016-04-24 email validation
+        // TODO: 2016-04-24 email validation
         return confirmPassword.equals(getPassword());
     }
 }

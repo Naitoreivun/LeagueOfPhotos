@@ -22,8 +22,8 @@ public class Group {
     private GroupType groupType;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "group", cascade = CascadeType.PERSIST)
-    private Set<UserGroup> userGroups;
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "group", cascade = CascadeType.PERSIST)
+    private Set<UserGroup> usersGroups;
 
     @JsonIgnore
     @OneToMany(mappedBy = "group")
@@ -41,7 +41,7 @@ public class Group {
         this.groupType = groupType;
         this.description = description;
         this.creationDate = DateTime.now();
-        this.userGroups = new HashSet<>();
+        this.usersGroups = new HashSet<>();
     }
 
     public Long getId() {
@@ -56,8 +56,8 @@ public class Group {
         return groupType;
     }
 
-    public Set<UserGroup> getUserGroups() {
-        return userGroups;
+    public Set<UserGroup> getUsersGroups() {
+        return usersGroups;
     }
 
     public Set<Season> getSeasons() {
