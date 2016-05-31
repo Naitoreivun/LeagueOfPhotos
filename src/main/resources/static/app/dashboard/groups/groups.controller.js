@@ -3,9 +3,9 @@ angular
     .module('leagueOfPhotos')
     .controller('GroupsController', GroupsController);
 
-GroupsController.$inject = ['groupsService', 'Restangular'];
+GroupsController.$inject = ['groupsService'];
 
-function GroupsController(groupsService, Restangular) {
+function GroupsController(groupsService) {
     var groups = this;
 
     groups.allGroups = {
@@ -26,7 +26,7 @@ function GroupsController(groupsService, Restangular) {
         getAll();
         getUserGroups();
     }
-    
+
     function collapse(object) {
         object.isCollapsed = !object.isCollapsed;
     }
@@ -42,25 +42,12 @@ function GroupsController(groupsService, Restangular) {
     }
 
     function getUserGroups() {
-        Restangular
-            .one('groups/user/', 'current')
-            .getList()
+        groups.userGroups.array = [];
+        groupsService
+            .getCurrentUserGroups()
             .then(
-                function (response) {
-                    groups.userGroups.array = [];
-                    _.forEach(response, function (val) {
-                        groups.userGroups.array.push({
-                            id: val.id,
-                            name: val.name,
-                            description: val.description,
-                            creationDate: new Date(val.creationDate),
-                            type: val.groupType.type
-                        });
-                    });
-                },
-                function (errors) {
-                    console.log('ERRORS:', errors);
-                }
-            );
+                function (data) {
+                    groups.userGroups.array = data;
+                });
     }
 }

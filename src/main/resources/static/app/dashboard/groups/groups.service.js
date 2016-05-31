@@ -7,55 +7,47 @@ groupsService.$inject = ['Restangular'];
 
 function groupsService(Restangular) {
     var groupsService = Restangular.service('groups');
+    var groupsObject = Restangular.all('groups');
 
     var service = {
         getAll: getAll,
         getById: getById,
-        getElementById: getElementById
+        getCurrentUserGroups: getCurrentUserGroups
     };
 
     return service;
 
     function getAll() {
-        return groupsService.getList()
-            .then(getAllComplete, dummyErrorsHandler);
+        return groupsService
+            .getList()
+            .then(getGroupsComplete, dummyErrorsHandler);
     }
 
-    function getAllComplete(response) {
+    function getById(id) {
+        return groupsObject
+            .get(id)
+            .then(getByIdComplete, dummyErrorsHandler);
+    }
+
+    function getByIdComplete(response) {
+        return response.plain();
+    }
+
+    function getCurrentUserGroups() {
+        return groupsObject
+            .one('user', 'current')
+            .getList()
+            .then(getGroupsComplete, dummyErrorsHandler);
+    }
+
+    function getGroupsComplete(response) {
         var groups = [];
         _.forEach(response, function (val) {
-            groups.push(parseGroup(val));
+            groups.push(val.plain());
         });
         return groups;
     }
 
-    function getById(id) {
-        return Restangular
-            .one('groups', id)
-            .get()
-            .then(
-                function (response) {
-                    return parseGroup(response);
-                },
-                dummyErrorsHandler
-            );
-    }
-
-    function getElementById(id) {
-        return Restangular.one('groups', id);
-    }
-
-    function parseGroup(object) {
-        var group = {
-            id: object.id,
-            name: object.name,
-            description: object.description,
-            creationDate: new Date(object.creationDate),
-            type: object.groupType.type
-        };
-        return group;
-    }
-    
     function dummyErrorsHandler(errors) {
         console.log('ERRORS:', errors);
     }

@@ -8,15 +8,25 @@ GroupController.$inject = ['groupsService', '$stateParams', '$uibModal', 'season
 function GroupController(groupsService, $stateParams, $uibModal, seasonsService) {
     var group = this;
 
+    group.collapse = collapse;
     group.createSeason = createSeason;
     group.details = {};
     group.getDetails = getDetails;
-    group.seasons = [];
+    group.getSeasons = getSeasons;
+    group.seasons = {
+        array: [],
+        isCollapsed: false
+    };
 
     activate();
 
     function activate() {
         getDetails();
+        getSeasons();
+    }
+
+    function collapse(object) {
+        object.isCollapsed = !object.isCollapsed;
     }
 
     function createSeason() {
@@ -27,8 +37,8 @@ function GroupController(groupsService, $stateParams, $uibModal, seasonsService)
         });
 
         newSeasonModal.result.then(function (newSeason) {
-            console.log(newSeason);
-            seasonsService.add(group.details.id, newSeason);
+            newSeason.groupId = group.details.id;
+            seasonsService.add(newSeason);
         });
     }
 
@@ -44,6 +54,15 @@ function GroupController(groupsService, $stateParams, $uibModal, seasonsService)
                     console.log('ERRORS:', errors);
                 }
             )
+    }
 
+    function getSeasons() {
+        group.seasons.array = [];
+        seasonsService
+            .getByGroupId($stateParams.id)
+            .then(
+                function (data) {
+                    group.seasons.array = data;
+                });
     }
 }

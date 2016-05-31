@@ -32,5 +32,15 @@ function routeConfig($stateProvider, $urlRouterProvider) {
             url: "/groups/{id:[0-9]+}",
             templateUrl: "app/dashboard/groups/group/group.html",
             controller: 'GroupController as group'
+        })
+        .state('dashboard.season', {
+            url: "/groups/{groupId:[0-9]+}/seasons/{seasonId:[0-9]+}",
+            templateUrl: "app/dashboard/groups/group/season/season.html",
+            controller: 'SeasonController as season'
+        })
+        .state('dashboard.contest', {
+            url: "/groups/{groupId:[0-9]+}/seasons/{seasonId:[0-9]+}/contests/{contestId:[0-9]+}",
+            templateUrl: "app/dashboard/groups/group/season/contest/contest.html",
+            controller: 'ContestController as contest'
         });
 }

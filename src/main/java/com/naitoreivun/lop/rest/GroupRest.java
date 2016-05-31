@@ -1,6 +1,7 @@
 package com.naitoreivun.lop.rest;
 
 import com.naitoreivun.lop.domain.Group;
+import com.naitoreivun.lop.domain.dto.GroupDTO;
 import com.naitoreivun.lop.service.GroupService;
 import io.jsonwebtoken.Claims;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,23 +24,23 @@ public class GroupRest {
     private GroupService groupService;
 
     @RequestMapping("")
-    public ResponseEntity<Set<Group>> getAll() {
+    public ResponseEntity<Set<GroupDTO>> getAll() {
         return new ResponseEntity<>(groupService.getAll(), HttpStatus.OK);
     }
 
 
     @RequestMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Group> getById(@PathVariable Long id) {
-        return new ResponseEntity<>(groupService.getById(id), HttpStatus.OK);
+    public ResponseEntity<GroupDTO> getById(@PathVariable Long id) {
+        return new ResponseEntity<>(groupService.getGroupDTOById(id), HttpStatus.OK);
     }
 
     @RequestMapping(value = "/user/{id}")
-    public ResponseEntity<Set<Group>> getByUserId(@PathVariable Long id) {
+    public ResponseEntity<Set<GroupDTO>> getByUserId(@PathVariable Long id) {
         return new ResponseEntity<>(groupService.getByUserId(id), HttpStatus.OK);
     }
 
     @RequestMapping(value = "/user/current")
-    public ResponseEntity<Set<Group>> getByCurrentUser(final HttpServletRequest request) throws ServletException {
+    public ResponseEntity<Set<GroupDTO>> getByCurrentUser(final HttpServletRequest request) throws ServletException {
         final Claims claims = (Claims) request.getAttribute("claims");
         Long currentUserId = ((Integer) claims.get("id")).longValue();
         return new ResponseEntity<>(groupService.getByUserId(currentUserId), HttpStatus.OK);

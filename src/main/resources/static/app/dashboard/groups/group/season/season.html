@@ -1,0 +1,41 @@
+<h1 class="page-header" ng-bind="season.details.name"></h1>
+
+<button class="btn btn-success" ng-click="season.createContest()">
+    Create new contest&nbsp;
+    <i class="glyphicon glyphicon glyphicon-plus"></i>
+</button>
+
+<h2 class="sub-header collapse-trigger-text" ng-click="season.collapse(season.contests)">
+    <i class="pull-left glyphicon"
+       ng-class="
+           {'glyphicon-chevron-down': season.contests.isCollapsed,
+            'glyphicon-chevron-right': !season.contests.isCollapsed}">
+    </i>
+    &nbsp;Contests
+</h2>
+<div uib-collapse="season.contests.isCollapsed" class="table-responsive">
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>name</th>
+            <th>start date</th>
+            <th>finish uploading date</th>
+            <th>finish voting date</th>
+            <th>status</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="contest in season.contests.array">
+            <td>
+                <a ng-bind="contest.name"
+                   ui-sref="dashboard.contest({groupId: season.groupId, seasonId: season.id, contestId: contest.id})">
+                </a>
+            </td>
+            <td ng-bind="contest.startDate | amDateFormat:'DD-MM-YYYY &nbsp;(HH:mm)'"></td>
+            <td ng-bind="contest.finishUploadingDate | amDateFormat:'DD-MM-YYYY &nbsp;(HH:mm)'"></td>
+            <td ng-bind="contest.finishVotingDate | amDateFormat:'DD-MM-YYYY &nbsp;(HH:mm)'"></td>
+            <td><span class="label label-info" ng-bind="contest.contestStatus"></span></td>
+        </tr>
+        </tbody>
+    </table>
+</div>

@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.joda.time.DateTime;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -27,6 +28,7 @@ public class Group {
 
     @JsonIgnore
     @OneToMany(mappedBy = "group")
+    @Transient
     private Set<Season> seasons;
 
     public Group() {
@@ -70,5 +72,13 @@ public class Group {
 
     public DateTime getCreationDate() {
         return creationDate;
+    }
+
+    @Override
+    public String toString() {
+        return "Group{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                '}';
     }
 }

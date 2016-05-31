@@ -13,10 +13,20 @@ INSERT INTO groups VALUES
   (3, now(), 'sosnowiec', 'grupaNr3-publcizna', 2);
 
 INSERT INTO seasons VALUES
-  (1, now(), 'sezon 2016 wiosna', '2016-08-05 18:19:03', 'WIOSNA', now(), 2),
+  (1, now(), 'sezon 2016 wiosna', '2016-08-05 18:19:03', 'WIOSNA', '2016-02-05 18:19:03', 2),
   (2, now(), 'XDDDD', '2016-08-05 18:19:03', 'test', now(), 2),
   (3, now(), 'wakacjee', '2016-08-05 18:19:03', 'lato', now(), 2),
   (4, now(), 'snieg', '2016-08-05 18:19:03', 'zima', now(), 2);
+
+INSERT INTO contests VALUES
+  (1, now() - INTERVAL 2 DAY, 'contest 1 desc', now() + INTERVAL 1 DAY, now() + INTERVAL 2 DAY,
+   'contest1', now() - INTERVAL 1 DAY, 1),
+  (2, now(), 'contest 2 desc', now() + INTERVAL 8 DAY, now() + INTERVAL 9 DAY,
+   'contest2', now() + INTERVAL 7 DAY, 1),
+  (3, now() - INTERVAL 12 DAY, 'contest 3 desc', now() - INTERVAL 5 DAY, now() - INTERVAL 3 DAY,
+   'contest3', now() - INTERVAL 10 DAY, 1),
+  (4, now() - INTERVAL 15 DAY, 'contest 4 desc', now() - INTERVAL 5 DAY, now() + INTERVAL 3 DAY,
+   'contest4', now() - INTERVAL 10 DAY, 1);
 
 INSERT INTO users VALUES
   (1, now(), 'user1@email.com', '\\H', 'naitoreivun', 1), # XD

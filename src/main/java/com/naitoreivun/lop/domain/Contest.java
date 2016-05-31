@@ -1,6 +1,7 @@
 package com.naitoreivun.lop.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.naitoreivun.lop.domain.dto.NewContest;
 import org.joda.time.DateTime;
 
 import javax.persistence.*;
@@ -16,7 +17,7 @@ public class Contest {
     private String description;
     private DateTime creationDate;
     private DateTime startDate;
-    private DateTime finishDate;
+    private DateTime finishUploadingDate;
     private DateTime finishVotingDate;
 
 
@@ -31,18 +32,23 @@ public class Contest {
     public Contest() {
     }
 
-    public Contest(String name, Season season, DateTime startDate, DateTime finishDate, DateTime finishVotingDate) {
-        this(name, season, "", startDate, finishDate, finishVotingDate);
+    public Contest(String name, Season season, DateTime startDate, DateTime finishUploadingDate, DateTime finishVotingDate) {
+        this(name, season, "", startDate, finishUploadingDate, finishVotingDate);
     }
 
-    public Contest(String name, Season season, String description, DateTime startDate, DateTime finishDate, DateTime finishVotingDate) {
+    public Contest(String name, Season season, String description, DateTime startDate, DateTime finishUploadingDate, DateTime finishVotingDate) {
         this.name = name;
         this.season = season;
         this.description = description;
         this.startDate = startDate;
-        this.finishDate = finishDate;
+        this.finishUploadingDate = finishUploadingDate;
         this.finishVotingDate = finishVotingDate;
         this.creationDate = DateTime.now();
+    }
+
+    public Contest(NewContest newContest, Season season) {
+        this(newContest.getName(), season, newContest.getDescription(), newContest.getStartDate(),
+                newContest.getFinishUploadingDate(), newContest.getFinishVotingDate());
     }
 
     public Long getId() {
@@ -73,8 +79,8 @@ public class Contest {
         return startDate;
     }
 
-    public DateTime getFinishDate() {
-        return finishDate;
+    public DateTime getFinishUploadingDate() {
+        return finishUploadingDate;
     }
 
     public DateTime getFinishVotingDate() {

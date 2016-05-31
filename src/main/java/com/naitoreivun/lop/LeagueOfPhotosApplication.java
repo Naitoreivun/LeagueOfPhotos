@@ -1,5 +1,6 @@
 package com.naitoreivun.lop;
 
+import com.naitoreivun.lop.dao.SeasonDAO;
 import com.naitoreivun.lop.security.JwtFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -15,6 +16,8 @@ public class LeagueOfPhotosApplication implements CommandLineRunner {
 
     @Autowired
     private MyProperties properties;
+    @Autowired
+    private SeasonDAO seasonDAO;
 
     @Bean
     public FilterRegistrationBean jwtFilter() {
@@ -28,7 +31,12 @@ public class LeagueOfPhotosApplication implements CommandLineRunner {
         SpringApplication.run(LeagueOfPhotosApplication.class, args);
     }
 
+
+
     @Override
     public void run(String... args) throws Exception {
+//        System.out.println("\n@@@@@@@@@@@@@@@@@@@@@@@@\n");
+//        System.out.println(seasonDAO.findById(1L).get());
+//        System.out.println("\n@@@@@@@@@@@@@@@@@@@@@@@@\n");
     }
 }

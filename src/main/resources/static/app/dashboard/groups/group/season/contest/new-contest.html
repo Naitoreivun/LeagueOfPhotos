@@ -1,0 +1,69 @@
+<div class="modal-header">
+    <h3 class="modal-title">Create new contest:</h3>
+</div>
+<div class="modal-body">
+    <form>
+        <div class="form-group">
+            <label for="newContestName">Name</label>
+            <input type="text" class="form-control" id="newContestName" ng-model="contest.new.name">
+        </div>
+        <div class="form-group col-sm-4">
+            <label for="newContestStartDate">From</label>
+            <p class="input-group">
+                <input id="newContestStartDate" type="text" class="form-control date-picker"
+                       uib-datepicker-popup="{{contest.dateFormat}}" ng-readonly="true"
+                       ng-model="contest.new.startDate" is-open="contest.startDatepicker.opened"
+                       datepicker-options="contest.startDatepicker.dateOptions" close-text="Close"
+                       placeholder="dd-MM-yyyy" ng-click="contest.open(contest.startDatepicker)"/>
+                  <span class="input-group-btn">
+                    <button type="button" class="btn btn-default" ng-click="contest.open(contest.startDatepicker)">
+                        <i class="glyphicon glyphicon-calendar"></i>
+                    </button>
+                  </span>
+            </p>
+            <uib-timepicker ng-model="contest.new.startTime" show-meridian="false"></uib-timepicker>
+        </div>
+        <div class="form-group col-sm-4">
+            <label for="newContestFinishUploadingDate">To (Uploading)</label>
+            <p class="input-group">
+                <input id="newContestFinishUploadingDate" type="text" class="form-control date-picker"
+                       uib-datepicker-popup="{{contest.dateFormat}}" ng-readonly="true"
+                       ng-model="contest.new.finishUploadingDate" is-open="contest.finishUploadingDatepicker.opened"
+                       datepicker-options="contest.finishUploadingDatepicker.dateOptions" close-text="Close"
+                       placeholder="dd-MM-yyyy" ng-click="contest.open(contest.finishUploadingDatepicker)"/>
+                  <span class="input-group-btn">
+                    <button type="button" class="btn btn-default"
+                            ng-click="contest.open(contest.finishUploadingDatepicker)">
+                        <i class="glyphicon glyphicon-calendar"></i>
+                    </button>
+                  </span>
+            </p>
+            <uib-timepicker ng-model="contest.new.finishUploadingTime" show-meridian="false"></uib-timepicker>
+        </div>
+        <div class="form-group col-sm-4">
+            <label for="newContestFinishVotingDate">To (Voting)</label>
+            <p class="input-group">
+                <input id="newContestFinishVotingDate" type="text" class="form-control date-picker"
+                       uib-datepicker-popup="{{contest.dateFormat}}" ng-readonly="true"
+                       ng-model="contest.new.finishVotingDate" is-open="contest.finishVotingDatepicker.opened"
+                       datepicker-options="contest.finishVotingDatepicker.dateOptions" close-text="Close"
+                       placeholder="dd-MM-yyyy" ng-click="contest.open(contest.finishVotingDatepicker)"/>
+                  <span class="input-group-btn">
+                    <button type="button" class="btn btn-default"
+                            ng-click="contest.open(contest.finishVotingDatepicker)">
+                        <i class="glyphicon glyphicon-calendar"></i>
+                    </button>
+                  </span>
+            </p>
+            <uib-timepicker ng-model="contest.new.finishVotingTime" show-meridian="false"></uib-timepicker>
+        </div>
+        <div class="form-group">
+            <label for="newContestDescription">Description</label>
+            <textarea class="form-control" id="newContestDescription" ng-model="contest.new.description"></textarea>
+        </div>
+    </form>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-primary" type="button" ng-click="contest.create()">Create</button>
+    <button class="btn btn-warning" type="button" ng-click="contest.cancel()">Cancel</button>
+</div>

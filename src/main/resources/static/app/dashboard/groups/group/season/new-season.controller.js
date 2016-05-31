@@ -41,6 +41,7 @@ function NewSeasonController($uibModalInstance) {
 
     function create() {
         var newSeason = {
+            groupId: null,
             name: season.new.name,
             description: season.new.description,
             startDate: getFullDate(season.new.startDate, season.new.startTime),

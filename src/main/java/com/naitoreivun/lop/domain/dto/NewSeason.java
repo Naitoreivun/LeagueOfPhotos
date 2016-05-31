@@ -3,6 +3,7 @@ package com.naitoreivun.lop.domain.dto;
 import org.joda.time.DateTime;
 
 public class NewSeason {
+    private Long groupId;
     private String name;
     private String description;
     private DateTime startDate;
@@ -11,11 +12,16 @@ public class NewSeason {
     public NewSeason() {
     }
 
-    public NewSeason(String name, String description, DateTime startDate, DateTime finishDate) {
+    public NewSeason(Long groupId, String name, String description, DateTime startDate, DateTime finishDate) {
+        this.groupId = groupId;
         this.name = name;
         this.description = description;
         this.startDate = startDate;
         this.finishDate = finishDate;
+    }
+
+    public Long getGroupId() {
+        return groupId;
     }
 
     public String getName() {

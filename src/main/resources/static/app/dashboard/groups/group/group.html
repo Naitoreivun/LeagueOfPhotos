@@ -1,7 +1,39 @@
 <h1 class="page-header" ng-bind="group.details.name"></h1>
 
-<button class="btn btn-info btn-lg" ng-click="group.createSeason()">Create new season</button>
+<button class="btn btn-success" ng-click="group.createSeason()">
+    Create new season&nbsp;
+    <i class="glyphicon glyphicon glyphicon-plus"></i>
+</button>
 
-<div ng-repeat="season in group.seasons">
-
+<h2 class="sub-header collapse-trigger-text" ng-click="group.collapse(group.seasons)">
+    <i class="pull-left glyphicon"
+       ng-class="
+           {'glyphicon-chevron-down': group.seasons.isCollapsed,
+            'glyphicon-chevron-right': !group.seasons.isCollapsed}">
+    </i>
+    &nbsp;Seasons
+</h2>
+<div uib-collapse="group.seasons.isCollapsed" class="table-responsive">
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>name</th>
+            <th>start date</th>
+            <th>finish date</th>
+            <th>status</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="season in group.seasons.array">
+            <td>
+                <a ng-bind="season.name"
+                   ui-sref="dashboard.season({groupId: group.details.id, seasonId: season.id})">
+                </a>
+            </td>
+            <td ng-bind="season.startDate | amDateFormat:'DD-MM-YYYY &nbsp;(HH:mm)'"></td>
+            <td ng-bind="season.finishDate | amDateFormat:'DD-MM-YYYY &nbsp;(HH:mm)'"></td>
+            <td><span class="label label-info" ng-bind="season.seasonStatus"></span></td>
+        </tr>
+        </tbody>
+    </table>
 </div>

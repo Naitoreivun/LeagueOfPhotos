@@ -23,7 +23,8 @@ public class Season {
     @OneToMany(mappedBy = "season")
     private Set<Contest> contests;
 
-    @ManyToOne
+    @JsonIgnore
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "group_id")
     private Group group;
 
@@ -78,5 +79,13 @@ public class Season {
 
     public DateTime getFinishDate() {
         return finishDate;
+    }
+
+    @Override
+    public String toString() {
+        return "Season{" +
+                "name='" + name + '\'' +
+                ", id=" + id +
+                '}';
     }
 }
