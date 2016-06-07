@@ -7,7 +7,7 @@ import org.joda.time.DateTime;
 
 import javax.persistence.*;
 import java.util.ArrayList;
-import java.util.HashSet;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -35,11 +35,11 @@ public class User {
 
     @JsonIgnore
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "user", cascade = CascadeType.PERSIST)
-    private Set<UserGroup> usersGroups;
+    private List<UserGroup> usersGroups;
 
     @JsonIgnore
     @OneToMany(mappedBy = "user")
-    private Set<Image> images;
+    private List<Image> images;
 
     public User(String username, String password, String email, AppRole appRole) {
         this.username = username;
@@ -47,7 +47,7 @@ public class User {
         this.email = email;
         this.appRole = appRole;
         this.creationDate = DateTime.now();
-        this.usersGroups = new HashSet<>();
+        this.usersGroups = new ArrayList<>();
     }
 
     public User(SignupForm signupForm, AppRole appRole) {
@@ -77,7 +77,7 @@ public class User {
         return password;
     }
 
-    public Set<UserGroup> getUsersGroups() {
+    public List<UserGroup> getUsersGroups() {
         return usersGroups;
     }
 
@@ -85,7 +85,7 @@ public class User {
         return appRole;
     }
 
-    public Set<Image> getImages() {
+    public List<Image> getImages() {
         return images;
     }
 

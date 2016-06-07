@@ -3,17 +3,28 @@ angular
     .module('leagueOfPhotos')
     .controller('GroupController', GroupController);
 
-GroupController.$inject = ['groupsService', '$stateParams', '$uibModal', 'seasonsService'];
+GroupController.$inject = ['groupsService', '$stateParams', '$uibModal', 'seasonsService', 'usersService'];
 
-function GroupController(groupsService, $stateParams, $uibModal, seasonsService) {
+function GroupController(groupsService, $stateParams, $uibModal, seasonsService, usersService) {
     var group = this;
 
     group.collapse = collapse;
     group.createSeason = createSeason;
     group.details = {};
     group.getDetails = getDetails;
+    group.getMemberStatusClass = getMemberStatusClass;
     group.getSeasons = getSeasons;
+    group.getUsers = getUsers;
+    group.memberStatusClassMap = {
+        ADMIN: "label-danger",
+        MODERATOR: "label-warning",
+        MEMBER: "label-success"
+    };
     group.seasons = {
+        array: [],
+        isCollapsed: false
+    };
+    group.users = {
         array: [],
         isCollapsed: false
     };
@@ -23,6 +34,7 @@ function GroupController(groupsService, $stateParams, $uibModal, seasonsService)
     function activate() {
         getDetails();
         getSeasons();
+        getUsers();
     }
 
     function collapse(object) {
@@ -56,6 +68,10 @@ function GroupController(groupsService, $stateParams, $uibModal, seasonsService)
             )
     }
 
+    function getMemberStatusClass(user) {
+        return group.memberStatusClassMap[user.memberStatus];
+    }
+
     function getSeasons() {
         group.seasons.array = [];
         seasonsService
@@ -63,6 +79,16 @@ function GroupController(groupsService, $stateParams, $uibModal, seasonsService)
             .then(
                 function (data) {
                     group.seasons.array = data;
+                });
+    }
+
+    function getUsers() {
+        group.users.array = [];
+        usersService
+            .getAcceptedUsersByGroupId($stateParams.id)
+            .then(
+                function (data) {
+                    group.users.array = data;
                 });
     }
 }

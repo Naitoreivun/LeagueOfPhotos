@@ -5,7 +5,7 @@ import com.naitoreivun.lop.domain.dto.NewSeason;
 import org.joda.time.DateTime;
 
 import javax.persistence.*;
-import java.util.Set;
+import java.util.List;
 
 @Entity(name = "seasons")
 public class Season {
@@ -21,7 +21,7 @@ public class Season {
 
     @JsonIgnore
     @OneToMany(mappedBy = "season")
-    private Set<Contest> contests;
+    private List<Contest> contests;
 
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
@@ -57,7 +57,7 @@ public class Season {
         return name;
     }
 
-    public Set<Contest> getContests() {
+    public List<Contest> getContests() {
         return contests;
     }
 

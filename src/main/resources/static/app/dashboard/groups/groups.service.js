@@ -17,6 +17,10 @@ function groupsService(Restangular) {
 
     return service;
 
+    function dummyErrorsHandler(errors) {
+        console.log('ERRORS:', errors);
+    }
+
     function getAll() {
         return groupsService
             .getList()
@@ -46,9 +50,5 @@ function groupsService(Restangular) {
             groups.push(val.plain());
         });
         return groups;
-    }
-
-    function dummyErrorsHandler(errors) {
-        console.log('ERRORS:', errors);
     }
 }

@@ -4,9 +4,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.joda.time.DateTime;
 
 import javax.persistence.*;
-import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity(name = "groups")
 public class Group {
@@ -24,12 +23,12 @@ public class Group {
 
     @JsonIgnore
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "group", cascade = CascadeType.PERSIST)
-    private Set<UserGroup> usersGroups;
+    private List<UserGroup> usersGroups;
 
     @JsonIgnore
     @OneToMany(mappedBy = "group")
     @Transient
-    private Set<Season> seasons;
+    private List<Season> seasons;
 
     public Group() {
     }
@@ -43,7 +42,7 @@ public class Group {
         this.groupType = groupType;
         this.description = description;
         this.creationDate = DateTime.now();
-        this.usersGroups = new HashSet<>();
+        this.usersGroups = new ArrayList<>();
     }
 
     public Long getId() {
@@ -58,11 +57,11 @@ public class Group {
         return groupType;
     }
 
-    public Set<UserGroup> getUsersGroups() {
+    public List<UserGroup> getUsersGroups() {
         return usersGroups;
     }
 
-    public Set<Season> getSeasons() {
+    public List<Season> getSeasons() {
         return seasons;
     }
 

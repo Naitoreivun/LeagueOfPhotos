@@ -8,7 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Set;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/seasons")
@@ -23,8 +23,8 @@ public class SeasonRest {
     }
 
     @RequestMapping(value = "/group/{groupId}", method = RequestMethod.GET)
-    public ResponseEntity<Set<SeasonDTO>> getByGroupId(@PathVariable Long groupId) {
-        Set<SeasonDTO> seasons = seasonService.getByGroupId(groupId);
+    public ResponseEntity<List<SeasonDTO>> getByGroupId(@PathVariable Long groupId) {
+        List<SeasonDTO> seasons = seasonService.getByGroupId(groupId);
         return new ResponseEntity<>(seasons, HttpStatus.OK);
     }
 

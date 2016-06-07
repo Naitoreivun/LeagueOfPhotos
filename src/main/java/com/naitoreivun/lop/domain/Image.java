@@ -4,8 +4,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.joda.time.DateTime;
 
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity(name = "images")
 public class Image {
@@ -32,7 +32,7 @@ public class Image {
 
     @JsonIgnore
     @OneToMany(mappedBy = "image", cascade = CascadeType.ALL)
-    private Set<Vote> votes;
+    private List<Vote> votes;
 
     public Image() {
     }
@@ -43,7 +43,7 @@ public class Image {
         this.contest = contest;
         this.user = user;
         this.creationDate = DateTime.now();
-        this.votes = new HashSet<>();
+        this.votes = new ArrayList<>();
     }
 
     public Long getId() {
@@ -66,7 +66,7 @@ public class Image {
         return user;
     }
 
-    public Set<Vote> getVotes() {
+    public List<Vote> getVotes() {
         return votes;
     }
 

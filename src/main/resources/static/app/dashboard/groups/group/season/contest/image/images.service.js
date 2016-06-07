@@ -28,6 +28,6 @@ function imagesService(Restangular) {
     }
 
     function getByContestIdAndCurrentUserComplete(response) {
-        return response.plain().content;
+        return response.plain();
     }
 }

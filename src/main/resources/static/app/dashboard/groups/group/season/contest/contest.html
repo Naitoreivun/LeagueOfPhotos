@@ -1,6 +1,10 @@
 <div ng-if="contest.details.contestStatus === 'AVAILABLE_SOON'">
     Contest start at {{contest.details.startDate | amDateFormat:'DD-MM-YYYY &nbsp;(HH:mm)'}}
 </div>
-<lop-uploading-phase ng-if="contest.details.contestStatus === 'UPLOADING'"></lop-uploading-phase>
-<div ng-if="contest.details.contestStatus === 'VOTING'">Głosowanie</div>
+<div ng-if="contest.details.contestStatus === 'UPLOADING'">
+    <lop-uploading-phase contest-details="contest.details"></lop-uploading-phase>
+</div>
+<div ng-if="contest.details.contestStatus === 'VOTING'">
+    <lop-voting-phase contest-details="contest.details"></lop-voting-phase>
+</div>
 <div ng-if="contest.details.contestStatus === 'CLOSED'">Koniec! ranking</div>

@@ -5,15 +5,12 @@ import com.naitoreivun.lop.dao.UserDAO;
 import com.naitoreivun.lop.domain.AppRole;
 import com.naitoreivun.lop.domain.User;
 import com.naitoreivun.lop.domain.dto.SignupForm;
-import io.jsonwebtoken.Claims;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
-import java.util.Set;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/users")
@@ -26,8 +23,8 @@ public class UserRest {
 
 
     @RequestMapping(value = "", method = RequestMethod.GET)
-    public ResponseEntity<Set<User>> getAll() {
-        Set<User> users = userDAO.findAll();
+    public ResponseEntity<List<User>> getAll() {
+        List<User> users = userDAO.findAll();
         return new ResponseEntity<>(users, HttpStatus.OK);
     }
 

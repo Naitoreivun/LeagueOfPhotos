@@ -8,7 +8,8 @@ import com.naitoreivun.lop.domain.dto.NewContest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Set;
+import java.util.Comparator;
+import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
@@ -21,12 +22,13 @@ public class ContestService {
     private SeasonService seasonService;
 
 
-    public Set<ContestDTO> getBySeasonId(Long seasonId) {
-        Set<Contest> contests = contestDAO.findBySeason(seasonService.getSeasonById(seasonId));
+    public List<ContestDTO> getBySeasonId(Long seasonId) {
+        List<Contest> contests = contestDAO.findBySeason(seasonService.getSeasonById(seasonId));
         return contests
                 .stream()
                 .map(ContestDTO::new)
-                .collect(Collectors.toSet());
+                .sorted(Comparator.comparing(ContestDTO::getName))
+                .collect(Collectors.toList());
     }
 
     public void add(NewContest newContest) {

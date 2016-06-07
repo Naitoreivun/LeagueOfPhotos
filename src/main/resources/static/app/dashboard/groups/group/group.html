@@ -37,3 +37,28 @@
         </tbody>
     </table>
 </div>
+
+<h2 class="sub-header collapse-trigger-text" ng-click="group.collapse(group.users)">
+    <i class="pull-left glyphicon"
+       ng-class="
+           {'glyphicon-chevron-down': group.users.isCollapsed,
+            'glyphicon-chevron-right': !group.users.isCollapsed}">
+    </i>
+    &nbsp;Users
+</h2>
+<div uib-collapse="group.users.isCollapsed" class="table-responsive">
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>username</th>
+            <th>role</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="user in group.users.array">
+            <td ng-bind="user.username"></td>
+            <td><span class="label" ng-class="group.getMemberStatusClass(user)" ng-bind="user.memberStatus"></span></td>
+        </tr>
+        </tbody>
+    </table>
+</div>

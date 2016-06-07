@@ -8,7 +8,8 @@ import com.naitoreivun.lop.domain.dto.SeasonDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Set;
+import java.util.Comparator;
+import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
@@ -25,12 +26,13 @@ public class SeasonService {
         seasonDAO.save(new Season(newSeason, group));
     }
 
-    public Set<SeasonDTO> getByGroupId(Long groupId) {
-        Set<Season> seasons = seasonDAO.findByGroup(groupService.getGroupById(groupId));
+    public List<SeasonDTO> getByGroupId(Long groupId) {
+        List<Season> seasons = seasonDAO.findByGroup(groupService.getGroupById(groupId));
         return seasons
                 .stream()
                 .map(SeasonDTO::new)
-                .collect(Collectors.toSet());
+                .sorted(Comparator.comparing(SeasonDTO::getName))
+                .collect(Collectors.toList());
     }
 
     public Season getSeasonById(Long id) {

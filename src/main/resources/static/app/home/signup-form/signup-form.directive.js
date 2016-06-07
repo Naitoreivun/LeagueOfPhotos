@@ -42,13 +42,14 @@ function SignupFormController(usersService, focus) {
 
     function createUser() {
         usersService
-            .post(vm.signupForm)
+            .create(vm.signupForm)
             .then(
-                function (response) {
-                    console.log(response);
-                    clear();
-                    vm.afterSignUp = true;
-                    focus('login-form-username');
+                function (success) {
+                    if(success) {
+                        clear();
+                        vm.afterSignUp = true;
+                        focus('login-form-username');
+                    }
                 },
                 function () {
                     console.log('SIGNUP ERROR');

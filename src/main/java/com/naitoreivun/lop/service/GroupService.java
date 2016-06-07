@@ -8,7 +8,8 @@ import com.naitoreivun.lop.domain.dto.GroupDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Set;
+import java.util.Comparator;
+import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
@@ -20,7 +21,7 @@ public class GroupService {
     @Autowired
     private UserDAO userDAO;
 
-    public Set<GroupDTO> getAll() {
+    public List<GroupDTO> getAll() {
         return mapToGroupDTO(groupDAO.findAll());
     }
 
@@ -32,16 +33,17 @@ public class GroupService {
         return new GroupDTO(getGroupById(id));
     }
 
-    public Set<GroupDTO> getByUserId(Long id) {
-        Set<UserGroup> userGroups = userDAO.findById(id).get().getUsersGroups();
-        Set<Group> groups = groupDAO.findByUsersGroupsIn(userGroups);
+    public List<GroupDTO> getByUserId(Long id) {
+        List<UserGroup> userGroups = userDAO.findById(id).get().getUsersGroups();
+        List<Group> groups = groupDAO.findByUsersGroupsIn(userGroups);
         return mapToGroupDTO(groups);
     }
 
-    private Set<GroupDTO> mapToGroupDTO(Set<Group> col) {
+    private List<GroupDTO> mapToGroupDTO(List<Group> col) {
         return col
                 .stream()
                 .map(GroupDTO::new)
-                .collect(Collectors.toSet());
+                .sorted(Comparator.comparing(GroupDTO::getName))
+                .collect(Collectors.toList());
     }
 }
