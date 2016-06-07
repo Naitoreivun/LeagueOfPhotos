@@ -1,0 +1,77 @@
+<h1 class="page-header">{{contest.details.name}} - Uploading Phase</h1>
+<div class="row">
+
+    <div ng-if="contest.image !== null" class="col-md-3 col-sm-3">
+        <div>
+            <h3>Current image:</h3>
+            <img class="img-thumbnail" ng-src="data:image/JPEG;base64,{{contest.image}}" height="200px">
+        </div>
+    </div>
+
+    <div class="col-md-9 col-sm-9" style="margin-bottom: 40px">
+
+        <h3>Select image</h3>
+
+        <div ng-show="contest.uploader.isHTML5">
+            <!-- 3. nv-file-over uploader="link" over-class="className" -->
+            <div nv-file-drop nv-file-over class="well my-drop-zone" uploader="contest.uploader">
+                Drop your image here
+            </div>
+        </div>
+
+        <input type="file" nv-file-select uploader="contest.uploader"/><br/>
+
+        <div class="">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th width="50%">Name</th>
+                    <th ng-show="contest.uploader.isHTML5">Size</th>
+                    <th ng-show="contest.uploader.isHTML5">Progress</th>
+                    <th>Status</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="item in contest.uploader.queue">
+                    <td>
+                        <strong>{{ item.file.name }}</strong>
+                        <!-- Image preview -->
+                        <!--auto height-->
+                        <!--<div ng-thumb="{ file: item.file, width: 100 }"></div>-->
+                        <!--auto width-->
+                        <div ng-show="contest.uploader.isHTML5" ng-thumb="{ file: item._file, height: 100 }"></div>
+                        <!--fixed width and height -->
+                        <!--<div ng-thumb="{ file: item.file, width: 100, height: 100 }"></div>-->
+                    </td>
+                    <td ng-show="contest.uploader.isHTML5" nowrap>{{ item.file.size/1024/1024|number:2 }} MB</td>
+                    <td ng-show="contest.uploader.isHTML5">
+                        <div class="progress" style="margin-bottom: 0;">
+                            <div class="progress-bar" role="progressbar"
+                                 ng-style="{ 'width': item.progress + '%' }"></div>
+                        </div>
+                    </td>
+                    <td class="text-center">
+                        <span ng-show="item.isSuccess"><i class="glyphicon glyphicon-ok"></i></span>
+                        <span ng-show="item.isCancel"><i class="glyphicon glyphicon-ban-circle"></i></span>
+                        <span ng-show="item.isError"><i class="glyphicon glyphicon-remove"></i></span>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div ng-show="contest.uploader.queue[0]" style="padding-left: 10px">
+            <button type="button" class="btn btn-success btn-ms" ng-click="contest.uploader.queue[0].upload()"
+                    ng-disabled="contest.uploader.queue[0].isReady ||
+                    contest.uploader.queue[0].isUploading || contest.uploader.queue[0].isSuccess">
+                <span class="glyphicon glyphicon-upload"></span> Upload
+            </button>
+            <button type="button" class="btn btn-warning btn-ms" ng-click="contest.uploader.queue[0].cancel()"
+                    ng-disabled="!contest.uploader.queue[0].isUploading">
+                <span class="glyphicon glyphicon-ban-circle"></span> Cancel
+            </button>
+            <button type="button" class="btn btn-danger btn-ms" ng-click="contest.uploader.queue[0].remove()">
+                <span class="glyphicon glyphicon-trash"></span> Remove
+            </button>
+        </div>
+    </div>
+</div>

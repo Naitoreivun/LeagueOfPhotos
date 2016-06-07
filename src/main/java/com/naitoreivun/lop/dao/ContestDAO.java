@@ -9,7 +9,7 @@ import java.util.Set;
 
 public interface ContestDAO extends CrudRepository<Contest, Long> {
 
-    Set<Contest> findBySeason(Season group);
+    Set<Contest> findBySeason(Season season);
 
     Optional<Contest> findById(Long id);
 }

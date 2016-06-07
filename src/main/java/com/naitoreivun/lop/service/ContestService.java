@@ -33,4 +33,12 @@ public class ContestService {
         Season season = seasonService.getSeasonById(newContest.getSeasonId());
         contestDAO.save(new Contest(newContest, season));
     }
+
+    public Contest getContestById(Long contestId) {
+        return contestDAO.findById(contestId).get(); // TODO: 2016-06-02 hande null
+    }
+
+    public ContestDTO getContestDTOById(Long contestId) {
+        return new ContestDTO(getContestById(contestId));
+    }
 }

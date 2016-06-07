@@ -11,7 +11,8 @@ function contestsService(Restangular) {
 
     var service = {
         add: add,
-        getBySeasonId: getBySeasonId
+        getBySeasonId: getBySeasonId,
+        getById: getById
     };
 
     return service;
@@ -24,6 +25,16 @@ function contestsService(Restangular) {
         console.log('SEASONS ERRORS:', errors);
     }
 
+    function getById(contestId) {
+        return contestsObject
+            .get(contestId)
+            .then(getByIdComplete, dummyErrorsHandler);
+    }
+
+    function getByIdComplete(response) {
+        return response.plain();
+    }
+    
     function getBySeasonId(seasonId) {
         return contestsObject
             .one('season', seasonId)

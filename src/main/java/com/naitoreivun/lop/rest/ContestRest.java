@@ -17,6 +17,11 @@ public class ContestRest {
     @Autowired
     ContestService contestService;
 
+    @RequestMapping(value = "/{contestId}")
+    public ResponseEntity<ContestDTO> getById(@PathVariable Long contestId) {
+        return new ResponseEntity<>(contestService.getContestDTOById(contestId), HttpStatus.OK);
+    }
+
     @RequestMapping(value = "/season/{seasonId}", method = RequestMethod.GET)
     public ResponseEntity<Set<ContestDTO>> getByGroupId(@PathVariable Long seasonId) {
         Set<ContestDTO> contests = contestService.getBySeasonId(seasonId);
@@ -29,4 +34,5 @@ public class ContestRest {
         contestService.add(newContest);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
+
 }

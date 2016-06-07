@@ -2,6 +2,7 @@ package com.naitoreivun.lop.rest;
 
 import com.naitoreivun.lop.domain.Group;
 import com.naitoreivun.lop.domain.dto.GroupDTO;
+import com.naitoreivun.lop.security.ClaimGetter;
 import com.naitoreivun.lop.service.GroupService;
 import io.jsonwebtoken.Claims;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,8 +42,7 @@ public class GroupRest {
 
     @RequestMapping(value = "/user/current")
     public ResponseEntity<Set<GroupDTO>> getByCurrentUser(final HttpServletRequest request) throws ServletException {
-        final Claims claims = (Claims) request.getAttribute("claims");
-        Long currentUserId = ((Integer) claims.get("id")).longValue();
+        Long currentUserId = ClaimGetter.getCurrentUserId(request);
         return new ResponseEntity<>(groupService.getByUserId(currentUserId), HttpStatus.OK);
     }
 }

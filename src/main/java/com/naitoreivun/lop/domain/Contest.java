@@ -5,6 +5,7 @@ import com.naitoreivun.lop.domain.dto.NewContest;
 import org.joda.time.DateTime;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity(name = "contests")
@@ -26,7 +27,7 @@ public class Contest {
     private Season season;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "contest")
+    @OneToMany(mappedBy = "contest", cascade = CascadeType.ALL)
     private Set<Image> images;
 
     public Contest() {
@@ -44,6 +45,7 @@ public class Contest {
         this.finishUploadingDate = finishUploadingDate;
         this.finishVotingDate = finishVotingDate;
         this.creationDate = DateTime.now();
+        this.images = new HashSet<>();
     }
 
     public Contest(NewContest newContest, Season season) {

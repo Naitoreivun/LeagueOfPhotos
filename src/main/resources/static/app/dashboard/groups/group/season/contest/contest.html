@@ -1,7 +1,6 @@
-<h1 class="page-header">konkurs id = {{contest.id}}</h1>
-<div class="container">
-    <div class="jumbotron">
-        <h1 class="page-header">tutaj bedzie sie dzialo!</h1>
-        <h2>...ale jeszcze nie dziś</h2>
-    </div>
+<div ng-if="contest.details.contestStatus === 'AVAILABLE_SOON'">
+    Contest start at {{contest.details.startDate | amDateFormat:'DD-MM-YYYY &nbsp;(HH:mm)'}}
 </div>
+<lop-uploading-phase ng-if="contest.details.contestStatus === 'UPLOADING'"></lop-uploading-phase>
+<div ng-if="contest.details.contestStatus === 'VOTING'">Głosowanie</div>
+<div ng-if="contest.details.contestStatus === 'CLOSED'">Koniec! ranking</div>

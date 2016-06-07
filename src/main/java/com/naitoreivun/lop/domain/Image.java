@@ -14,14 +14,18 @@ public class Image {
     private Long id;
 
     private String title;
-    private String path;
+    @Lob
+    @Column(columnDefinition = "mediumblob")
+    private byte[] content;
 
     private DateTime creationDate;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "contest_id")
     private Contest contest;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
@@ -33,9 +37,9 @@ public class Image {
     public Image() {
     }
 
-    public Image(String title, String path, Contest contest, User user) {
+    public Image(String title, byte[] content, Contest contest, User user) {
         this.title = title;
-        this.path = path;
+        this.content = content;
         this.contest = contest;
         this.user = user;
         this.creationDate = DateTime.now();
@@ -50,8 +54,8 @@ public class Image {
         return title;
     }
 
-    public String getPath() {
-        return path;
+    public byte[] getContent() {
+        return content;
     }
 
     public Contest getContest() {
