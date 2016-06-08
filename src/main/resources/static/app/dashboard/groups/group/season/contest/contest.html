@@ -7,4 +7,6 @@
 <div ng-if="contest.details.contestStatus === 'VOTING'">
     <lop-voting-phase contest-details="contest.details"></lop-voting-phase>
 </div>
-<div ng-if="contest.details.contestStatus === 'CLOSED'">Koniec! ranking</div>
+<div ng-if="contest.details.contestStatus === 'CLOSED'">
+    <lop-contest-ranking contest-details="contest.details"></lop-contest-ranking>
+</div>

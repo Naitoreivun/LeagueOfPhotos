@@ -31,7 +31,7 @@ public class Image {
     private User user;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "image", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "image", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Vote> votes;
 
     public Image() {

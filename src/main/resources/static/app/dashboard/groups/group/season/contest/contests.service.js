@@ -12,7 +12,8 @@ function contestsService(Restangular) {
     var service = {
         add: add,
         getBySeasonId: getBySeasonId,
-        getById: getById
+        getById: getById,
+        getScoresByContestId: getScoresByContestId
     };
 
     return service;
@@ -39,15 +40,22 @@ function contestsService(Restangular) {
         return contestsObject
             .one('season', seasonId)
             .getList()
-            .then(getBySeasonIdComplete, dummyErrorsHandler);
+            .then(getListComplete, dummyErrorsHandler);
     }
     
-    function getBySeasonIdComplete(response) {
-        var contests = [];
+    function getListComplete(response) {
+        var array = [];
         _.forEach(response, function (val) {
-            contests.push(val.plain());
+            array.push(val.plain());
         });
-        console.log(contests);
-        return contests;
+        console.log(array);
+        return array;
+    }
+    
+    function getScoresByContestId(contestId) {
+        return contestsObject
+            .one("", contestId)
+            .customGETLIST('scores')
+            .then(getListComplete, dummyErrorsHandler);
     }
 }

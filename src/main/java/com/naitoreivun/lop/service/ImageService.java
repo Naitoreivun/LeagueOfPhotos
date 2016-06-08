@@ -4,12 +4,16 @@ import com.naitoreivun.lop.dao.ImageDAO;
 import com.naitoreivun.lop.domain.Contest;
 import com.naitoreivun.lop.domain.Image;
 import com.naitoreivun.lop.domain.User;
+import com.naitoreivun.lop.domain.VotableImage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.Comparator;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class ImageService {
@@ -22,6 +26,9 @@ public class ImageService {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private VoteService voteService;
 
 
     public boolean add(MultipartFile file, String title, Long contestId, Long userId) {
@@ -55,5 +62,25 @@ public class ImageService {
         Contest contest = contestService.getContestById(contestId);
         User user = userService.getById(userId);
         return imageDAO.findByContestAndUser(contest, user).get();
+    }
+
+    public List<VotableImage> getVotableImagesByContestId(Long contestId, Long currentUserId) {
+        Contest contest = contestService.getContestById(contestId);
+        User user = userService.getById(currentUserId);
+
+        return imageDAO.findByContestAndUserNot(contest, user)
+                .stream()
+                .sorted(Comparator.comparing(Image::getCreationDate))
+                .map(image -> new VotableImage(image, voteService.getRatingByUserAndImage(user, image)))
+                .collect(Collectors.toList());
+    }
+
+    public Image getById(Long id) {
+        return imageDAO.findById(id).get();
+    }
+
+    public List<Image> getByContestId(Long contestId) {
+        Contest contest = contestService.getContestById(contestId);
+        return contest.getImages();
     }
 }

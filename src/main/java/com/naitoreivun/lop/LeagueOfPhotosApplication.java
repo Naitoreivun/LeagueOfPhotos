@@ -1,7 +1,10 @@
 package com.naitoreivun.lop;
 
 import com.naitoreivun.lop.dao.SeasonDAO;
+import com.naitoreivun.lop.domain.Image;
 import com.naitoreivun.lop.security.JwtFilter;
+import com.naitoreivun.lop.service.ImageService;
+import com.naitoreivun.lop.service.VoteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -17,7 +20,9 @@ public class LeagueOfPhotosApplication implements CommandLineRunner {
     @Autowired
     private MyProperties properties;
     @Autowired
-    private SeasonDAO seasonDAO;
+    private VoteService voteService;
+    @Autowired
+    private ImageService imageService;
 
     @Bean
     public FilterRegistrationBean jwtFilter() {
@@ -35,8 +40,9 @@ public class LeagueOfPhotosApplication implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-//        System.out.println("\n@@@@@@@@@@@@@@@@@@@@@@@@\n");
-//        System.out.println(seasonDAO.findById(1L).get());
-//        System.out.println("\n@@@@@@@@@@@@@@@@@@@@@@@@\n");
+        System.out.println("-------------------");
+//        voteService.add(1L, 1L, (short) 5);
+//        final Image image = imageService.getById(2L);
+        System.out.println("-------------------");
     }
 }

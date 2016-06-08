@@ -1,12 +1,10 @@
 package com.naitoreivun.lop.domain;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity(name = "votes")
+@IdClass(VotePK.class)
 public class Vote implements Serializable {
     @Id
     @ManyToOne
@@ -21,7 +19,10 @@ public class Vote implements Serializable {
     private Short rating;
 
     public Vote() {
+    }
 
+    public Vote(User user, Image image) {
+        this(user, image, (short) 0);
     }
 
     public Vote(User user, Image image, Short rating) {
@@ -34,11 +35,23 @@ public class Vote implements Serializable {
         return user;
     }
 
+    public void setUser(User user) {
+        this.user = user;
+    }
+
     public Image getImage() {
         return image;
     }
 
+    public void setImage(Image image) {
+        this.image = image;
+    }
+
     public Short getRating() {
         return rating;
+    }
+
+    public void setRating(Short rating) {
+        this.rating = rating;
     }
 }

@@ -141,8 +141,15 @@ body {
  * https://github.com/nervgh/angular-file-upload/blob/master/examples/image-preview/index.html
  */
 
-.my-drop-zone { border: dotted 3px lightgray; }
-.nv-file-over { border: dotted 3px green; } /* Default class applied to drop zones on over */
+.my-drop-zone {
+    border: dotted 3px lightgray;
+}
+
+.nv-file-over {
+    border: dotted 3px green;
+}
+
+/* Default class applied to drop zones on over */
 
 canvas {
     background-color: #f3f3f3;
@@ -152,4 +159,24 @@ canvas {
     border: 1px solid #c3c3c3;
     height: 100px;
     margin: 6px 0 0 6px;
+}
+
+/*
+ *   podium:
+ */
+
+.label-first-place {
+    background-color: gold;
+}
+
+.label-second-place {
+    background-color: silver;
+}
+
+.label-third-place {
+    background-color: saddlebrown;
+}
+
+.label-black {
+    background-color: black;
 }

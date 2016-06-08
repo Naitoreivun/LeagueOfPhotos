@@ -2,9 +2,11 @@ package com.naitoreivun.lop.service;
 
 import com.naitoreivun.lop.dao.ContestDAO;
 import com.naitoreivun.lop.domain.Contest;
+import com.naitoreivun.lop.domain.Image;
 import com.naitoreivun.lop.domain.Season;
 import com.naitoreivun.lop.domain.dto.ContestDTO;
 import com.naitoreivun.lop.domain.dto.NewContest;
+import com.naitoreivun.lop.domain.dto.Score;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +22,11 @@ public class ContestService {
 
     @Autowired
     private SeasonService seasonService;
+
+    @Autowired
+    private ImageService imageService;
+    @Autowired
+    private VoteService voteService;
 
 
     public List<ContestDTO> getBySeasonId(Long seasonId) {
@@ -42,5 +49,14 @@ public class ContestService {
 
     public ContestDTO getContestDTOById(Long contestId) {
         return new ContestDTO(getContestById(contestId));
+    }
+
+    public List<Score> getScoresByContestId(Long contestId) {
+        List<Image> images = imageService.getByContestId(contestId);
+        return images
+                .stream()
+                .map(image -> new Score(image, voteService.getTotalRatingByImage(image)))
+                .sorted(Comparator.comparing(Score::getVotes).reversed())
+                .collect(Collectors.toList());
     }
 }

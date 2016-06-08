@@ -18,15 +18,46 @@ function lopVotingPhase() {
     return directive;
 }
 
-VotingPhaseController.$inject = ['imagesService'];
+VotingPhaseController.$inject = ['imagesService', '$uibModal'];
 
-function VotingPhaseController(imagesService) {
+function VotingPhaseController(imagesService, $uibModal) {
     var vp = this; // voting phase
-    
-    activate();
-    
-    function activate() {
 
+    activate();
+    vp.enlargeImage = enlargeImage;
+    vp.images = [];
+    vp.getVotableImages = getVotableImages;
+
+    function activate() {
+        getVotableImages();
+    }
+
+    function enlargeImage(index) {
+        var largeImage = $uibModal.open({
+            templateUrl: "app/dashboard/groups/group/season/contest/voting-phase/large-image.html",
+            controller: LargeImageController,
+            controllerAs: 'li',
+            resolve: {
+                image: vp.images[index]
+            }
+        });
+
+        largeImage.result.then(function (rating) {
+            vp.images[index].rating = rating;
+            imagesService.vote(vp.images[index].id, rating);
+        });
+    }
+
+    function getVotableImages() {
+        vp.images = [];
+        imagesService
+            .getVotableImagesByContestId(vp.contestDetails.id)
+            .then(
+                function (data) {
+                    vp.images = data;
+                    console.log(data);
+                }
+            );
     }
 
 }

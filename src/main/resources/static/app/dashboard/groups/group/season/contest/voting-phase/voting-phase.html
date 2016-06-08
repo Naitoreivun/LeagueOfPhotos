@@ -1,1 +1,10 @@
-GLOSOWANIEEE AAAAA XD
+<div class="row">
+    <div class="col-xs-12 col-sm-4 col-md-3 col-lg-2" ng-repeat="image in vp.images">
+        <figure>
+            <h3 ng-bind="image.title">Current image:</h3>
+            <img class="img-rounded" ng-src="data:image/JPEG;base64,{{image.content}}" width="100%"
+                 ng-click="vp.enlargeImage($index)">
+            <figcaption><span ng-bind="image.rating"></span></figcaption>
+        </figure>
+    </div>
+</div>

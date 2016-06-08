@@ -10,7 +10,9 @@ function imagesService(Restangular) {
     var imagesObject = Restangular.all('images');
 
     var service = {
-        getByContestIdAndCurrentUser: getByContestIdAndCurrentUser
+        getByContestIdAndCurrentUser: getByContestIdAndCurrentUser,
+        getVotableImagesByContestId: getVotableImagesByContestId,
+        vote: vote
     };
 
     return service;
@@ -30,4 +32,35 @@ function imagesService(Restangular) {
     function getByContestIdAndCurrentUserComplete(response) {
         return response.plain();
     }
+
+    function getVotableImagesByContestId(contestId) {
+        return imagesObject
+            .one('contest', contestId)
+            .customGETLIST('votable')
+            .then(getImagesComplete, dummyErrorsHandler);
+    }
+
+    function getImagesComplete(response) {
+        var images = [];
+        _.forEach(response, function (val) {
+            images.push(val.plain());
+        });
+        return images;
+    }
+
+    function vote(imageId, rating) {
+        var ratedImage = {
+            id: imageId,
+            rating: rating
+        };
+        imagesObject
+            .customPOST(ratedImage, 'vote')
+            .then(
+                function (response) {
+                    console.log(response);
+                }
+                , dummyErrorsHandler
+            )
+    }
+
 }
