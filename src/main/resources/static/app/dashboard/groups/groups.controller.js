@@ -14,7 +14,12 @@ function GroupsController(groupsService) {
     };
     groups.collapse = collapse;
     groups.getAll = getAll;
+    groups.getTypeClass = getTypeClass;
     groups.getUserGroups = getUserGroups;
+    groups.typeClassMap = {
+        'PRIVATE': "label-danger",
+        'PUBLIC': "label-success"
+    };
     groups.userGroups = {
         array: [],
         isCollapsed: false
@@ -39,6 +44,10 @@ function GroupsController(groupsService) {
                 function (data) {
                     groups.allGroups.array = data;
                 });
+    }
+
+    function getTypeClass(type) {
+        return groups.typeClassMap[type];
     }
 
     function getUserGroups() {

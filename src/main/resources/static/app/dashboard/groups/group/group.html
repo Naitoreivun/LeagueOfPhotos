@@ -5,7 +5,7 @@
     <i class="glyphicon glyphicon glyphicon-plus"></i>
 </button>
 
-<h2 class="sub-header collapse-trigger-text" ng-click="group.collapse(group.seasons)">
+<h2 class="sub-header clickable" ng-click="group.collapse(group.seasons)">
     <i class="pull-left glyphicon"
        ng-class="
            {'glyphicon-chevron-down': group.seasons.isCollapsed,
@@ -32,13 +32,16 @@
             </td>
             <td ng-bind="season.startDate | amDateFormat:'DD-MM-YYYY &nbsp;(HH:mm)'"></td>
             <td ng-bind="season.finishDate | amDateFormat:'DD-MM-YYYY &nbsp;(HH:mm)'"></td>
-            <td><span class="label label-info" ng-bind="season.seasonStatus"></span></td>
+            <td>
+                <span class="label" ng-class="group.getSeasonStatusClass(season.seasonStatus)"
+                      ng-bind="season.seasonStatus"></span>
+            </td>
         </tr>
         </tbody>
     </table>
 </div>
 
-<h2 class="sub-header collapse-trigger-text" ng-click="group.collapse(group.users)">
+<h2 class="sub-header clickable" ng-click="group.collapse(group.users)">
     <i class="pull-left glyphicon"
        ng-class="
            {'glyphicon-chevron-down': group.users.isCollapsed,

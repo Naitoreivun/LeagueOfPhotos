@@ -5,7 +5,7 @@
     <i class="glyphicon glyphicon glyphicon-plus"></i>
 </button>
 
-<h2 class="sub-header collapse-trigger-text" ng-click="season.collapse(season.contests)">
+<h2 class="sub-header clickable" ng-click="season.collapse(season.contests)">
     <i class="pull-left glyphicon"
        ng-class="
            {'glyphicon-chevron-down': season.contests.isCollapsed,
@@ -34,7 +34,10 @@
             <td ng-bind="contest.startDate | amDateFormat:'DD-MM-YYYY &nbsp;(HH:mm)'"></td>
             <td ng-bind="contest.finishUploadingDate | amDateFormat:'DD-MM-YYYY &nbsp;(HH:mm)'"></td>
             <td ng-bind="contest.finishVotingDate | amDateFormat:'DD-MM-YYYY &nbsp;(HH:mm)'"></td>
-            <td><span class="label label-info" ng-bind="contest.contestStatus"></span></td>
+            <td>
+                <span class="label" ng-class="season.getContestStatusClass(contest.contestStatus)"
+                      ng-bind="contest.contestStatus"></span>
+            </td>
         </tr>
         </tbody>
     </table>

@@ -18,7 +18,7 @@ function seasonsService(Restangular) {
     return service;
 
     function add(newSeason) {
-        seasonsObject.post(newSeason);
+        return seasonsObject.post(newSeason);
     }
 
     function dummyErrorsHandler(errors) {

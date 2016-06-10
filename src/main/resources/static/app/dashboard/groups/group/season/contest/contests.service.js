@@ -19,7 +19,7 @@ function contestsService(Restangular) {
     return service;
 
     function add(newContest) {
-        contestsObject.post(newContest);
+        return contestsObject.post(newContest);
     }
 
     function dummyErrorsHandler(errors) {

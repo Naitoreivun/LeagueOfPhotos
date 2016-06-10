@@ -1,25 +1,23 @@
 <nav class="navbar navbar-inverse navbar-fixed-top">
     <div class="container-fluid">
         <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
+                    aria-expanded="false" aria-controls="navbar">
                 <span class="sr-only">Toggle navigation</span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#">League of Photos</a>
+            <a class="navbar-brand" ui-sref=".overview">League of Photos</a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav navbar-right">
-                <li><a>Dashboard</a></li>
-                <li><a>Settings</a></li>
-                <li><a>Profile</a></li>
-                <li><a>Help</a></li>
+                <li ng-class="vm.getActiveClass('dashboard.overview')"><a ui-sref=".overview">Overview</a></li>
+                <li ng-class="vm.getActiveClass('dashboard.groups')"><a ui-sref=".groups">Groups</a></li>
+                <li>
+                    <a class="logout-button" ng-click="vm.logout()">Logout</a>
+                </li>
             </ul>
-            <form class="navbar-form navbar-right">
-                <button type="button" class="btn btn-danger" ng-click="vm.logout()">Logout</button>
-                <input type="text" class="form-control" placeholder="Search...">
-            </form>
         </div>
     </div>
 </nav>

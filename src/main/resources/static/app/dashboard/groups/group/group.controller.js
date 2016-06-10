@@ -14,6 +14,7 @@ function GroupController(groupsService, $stateParams, $uibModal, seasonsService,
     group.getDetails = getDetails;
     group.getMemberStatusClass = getMemberStatusClass;
     group.getSeasons = getSeasons;
+    group.getSeasonStatusClass = getSeasonStatusClass;
     group.getUsers = getUsers;
     group.memberStatusClassMap = {
         ADMIN: "label-danger",
@@ -23,6 +24,11 @@ function GroupController(groupsService, $stateParams, $uibModal, seasonsService,
     group.seasons = {
         array: [],
         isCollapsed: false
+    };
+    group.seasonStatusClassMap = {
+        'CLOSED': "label-danger",
+        'OPEN': "label-success",
+        'AVAILABLE_SOON': "label-warning"
     };
     group.users = {
         array: [],
@@ -50,7 +56,7 @@ function GroupController(groupsService, $stateParams, $uibModal, seasonsService,
 
         newSeasonModal.result.then(function (newSeason) {
             newSeason.groupId = group.details.id;
-            seasonsService.add(newSeason);
+            seasonsService.add(newSeason).then(getSeasons);
         });
     }
 
@@ -80,6 +86,10 @@ function GroupController(groupsService, $stateParams, $uibModal, seasonsService,
                 function (data) {
                     group.seasons.array = data;
                 });
+    }
+
+    function getSeasonStatusClass(status) {
+        return group.seasonStatusClassMap[status];
     }
 
     function getUsers() {

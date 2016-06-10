@@ -10,6 +10,7 @@ function LargeImageController($uibModalInstance, image) {
 
     li.cancel = cancel;
     li.image = image;
+    li.tempRating = image.rating;
     li.vote = vote;
 
     function cancel() {
@@ -17,6 +18,6 @@ function LargeImageController($uibModalInstance, image) {
     }
 
     function vote() {
-        $uibModalInstance.close(li.image.rating);
+        $uibModalInstance.close(li.tempRating);
     }
 }

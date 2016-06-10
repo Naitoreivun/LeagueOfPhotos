@@ -86,6 +86,15 @@ body {
     background-color: #428bca;
 }
 
+.logout-button {
+    border-left: dashed 1px rgba(255, 255, 255, 0.5) !important;
+}
+
+.logout-button:hover,
+.logout-button:focus {
+    color: red !important;
+}
+
 /*
  * Main content
  */
@@ -127,7 +136,7 @@ body {
     /*border-radius: 10%;*/
 }
 
-.collapse-trigger-text {
+.clickable {
     cursor: pointer;
 }
 

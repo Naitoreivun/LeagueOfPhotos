@@ -13,6 +13,7 @@ function DashboardController(auth, $state) {
     };
     vm.text = 'DASHBOARD';
     vm.logout = logout;
+    vm.getActiveClass = getActiveClass;
     
     activate();
     
@@ -20,6 +21,13 @@ function DashboardController(auth, $state) {
         if($state.current.name === 'dashboard') {
             $state.go('dashboard.overview');
         }
+    }
+    
+    function getActiveClass(stateName) {
+        if($state.current.name === stateName) {
+            return 'active';
+        }
+        return '';
     }
     
     function logout() {

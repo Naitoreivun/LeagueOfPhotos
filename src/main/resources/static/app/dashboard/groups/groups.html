@@ -1,43 +1,12 @@
 <h1 class="page-header">Groups</h1>
 
-<h2 class="sub-header collapse-trigger-text" ng-click="groups.collapse(groups.allGroups)">
-        <i class="pull-left glyphicon"
-           ng-class="
-           {'glyphicon-chevron-down': groups.allGroups.isCollapsed,
-            'glyphicon-chevron-right': !groups.allGroups.isCollapsed}">
-        </i>
-        &nbsp;All groups
-</h2>
-<div uib-collapse="groups.allGroups.isCollapsed" class="table-responsive">
-    <table class="table table-striped">
-        <thead>
-        <tr>
-            <th>name</th>
-            <th>description</th>
-            <th>type</th>
-            <th>actions</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr ng-repeat="group in groups.allGroups.array">
-            <td ng-bind="group.name"></td>
-            <td ng-bind="group.description"></td>
-            <td ng-bind="group.type"></td>
-            <td>
-                <button class="btn btn-success btn-xs">Join</button>
-            </td>
-        </tr>
-        </tbody>
-    </table>
-</div>
-
-<h2 class="sub-header collapse-trigger-text" ng-click="groups.collapse(groups.userGroups)">
-        <i class="pull-left glyphicon"
-           ng-class="
+<h2 class="sub-header clickable" ng-click="groups.collapse(groups.userGroups)">
+    <i class="pull-left glyphicon"
+       ng-class="
            {'glyphicon-chevron-down': groups.userGroups.isCollapsed,
             'glyphicon-chevron-right': !groups.userGroups.isCollapsed}">
-        </i>
-        &nbsp;My groups
+    </i>
+    &nbsp;My groups
 </h2>
 <div uib-collapse="groups.userGroups.isCollapsed" class="table-responsive">
     <table class="table table-striped">
@@ -53,9 +22,44 @@
         <tr ng-repeat="group in groups.userGroups.array">
             <td><a ng-bind="group.name" ui-sref="dashboard.group({id: group.id})"></a></td>
             <td ng-bind="group.description"></td>
-            <td ng-bind="group.type"></td>
+            <td>
+                <div ng-bind="group.type" class="label" ng-class="groups.getTypeClass(group.type)"></div>
+            </td>
             <td>
                 <button class="btn btn-warning btn-xs">Leave</button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<h2 class="sub-header clickable" ng-click="groups.collapse(groups.allGroups)">
+    <i class="pull-left glyphicon"
+       ng-class="
+           {'glyphicon-chevron-down': groups.allGroups.isCollapsed,
+            'glyphicon-chevron-right': !groups.allGroups.isCollapsed}">
+    </i>
+    &nbsp;All groups
+</h2>
+<div uib-collapse="groups.allGroups.isCollapsed" class="table-responsive">
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>name</th>
+            <th>description</th>
+            <th>type</th>
+            <th>actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="group in groups.allGroups.array">
+            <td ng-bind="group.name"></td>
+            <td ng-bind="group.description"></td>
+            <td>
+                <div ng-bind="group.type" class="label" ng-class="groups.getTypeClass(group.type)"></div>
+            </td>
+            <td>
+                <button class="btn btn-primary btn-xs">Join</button>
             </td>
         </tr>
         </tbody>

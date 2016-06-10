@@ -37,6 +37,7 @@ function VotingPhaseController(imagesService, $uibModal) {
             templateUrl: "app/dashboard/groups/group/season/contest/voting-phase/large-image.html",
             controller: LargeImageController,
             controllerAs: 'li',
+            // size: 'lg',
             resolve: {
                 image: vp.images[index]
             }

@@ -5,7 +5,7 @@
     <img class="img-responsive" ng-src="data:image/JPEG;base64,{{li.image.content}}" width="100%">
 </div>
 <div class="modal-footer">
-    <uib-rating class="pull-left" ng-model="li.image.rating"></uib-rating>
+    <uib-rating class="pull-left" ng-model="li.tempRating"></uib-rating>
     <button class="btn btn-primary" type="button" ng-click="li.vote()">Vote</button>
     <button class="btn btn-warning" type="button" ng-click="li.cancel()">Cancel</button>
 </div>
