@@ -1,5 +1,10 @@
 <h1 class="page-header">Groups</h1>
 
+<button class="btn btn-success" ng-click="groups.createGroup()">
+    Create new group&nbsp;
+    <i class="glyphicon glyphicon glyphicon-plus"></i>
+</button>
+
 <h2 class="sub-header clickable" ng-click="groups.collapse(groups.userGroups)">
     <i class="pull-left glyphicon"
        ng-class="
@@ -26,22 +31,22 @@
                 <div ng-bind="group.type" class="label" ng-class="groups.getTypeClass(group.type)"></div>
             </td>
             <td>
-                <button class="btn btn-warning btn-xs">Leave</button>
+                <button class="btn btn-warning btn-xs" ng-click="groups.leave(group.id)">Leave</button>
             </td>
         </tr>
         </tbody>
     </table>
 </div>
 
-<h2 class="sub-header clickable" ng-click="groups.collapse(groups.allGroups)">
+<h2 class="sub-header clickable" ng-click="groups.collapse(groups.otherGroups)">
     <i class="pull-left glyphicon"
        ng-class="
-           {'glyphicon-chevron-down': groups.allGroups.isCollapsed,
-            'glyphicon-chevron-right': !groups.allGroups.isCollapsed}">
+           {'glyphicon-chevron-down': groups.otherGroups.isCollapsed,
+            'glyphicon-chevron-right': !groups.otherGroups.isCollapsed}">
     </i>
-    &nbsp;All groups
+    &nbsp;Other groups
 </h2>
-<div uib-collapse="groups.allGroups.isCollapsed" class="table-responsive">
+<div uib-collapse="groups.otherGroups.isCollapsed" class="table-responsive">
     <table class="table table-striped">
         <thead>
         <tr>
@@ -52,14 +57,14 @@
         </tr>
         </thead>
         <tbody>
-        <tr ng-repeat="group in groups.allGroups.array">
+        <tr ng-repeat="group in groups.otherGroups.array">
             <td ng-bind="group.name"></td>
             <td ng-bind="group.description"></td>
             <td>
                 <div ng-bind="group.type" class="label" ng-class="groups.getTypeClass(group.type)"></div>
             </td>
             <td>
-                <button class="btn btn-primary btn-xs">Join</button>
+                <button class="btn btn-primary btn-xs" ng-click="groups.join(group.id)">Join</button>
             </td>
         </tr>
         </tbody>

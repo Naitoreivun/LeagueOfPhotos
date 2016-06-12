@@ -32,7 +32,7 @@ function GroupController(groupsService, $stateParams, $uibModal, seasonsService,
     };
     group.users = {
         array: [],
-        isCollapsed: false
+        isCollapsed: true
     };
 
     activate();

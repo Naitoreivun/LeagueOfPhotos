@@ -34,7 +34,7 @@ public class User {
     private DateTime creationDate;
 
     @JsonIgnore
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "user", cascade = CascadeType.PERSIST)
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "user", cascade = CascadeType.REMOVE)
     private List<UserGroup> usersGroups;
 
     @JsonIgnore

@@ -3,7 +3,7 @@
 }
 
 .full {
-    background: url('../img/background.jpg') no-repeat center center fixed;
+    background: url('../img/background.jpg') no-repeat fixed center;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     background-size: cover;
@@ -16,6 +16,23 @@
     background: none;
     color: white;
     text-align: right;
+}
+
+.full .jumbotron h1 {
+    color: whitesmoke;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+    transition: background-color 5000s ease-in-out 0s;
+    /*-webkit-box-shadow: 0 0 0px 1000px rgba(34, 34, 34, 0.8) inset !important;*/
+    -webkit-text-fill-color: #00b100 !important;
+}
+
+.full .jumbotron .form-control {
+    color: whitesmoke;
 }
 
 .full .hello {

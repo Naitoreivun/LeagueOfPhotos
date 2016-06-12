@@ -1,6 +1,7 @@
 package com.naitoreivun.lop.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.naitoreivun.lop.domain.dto.NewGroup;
 import org.joda.time.DateTime;
 
 import javax.persistence.*;
@@ -22,7 +23,7 @@ public class Group {
     private GroupType groupType;
 
     @JsonIgnore
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "group", cascade = CascadeType.PERSIST)
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "group", cascade = CascadeType.REMOVE)
     private List<UserGroup> usersGroups;
 
     @JsonIgnore

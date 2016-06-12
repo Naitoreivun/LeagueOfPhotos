@@ -23,6 +23,8 @@ SignupFormController.$inject = ['usersService', 'focus'];
 function SignupFormController(usersService, focus) {
     var vm = this;
 
+    vm.confirmPasswordOk = false;
+    vm.correctPassword = correctPassword;
     vm.createUser = createUser;
     vm.signupForm = {
         username: '',
@@ -38,6 +40,11 @@ function SignupFormController(usersService, focus) {
             password: '',
             confirmPassword: ''
         };
+    }
+
+    function correctPassword() {
+        console.log(vm.signupForm.password === vm.signupForm.confirmPassword);
+        return vm.signupForm.password === vm.signupForm.confirmPassword;
     }
 
     function createUser() {

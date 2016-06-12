@@ -1,0 +1,28 @@
+<div class="modal-header">
+    <h3 class="modal-title">Create new group:</h3>
+</div>
+<form name="form" ng-submit="form.$valid && group.create()" novalidate>
+    <div class="modal-body">
+        <div class="form-group" ng-class="{'has-success': !form.name.$invalid,
+        'has-error': form.name.$invalid && form.name.$touched}">
+            <label for="newSeasonName">Name</label>
+            <input type="text" class="form-control" id="newSeasonName"
+                   ng-model="group.new.name" required name="name">
+        </div>
+        <div class="form-group">
+            <label for="newSeasonDescription">Description</label>
+            <textarea class="form-control" id="newSeasonDescription" ng-model="group.new.description"></textarea>
+        </div>
+        <div class="radio" ng-repeat="type in group.types" required>
+            <label class="active">
+                <input type="radio" name="types" ng-model="group.new.type" ng-value="type.value">
+                <span class="{{type.class}}" ng-bind="type.name"></span>
+            </label>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" type="submit" ng-disabled="!form.$valid">Create
+        </button>
+        <button class="btn btn-warning" type="button" ng-click="group.cancel()">Cancel</button>
+    </div>
+</form>

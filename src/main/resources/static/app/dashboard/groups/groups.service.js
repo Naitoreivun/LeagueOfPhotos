@@ -10,12 +10,27 @@ function groupsService(Restangular) {
     var groupsObject = Restangular.all('groups');
 
     var service = {
+        add: add,
+        addCurrentUserToGroup: addCurrentUserToGroup,
         getAll: getAll,
         getById: getById,
-        getCurrentUserGroups: getCurrentUserGroups
+        getCurrentUserGroups: getCurrentUserGroups,
+        getGroupsWithoutCurrentUser: getGroupsWithoutCurrentUser,
+        removeCurrentUserFromGroup: removeCurrentUserFromGroup
     };
 
     return service;
+
+    function add(newGroup) {
+        return groupsService.post(newGroup);
+    }
+
+    function addCurrentUserToGroup(groupId) {
+        return groupsObject
+            .one('', groupId)
+            .one('users', 'current')
+            .post();
+    }
 
     function dummyErrorsHandler(errors) {
         console.log('ERRORS:', errors);
@@ -44,11 +59,25 @@ function groupsService(Restangular) {
             .then(getGroupsComplete, dummyErrorsHandler);
     }
 
+    function getGroupsWithoutCurrentUser() {
+        return groupsObject
+            .one('withoutuser', 'current')
+            .getList()
+            .then(getGroupsComplete, dummyErrorsHandler);
+    }
+
     function getGroupsComplete(response) {
         var groups = [];
         _.forEach(response, function (val) {
             groups.push(val.plain());
         });
         return groups;
+    }
+
+    function removeCurrentUserFromGroup(groupId) {
+        return groupsObject
+            .one('', groupId)
+            .one('users', 'current')
+            .remove();
     }
 }

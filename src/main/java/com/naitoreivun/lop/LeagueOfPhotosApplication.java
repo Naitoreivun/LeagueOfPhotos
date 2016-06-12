@@ -40,9 +40,5 @@ public class LeagueOfPhotosApplication implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        System.out.println("-------------------");
-//        voteService.add(1L, 1L, (short) 5);
-//        final Image image = imageService.getById(2L);
-        System.out.println("-------------------");
     }
 }

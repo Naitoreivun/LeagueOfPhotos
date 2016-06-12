@@ -1,23 +1,28 @@
-<form ng-submit="vm.createUser()">
-    <div class="form-group">
+<form ng-submit="form.$valid && vm.createUser()" name="form" novalidate>
+    <div class="form-group" ng-class="{'has-success': !form.username.$invalid,
+    'has-error': form.username.$invalid && form.username.$touched}">
         <!--<label for="username">Username</label>-->
         <input type="text" class="form-control" id="username" placeholder="username"
-               ng-model="vm.signupForm.username" required>
+               ng-model="vm.signupForm.username" name="username" required>
     </div>
-    <div class="form-group">
+    <div class="form-group" ng-class="{'has-success': !form.email.$invalid,
+    'has-error': form.email.$invalid && form.email.$touched}">
         <!--<label for="email">Email</label>-->
         <input type="email" class="form-control" id="email" placeholder="email"
-               ng-model="vm.signupForm.email" required>
+               ng-model="vm.signupForm.email" name="email" required>
     </div>
-    <div class="form-group">
+    <div class="form-group" ng-class="{'has-success': !form.password.$invalid,
+    'has-error': form.password.$invalid && form.password.$touched}">
         <!--<label for="password">Password</label>-->
         <input type="password" class="form-control" id="password" placeholder="password"
-               ng-model="vm.signupForm.password" required>
+               ng-model="vm.signupForm.password" name="password" required pattern=".{3,}">
     </div>
-    <div class="form-group">
+    <div class="form-group" ng-class="{'has-success': !form.confirmPassword.$invalid,
+    'has-error': form.confirmPassword.$invalid && form.confirmPassword.$touched}">
         <!--<label for="confirm-password">Confirm password</label>-->
         <input type="password" class="form-control" id="confirm-password" placeholder="confirm password"
-               ng-model="vm.signupForm.confirmPassword" required>
+               ng-model="vm.signupForm.confirmPassword" name="confirmPassword" required
+               match="vm.signupForm.password">
     </div>
-    <button type="submit" class="btn btn-primary btn-lg">Sign up</button>
+    <button type="submit" class="btn btn-primary btn-lg" ng-disabled="!form.$valid">Sign up</button>
 </form>
