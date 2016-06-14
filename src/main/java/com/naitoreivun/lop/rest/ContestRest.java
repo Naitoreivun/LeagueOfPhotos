@@ -16,11 +16,17 @@ import java.util.List;
 public class ContestRest {
 
     @Autowired
-    ContestService contestService;
+    private ContestService contestService;
 
     @RequestMapping(value = "/{contestId}")
     public ResponseEntity<ContestDTO> getById(@PathVariable Long contestId) {
         return new ResponseEntity<>(contestService.getContestDTOById(contestId), HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/{contestId}", method = RequestMethod.PUT)
+    public ResponseEntity<?> updateContest(@PathVariable Long contestId, @RequestBody NewContest newContest) {
+        contestService.updateContest(contestId, newContest);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @RequestMapping(value = "/season/{seasonId}", method = RequestMethod.GET)

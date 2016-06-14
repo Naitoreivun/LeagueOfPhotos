@@ -43,14 +43,20 @@ function GroupsController(groupsService, $uibModal) {
         var newGroupModal = $uibModal.open({
             templateUrl: "app/dashboard/groups/group/new-group.html",
             controller: NewGroupController,
-            controllerAs: 'group'
+            controllerAs: 'group',
+            resolve: {
+                titlePrefix: function () {
+                    return 'Create new';
+                },
+                oldGroup: null
+            }
         });
 
         newGroupModal.result.then(function (newGroup) {
             groupsService.add(newGroup).then(activate);
         });
     }
-    
+
     function getOther() {
         groups.otherGroups.array = [];
         groupsService
@@ -74,7 +80,7 @@ function GroupsController(groupsService, $uibModal) {
                     groups.userGroups.array = data;
                 });
     }
-    
+
     function join(groupId) {
         groupsService
             .addCurrentUserToGroup(groupId)

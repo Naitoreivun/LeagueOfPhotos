@@ -1,51 +1,57 @@
 <div class="modal-header">
-    <h3 class="modal-title">Create new season:</h3>
+    <h3 class="modal-title"><span ng-bind="season.titlePrefix"></span> season:</h3>
 </div>
+<form name="form" ng-submit="form.$valid && season.save()" novalidate>
 <div class="modal-body">
-    <form>
-        <div class="form-group">
+        <div class="form-group" ng-class="{'has-success': !form.name.$invalid,
+        'has-error': form.name.$invalid && form.name.$touched}">
             <label for="newSeasonName">Name</label>
-            <input type="text" class="form-control" id="newSeasonName" ng-model="season.new.name">
+            <input type="text" class="form-control" id="newSeasonName"
+                   ng-model="season.new.name" required name="name">
         </div>
-        <div class="form-group col-sm-6">
+        <div class="form-group col-sm-6" ng-class="{'has-success': !form.startDate.$invalid,
+        'has-error': form.startDate.$invalid && form.startDate.$touched}">
             <label for="newSeasonStartDate">From</label>
             <p class="input-group">
                 <input id="newSeasonStartDate" type="text" class="form-control date-picker"
                        uib-datepicker-popup="{{season.dateFormat}}" ng-readonly="true"
                        ng-model="season.new.startDate" is-open="season.fromPopup.opened"
                        datepicker-options="season.fromPopup.dateOptions" close-text="Close"
-                       placeholder="dd-MM-yyyy" ng-click="season.open(season.fromPopup)"/>
+                       placeholder="dd-MM-yyyy" ng-click="season.open(season.fromPopup)"
+                        name="startDate" required/>
                   <span class="input-group-btn">
                     <button type="button" class="btn btn-default" ng-click="season.open(season.fromPopup)">
                         <i class="glyphicon glyphicon-calendar"></i>
                     </button>
                   </span>
             </p>
-            <uib-timepicker ng-model="season.new.startTime" show-meridian="false"></uib-timepicker>
+            <uib-timepicker ng-model="season.new.startDate" show-meridian="false"></uib-timepicker>
         </div>
-        <div class="form-group col-sm-6">
+        <div class="form-group col-sm-6" ng-class="{'has-success': !form.finishDate.$invalid,
+        'has-error': form.finishDate.$invalid && form.finishDate.$touched}">
             <label for="newSeasonFinishDate">To</label>
             <p class="input-group">
                 <input id="newSeasonFinishDate" type="text" class="form-control date-picker"
                        uib-datepicker-popup="{{season.dateFormat}}" ng-readonly="true"
                        ng-model="season.new.finishDate" is-open="season.toPopup.opened"
                        datepicker-options="season.toPopup.dateOptions" close-text="Close"
-                       placeholder="dd-MM-yyyy" ng-click="season.open(season.toPopup)"/>
+                       placeholder="dd-MM-yyyy" ng-click="season.open(season.toPopup)"
+                       name="finishDate" required/>
                   <span class="input-group-btn">
                     <button type="button" class="btn btn-default" ng-click="season.open(season.toPopup)">
                         <i class="glyphicon glyphicon-calendar"></i>
                     </button>
                   </span>
             </p>
-            <uib-timepicker ng-model="season.new.finishTime" show-meridian="false"></uib-timepicker>
+            <uib-timepicker ng-model="season.new.finishDate" show-meridian="false"></uib-timepicker>
         </div>
         <div class="form-group">
             <label for="newSeasonDescription">Description</label>
             <textarea class="form-control" id="newSeasonDescription" ng-model="season.new.description"></textarea>
         </div>
-    </form>
 </div>
 <div class="modal-footer">
-    <button class="btn btn-primary" type="button" ng-click="season.create()">Create</button>
+    <button class="btn btn-primary" type="submit" ng-disabled="!form.$valid">Save</button>
     <button class="btn btn-warning" type="button" ng-click="season.cancel()">Cancel</button>
 </div>
+</form>

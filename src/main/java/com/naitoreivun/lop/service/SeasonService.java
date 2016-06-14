@@ -42,4 +42,10 @@ public class SeasonService {
     public SeasonDTO getSeasonDTOById(Long id) {
         return new SeasonDTO(getSeasonById(id));
     }
+
+    public void updateSeason(Long seasonId, NewSeason newSeason) {
+        Season season = getSeasonById(seasonId);
+        season.setNewDetails(newSeason);
+        seasonDAO.save(season);
+    }
 }

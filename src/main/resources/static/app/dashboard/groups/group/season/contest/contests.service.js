@@ -13,7 +13,8 @@ function contestsService(Restangular) {
         add: add,
         getBySeasonId: getBySeasonId,
         getById: getById,
-        getScoresByContestId: getScoresByContestId
+        getScoresByContestId: getScoresByContestId,
+        updateContest: updateContest
     };
 
     return service;
@@ -57,5 +58,10 @@ function contestsService(Restangular) {
             .one("", contestId)
             .customGETLIST('scores')
             .then(getListComplete, dummyErrorsHandler);
+    }
+
+    function updateContest(contestId, newContest) {
+        return contestsObject
+            .customPUT(newContest, contestId);
     }
 }

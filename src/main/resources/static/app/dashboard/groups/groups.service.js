@@ -16,7 +16,8 @@ function groupsService(Restangular) {
         getById: getById,
         getCurrentUserGroups: getCurrentUserGroups,
         getGroupsWithoutCurrentUser: getGroupsWithoutCurrentUser,
-        removeCurrentUserFromGroup: removeCurrentUserFromGroup
+        removeCurrentUserFromGroup: removeCurrentUserFromGroup,
+        updateGroup: updateGroup
     };
 
     return service;
@@ -79,5 +80,10 @@ function groupsService(Restangular) {
             .one('', groupId)
             .one('users', 'current')
             .remove();
+    }
+    
+    function updateGroup(groupId, newGroup) {
+        return groupsObject
+            .customPUT(newGroup, groupId);
     }
 }

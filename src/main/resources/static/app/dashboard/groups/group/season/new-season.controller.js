@@ -3,13 +3,13 @@ angular
     .module('leagueOfPhotos')
     .controller('NewSeasonController', NewSeasonController);
 
-NewSeasonController.$inject = ['$uibModalInstance'];
+NewSeasonController.$inject = ['$uibModalInstance', 'titlePrefix', 'oldSeason'];
 
-function NewSeasonController($uibModalInstance) {
+function NewSeasonController($uibModalInstance, titlePrefix, oldSeason) {
     var season = this;
 
     season.cancel = cancel;
-    season.create = create;
+    season.save = create;
     season.dateFormat = 'dd-MM-yyyy';
     season.fromPopup = {
         opened: false,
@@ -18,15 +18,9 @@ function NewSeasonController($uibModalInstance) {
             startingDay: 1
         }
     };
-    season.new = {
-        name: '',
-        description: '',
-        startDate: null,
-        startTime: null,
-        finishDate: null,
-        finishTime: null
-    };
+    season.new = {};
     season.open = open;
+    season.titlePrefix = titlePrefix;
     season.toPopup = {
         opened: false,
         dateOptions: {
@@ -34,6 +28,27 @@ function NewSeasonController($uibModalInstance) {
             startingDay: 1
         }
     };
+
+    activate();
+
+    function activate() {
+        if(oldSeason) {
+            season.new = {
+                name: oldSeason.name,
+                description: oldSeason.description,
+                startDate: oldSeason.startDate,
+                finishDate: oldSeason.finishDate
+            };
+        }
+        else {
+            season.new = {
+                name: '',
+                description: '',
+                startDate: null,
+                finishDate: null
+            };
+        }
+    }
 
     function cancel() {
         $uibModalInstance.dismiss('cancel');
@@ -44,18 +59,10 @@ function NewSeasonController($uibModalInstance) {
             groupId: null,
             name: season.new.name,
             description: season.new.description,
-            startDate: getFullDate(season.new.startDate, season.new.startTime),
-            finishDate: getFullDate(season.new.finishDate, season.new.finishTime)
+            startDate: season.new.startDate,
+            finishDate: season.new.finishDate
         };
         $uibModalInstance.close(newSeason);
-    }
-
-    function getFullDate(date, time) {
-        var mTime = moment(time);
-        var mDate = moment(date);
-        mDate.hour(mTime.hour());
-        mDate.minute(mTime.minute());
-        return mDate.toDate();
     }
 
     function open(datepicker) {

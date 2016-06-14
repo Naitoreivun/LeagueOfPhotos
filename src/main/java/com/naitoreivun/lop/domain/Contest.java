@@ -38,12 +38,8 @@ public class Contest {
     }
 
     public Contest(String name, Season season, String description, DateTime startDate, DateTime finishUploadingDate, DateTime finishVotingDate) {
-        this.name = name;
         this.season = season;
-        this.description = description;
-        this.startDate = startDate;
-        this.finishUploadingDate = finishUploadingDate;
-        this.finishVotingDate = finishVotingDate;
+        setDetails(name, description, startDate, finishUploadingDate, finishVotingDate);
         this.creationDate = DateTime.now();
         this.images = new ArrayList<>();
     }
@@ -87,5 +83,19 @@ public class Contest {
 
     public DateTime getFinishVotingDate() {
         return finishVotingDate;
+    }
+
+    public void setNewDetails(NewContest newContest) {
+        setDetails(newContest.getName(), newContest.getDescription(), newContest.getStartDate(),
+                newContest.getFinishUploadingDate(), newContest.getFinishVotingDate());
+    }
+
+    private void setDetails(String name, String description, DateTime startDate,
+                            DateTime finishUploadingDate, DateTime finishVotingDate) {
+        this.name = name;
+        this.description = description;
+        this.startDate = startDate;
+        this.finishUploadingDate = finishUploadingDate;
+        this.finishVotingDate = finishVotingDate;
     }
 }

@@ -3,13 +3,13 @@ angular
     .module('leagueOfPhotos')
     .controller('NewContestController', NewContestController);
 
-NewContestController.$inject = ['$uibModalInstance'];
+NewContestController.$inject = ['$uibModalInstance', 'titlePrefix', 'oldContest'];
 
-function NewContestController($uibModalInstance) {
+function NewContestController($uibModalInstance, titlePrefix, oldContest) {
     var contest = this;
 
     contest.cancel = cancel;
-    contest.create = create;
+    contest.save = save;
     contest.dateFormat = 'dd-MM-yyyy';
     contest.startDatepicker = {
         opened: false,
@@ -17,16 +17,6 @@ function NewContestController($uibModalInstance) {
             minDate: new Date(),
             startingDay: 1
         }
-    };
-    contest.new = {
-        name: '',
-        description: '',
-        startDate: null,
-        startTime: null,
-        finishUploadingDate: null,
-        finishUploadingTime: null,
-        finishVotingDate: null,
-        finishVotingTime: null
     };
     contest.open = open;
     contest.finishUploadingDatepicker = {
@@ -43,29 +33,45 @@ function NewContestController($uibModalInstance) {
             startingDay: 1
         }
     };
+    contest.titlePrefix = titlePrefix;
+
+    activate();
+
+    function activate() {
+        if (oldContest) {
+            contest.new = {
+                name: oldContest.name,
+                description: oldContest.description,
+                startDate: oldContest.startDate,
+                finishUploadingDate: oldContest.finishUploadingDate,
+                finishVotingDate: oldContest.finishVotingDate
+            };
+        }
+        else {
+            contest.new = {
+                name: '',
+                description: '',
+                startDate: null,
+                finishUploadingDate: null,
+                finishVotingDate: null
+            };
+        }
+    }
 
     function cancel() {
         $uibModalInstance.dismiss('cancel');
     }
 
-    function create() {
+    function save() {
         var newContest = {
             seasonId: null,
             name: contest.new.name,
             description: contest.new.description,
-            startDate: getFullDate(contest.new.startDate, contest.new.startTime),
-            finishUploadingDate: getFullDate(contest.new.finishUploadingDate, contest.new.finishUploadingTime),
-            finishVotingDate: getFullDate(contest.new.finishVotingDate, contest.new.finishVotingTime)
+            startDate: contest.new.startDate,
+            finishUploadingDate: contest.new.finishUploadingDate,
+            finishVotingDate: contest.new.finishVotingDate
         };
         $uibModalInstance.close(newContest);
-    }
-
-    function getFullDate(date, time) {
-        var mTime = moment(time);
-        var mDate = moment(date);
-        mDate.hour(mTime.hour());
-        mDate.minute(mTime.minute());
-        return mDate.toDate();
     }
 
     function open(datepicker) {

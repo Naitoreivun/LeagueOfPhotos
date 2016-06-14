@@ -1,8 +1,15 @@
-<h1 class="page-header" ng-bind="season.details.name"></h1>
-
+<h1 class="page-header">
+    <span ng-bind="season.details.name"></span><br>
+    <small ng-bind="season.details.description"></small>
+</h1>
 <button class="btn btn-success" ng-click="season.createContest()">
     Create new contest&nbsp;
     <i class="glyphicon glyphicon glyphicon-plus"></i>
+</button>
+
+<button class="btn btn-warning" ng-click="season.editSeason()">
+    Edit season&nbsp;
+    <i class="glyphicon glyphicon-edit"></i>
 </button>
 
 <h2 class="sub-header clickable" ng-click="season.collapse(season.contests)">
@@ -22,13 +29,16 @@
             <th>finish uploading date</th>
             <th>finish voting date</th>
             <th>status</th>
+            <th>actions</th>
         </tr>
         </thead>
         <tbody>
         <tr ng-repeat="contest in season.contests.array">
             <td>
-                <a ng-bind="contest.name"
+                <strong ng-bind="contest.name"></strong>&nbsp;
+                <a class="btn btn-default btn-xs"
                    ui-sref="dashboard.contest({groupId: season.groupId, seasonId: season.id, contestId: contest.id})">
+                    <i class="glyphicon glyphicon-eye-open"></i>
                 </a>
             </td>
             <td ng-bind="contest.startDate | amDateFormat:'DD-MM-YYYY &nbsp;(HH:mm)'"></td>
@@ -37,6 +47,13 @@
             <td>
                 <span class="label" ng-class="season.getContestStatusClass(contest.contestStatus)"
                       ng-bind="contest.contestStatus"></span>
+            </td>
+            <td>
+                <button ng-if="contest.contestStatus !== 'CLOSED'"
+                        class="btn btn-warning btn-xs" ng-click="season.editContest(contest)">
+                    Edit&nbsp;
+                    <i class="glyphicon glyphicon-edit"></i>
+                </button>
             </td>
         </tr>
         </tbody>

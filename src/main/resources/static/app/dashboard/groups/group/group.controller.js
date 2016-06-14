@@ -12,6 +12,7 @@ function GroupController(groupsService, $stateParams, $uibModal, seasonsService,
     group.createSeason = createSeason;
     group.details = {};
     group.getDetails = getDetails;
+    group.editGroup = editGroup;
     group.getMemberStatusClass = getMemberStatusClass;
     group.getSeasons = getSeasons;
     group.getSeasonStatusClass = getSeasonStatusClass;
@@ -51,12 +52,36 @@ function GroupController(groupsService, $stateParams, $uibModal, seasonsService,
         var newSeasonModal = $uibModal.open({
             templateUrl: "app/dashboard/groups/group/season/new-season.html",
             controller: NewSeasonController,
-            controllerAs: 'season'
+            controllerAs: 'season',
+            resolve: {
+                titlePrefix: function () {
+                    return 'Create new';
+                },
+                oldSeason: null
+            }
         });
 
         newSeasonModal.result.then(function (newSeason) {
             newSeason.groupId = group.details.id;
             seasonsService.add(newSeason).then(getSeasons);
+        });
+    }
+
+    function editGroup() {
+        var newGroupModal = $uibModal.open({
+            templateUrl: "app/dashboard/groups/group/new-group.html",
+            controller: NewGroupController,
+            controllerAs: 'group',
+            resolve: {
+                titlePrefix: function () {
+                    return 'Edit';
+                },
+                oldGroup: group.details
+            }
+        });
+
+        newGroupModal.result.then(function (newGroup) {
+            groupsService.updateGroup(group.details.id, newGroup).then(getDetails);
         });
     }
 

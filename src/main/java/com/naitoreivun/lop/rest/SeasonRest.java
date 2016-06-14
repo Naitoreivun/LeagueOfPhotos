@@ -22,6 +22,12 @@ public class SeasonRest {
         return new ResponseEntity<>(seasonService.getSeasonDTOById(seasonId), HttpStatus.OK);
     }
 
+    @RequestMapping(value = "/{seasonId}", method = RequestMethod.PUT)
+    public ResponseEntity<?> updateGroup(@PathVariable Long seasonId, @RequestBody NewSeason newSeason) {
+        seasonService.updateSeason(seasonId, newSeason);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
     @RequestMapping(value = "/group/{groupId}", method = RequestMethod.GET)
     public ResponseEntity<List<SeasonDTO>> getByGroupId(@PathVariable Long groupId) {
         List<SeasonDTO> seasons = seasonService.getByGroupId(groupId);

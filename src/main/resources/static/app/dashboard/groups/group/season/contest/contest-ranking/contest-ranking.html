@@ -1,4 +1,7 @@
-<h1 class="page-header"><span ng-bind="ranking.contestDetails.name"></span> - ranking</h1>
+<h1 class="page-header">
+    <span ng-bind="ranking.contestDetails.name"></span> - Ranking<br>
+    <small ng-bind="ranking.contestDetails.description"></small>
+</h1>
 
 <h2 class="sub-header clickable" ng-click="ranking.collapse(ranking.scores)">
     <i class="pull-left glyphicon"
@@ -23,9 +26,13 @@
             <td>
                 <div ng-bind="$index + 1" class="label" ng-class="ranking.getPlaceClass($index + 1)"></div>
             </td>
-            <td ng-bind="score.username"></td>
             <td>
-                <a class="btn btn-default btn-xs" ng-href="data:image/png;base64,{{score.imageContent}}">show</a>
+                <strong ng-bind="score.username"></strong>
+            </td>
+            <td>
+                <a class="btn btn-default btn-xs" ng-href="data:image/png;base64,{{score.imageContent}}">
+                    show&nbsp;<i class="glyphicon glyphicon-eye-open"></i>
+                </a>
                 <!--<img class="img-circle" ng-src="data:image/JPEG;base64,{{score.imageContent}}" width="50px">-->
             </td>
             <td><span class="label label-info" ng-bind="score.votes"></span></td>

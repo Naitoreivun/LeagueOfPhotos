@@ -59,4 +59,10 @@ public class ContestService {
                 .sorted(Comparator.comparing(Score::getVotes).reversed())
                 .collect(Collectors.toList());
     }
+
+    public void updateContest(Long contestId, NewContest newContest) {
+        Contest contest = getContestById(contestId);
+        contest.setNewDetails(newContest);
+        contestDAO.save(contest);
+    }
 }

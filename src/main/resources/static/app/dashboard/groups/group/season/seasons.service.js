@@ -12,7 +12,8 @@ function seasonsService(Restangular) {
     var service = {
         add: add,
         getByGroupId: getByGroupId,
-        getById: getById
+        getById: getById,
+        updateSeason: updateSeason
     };
 
     return service;
@@ -49,5 +50,10 @@ function seasonsService(Restangular) {
 
     function getByIdComplete(response) {
         return response.plain();
+    }
+    
+    function updateSeason(seasonId, newSeason) {
+        return seasonsObject
+            .customPUT(newSeason, seasonId);
     }
 }

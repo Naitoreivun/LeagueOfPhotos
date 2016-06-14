@@ -3,14 +3,15 @@ angular
     .module('leagueOfPhotos')
     .controller('NewGroupController', NewGroupController);
 
-NewGroupController.$inject = ['$uibModalInstance'];
+NewGroupController.$inject = ['$uibModalInstance', 'titlePrefix', 'oldGroup'];
 
-function NewGroupController($uibModalInstance) {
+function NewGroupController($uibModalInstance, titlePrefix, oldGroup) {
     var group = this;
 
     group.cancel = cancel;
-    group.create = create;
+    group.save = save;
     group.new = {};
+    group.titlePrefix = titlePrefix;
     group.types = [];
 
     activate();
@@ -28,18 +29,27 @@ function NewGroupController($uibModalInstance) {
                 value: 'PRIVATE'
             }
         ];
-        group.new = {
-            name: '',
-            description: '',
-            type: 'PUBLIC'
-        };
+        if(oldGroup) {
+            group.new = {
+                name: oldGroup.name,
+                description: oldGroup.description,
+                type: oldGroup.type
+            };
+        }
+        else {
+            group.new = {
+                name: '',
+                description: '',
+                type: 'PUBLIC'
+            };
+        }
     }
 
     function cancel() {
         $uibModalInstance.dismiss('cancel');
     }
 
-    function create() {
+    function save() {
         var newGroup = {
             name: group.new.name,
             description: group.new.description,

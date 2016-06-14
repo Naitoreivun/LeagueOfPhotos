@@ -1,5 +1,5 @@
 <div ng-if="contest.details.contestStatus === 'AVAILABLE_SOON'">
-    Contest start at {{contest.details.startDate | amDateFormat:'DD-MM-YYYY &nbsp;(HH:mm)'}}
+    <h1>Contest start at {{contest.details.startDate | amDateFormat:'DD-MM-YYYY &nbsp;(HH:mm)'}}</h1>
 </div>
 <div ng-if="contest.details.contestStatus === 'UPLOADING'">
     <lop-uploading-phase contest-details="contest.details"></lop-uploading-phase>

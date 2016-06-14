@@ -94,4 +94,11 @@ public class GroupService {
         Group group = add(newGroup);
         addUserToGroupWithStatus(userId, group, MemberStatus.ADMIN);
     }
+
+    public void updateGroup(Long groupId, NewGroup newGroup) {
+        Group group = getGroupById(groupId);
+        GroupType groupType = groupTypeService.getByType(newGroup.getType());
+        group.setNewDetails(newGroup.getName(), newGroup.getDescription(), groupType);
+        groupDAO.save(group);
+    }
 }

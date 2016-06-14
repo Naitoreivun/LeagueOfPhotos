@@ -1,17 +1,17 @@
 <div class="modal-header">
-    <h3 class="modal-title">Create new group:</h3>
+    <h3 class="modal-title"><span ng-bind="group.titlePrefix"></span> group:</h3>
 </div>
-<form name="form" ng-submit="form.$valid && group.create()" novalidate>
+<form name="form" ng-submit="form.$valid && group.save()" novalidate>
     <div class="modal-body">
         <div class="form-group" ng-class="{'has-success': !form.name.$invalid,
         'has-error': form.name.$invalid && form.name.$touched}">
-            <label for="newSeasonName">Name</label>
-            <input type="text" class="form-control" id="newSeasonName"
+            <label for="newGroupName">Name</label>
+            <input type="text" class="form-control" id="newGroupName"
                    ng-model="group.new.name" required name="name">
         </div>
         <div class="form-group">
-            <label for="newSeasonDescription">Description</label>
-            <textarea class="form-control" id="newSeasonDescription" ng-model="group.new.description"></textarea>
+            <label for="newGroupDescription">Description</label>
+            <textarea class="form-control" id="newGroupDescription" ng-model="group.new.description"></textarea>
         </div>
         <div class="radio" ng-repeat="type in group.types" required>
             <label class="active">
@@ -21,8 +21,7 @@
         </div>
     </div>
     <div class="modal-footer">
-        <button class="btn btn-primary" type="submit" ng-disabled="!form.$valid">Create
-        </button>
+        <button class="btn btn-primary" type="submit" ng-disabled="!form.$valid">Save</button>
         <button class="btn btn-warning" type="button" ng-click="group.cancel()">Cancel</button>
     </div>
 </form>

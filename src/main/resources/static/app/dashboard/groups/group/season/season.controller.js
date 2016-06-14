@@ -22,6 +22,8 @@ function SeasonController($stateParams, $uibModal, seasonsService, contestsServi
     };
     season.createContest = createContest;
     season.details = {};
+    season.editSeason = editSeason;
+    season.editContest = editContest;
     season.getDetails = getDetails;
     season.getContests = getContests;
     season.getContestStatusClass = getContestStatusClass;
@@ -43,12 +45,54 @@ function SeasonController($stateParams, $uibModal, seasonsService, contestsServi
         var newSeasonModal = $uibModal.open({
             templateUrl: "app/dashboard/groups/group/season/contest/new-contest.html",
             controller: NewContestController,
-            controllerAs: 'contest'
+            controllerAs: 'contest',
+            resolve: {
+                titlePrefix: function () {
+                    return 'Create new';
+                },
+                oldContest: null
+            }
         });
 
         newSeasonModal.result.then(function (newContest) {
             newContest.seasonId = season.id;
             contestsService.add(newContest).then(getContests);
+        });
+    }
+
+    function editSeason() {
+        var newSeasonModal = $uibModal.open({
+            templateUrl: "app/dashboard/groups/group/season/new-season.html",
+            controller: NewSeasonController,
+            controllerAs: 'season',
+            resolve: {
+                titlePrefix: function () {
+                    return 'Edit';
+                },
+                oldSeason: season.details
+            }
+        });
+
+        newSeasonModal.result.then(function (newSeason) {
+            seasonsService.updateSeason(season.details.id, newSeason).then(getDetails);
+        });
+    }
+
+    function editContest(oldContest) {
+        var newSeasonModal = $uibModal.open({
+            templateUrl: "app/dashboard/groups/group/season/contest/new-contest.html",
+            controller: NewContestController,
+            controllerAs: 'contest',
+            resolve: {
+                titlePrefix: function () {
+                    return 'Edit';
+                },
+                oldContest: oldContest
+            }
+        });
+
+        newSeasonModal.result.then(function (newContest) {
+            contestsService.updateContest(oldContest.id, newContest).then(getContests);
         });
     }
 

@@ -1,4 +1,7 @@
-<h1 class="page-header">{{up.contestDetails.name}} - Uploading Phase</h1>
+<h1 class="page-header">
+    <span ng-bind="up.contestDetails.name"></span> - Uploading Phase<br>
+    <small ng-bind="up.contestDetails.description"></small>
+</h1>
 <div class="row">
     <div ng-if="up.image !== null" class="col-md-3 col-sm-3">
         <figure>

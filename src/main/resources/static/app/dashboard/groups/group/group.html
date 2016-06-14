@@ -1,8 +1,15 @@
-<h1 class="page-header" ng-bind="group.details.name"></h1>
-
+<h1 class="page-header">
+    <span ng-bind="group.details.name"></span><br>
+    <small ng-bind="group.details.description"></small>
+</h1>
 <button class="btn btn-success" ng-click="group.createSeason()">
     Create new season&nbsp;
-    <i class="glyphicon glyphicon glyphicon-plus"></i>
+    <i class="glyphicon glyphicon-plus"></i>
+</button>
+
+<button class="btn btn-warning" ng-click="group.editGroup()">
+    Edit group&nbsp;
+    <i class="glyphicon glyphicon-edit"></i>
 </button>
 
 <h2 class="sub-header clickable" ng-click="group.collapse(group.seasons)">
@@ -26,8 +33,10 @@
         <tbody>
         <tr ng-repeat="season in group.seasons.array">
             <td>
-                <a ng-bind="season.name"
+                <strong ng-bind="season.name"></strong>&nbsp;
+                <a class="btn btn-default btn-xs"
                    ui-sref="dashboard.season({groupId: group.details.id, seasonId: season.id})">
+                    <i class="glyphicon glyphicon-eye-open"></i>
                 </a>
             </td>
             <td ng-bind="season.startDate | amDateFormat:'DD-MM-YYYY &nbsp;(HH:mm)'"></td>
@@ -59,7 +68,9 @@
         </thead>
         <tbody>
         <tr ng-repeat="user in group.users.array">
-            <td ng-bind="user.username"></td>
+            <td>
+                <strong ng-bind="user.username"></strong>
+            </td>
             <td><span class="label" ng-class="group.getMemberStatusClass(user)" ng-bind="user.memberStatus"></span></td>
         </tr>
         </tbody>

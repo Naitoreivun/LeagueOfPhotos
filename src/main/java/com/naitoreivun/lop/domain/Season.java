@@ -36,11 +36,8 @@ public class Season {
     }
 
     public Season(String name, Group group, String description, DateTime startDate, DateTime finishDate) {
-        this.name = name;
         this.group = group;
-        this.description = description;
-        this.startDate = startDate;
-        this.finishDate = finishDate;
+        setDetails(name, description, startDate, finishDate);
         this.creationDate = DateTime.now();
     }
 
@@ -87,5 +84,18 @@ public class Season {
                 "name='" + name + '\'' +
                 ", id=" + id +
                 '}';
+    }
+
+
+    public void setNewDetails(NewSeason newSeason) {
+        setDetails(newSeason.getName(), newSeason.getDescription(),
+                newSeason.getStartDate(), newSeason.getFinishDate());
+    }
+
+    private void setDetails(String name, String description, DateTime startDate, DateTime finishDate) {
+        this.name = name;
+        this.description = description;
+        this.startDate = startDate;
+        this.finishDate = finishDate;
     }
 }

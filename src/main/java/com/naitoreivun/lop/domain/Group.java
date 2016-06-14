@@ -39,9 +39,7 @@ public class Group {
     }
 
     public Group(String name, GroupType groupType, String description) {
-        this.name = name;
-        this.groupType = groupType;
-        this.description = description;
+        setNewDetails(name, description, groupType);
         this.creationDate = DateTime.now();
         this.usersGroups = new ArrayList<>();
     }
@@ -80,5 +78,11 @@ public class Group {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 '}';
+    }
+
+    public void setNewDetails(String name, String description, GroupType groupType) {
+        this.name = name;
+        this.description = description;
+        this.groupType = groupType;
     }
 }

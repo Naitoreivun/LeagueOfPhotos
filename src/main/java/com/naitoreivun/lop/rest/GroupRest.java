@@ -45,6 +45,12 @@ public class GroupRest {
         return new ResponseEntity<>(groupService.getGroupDTOById(groupId), HttpStatus.OK);
     }
 
+    @RequestMapping(value = "/{groupId}", method = RequestMethod.PUT)
+    public ResponseEntity<?> updateGroup(@PathVariable Long groupId, @RequestBody NewGroup newGroup) {
+        groupService.updateGroup(groupId, newGroup);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
     @RequestMapping(value = "/{groupId}/users/current", method = RequestMethod.POST)
     public ResponseEntity<?> addCurrentUserToGroup(@PathVariable Long groupId,
                                             final HttpServletRequest request) throws ServletException {
