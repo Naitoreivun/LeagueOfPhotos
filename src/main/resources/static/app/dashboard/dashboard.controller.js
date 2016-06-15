@@ -3,9 +3,9 @@ angular
     .module('leagueOfPhotos')
     .controller('DashboardController', DashboardController);
 
-DashboardController.$inject = ['auth', '$state'];
+DashboardController.$inject = ['auth', '$state', 'userProfile'];
 
-function DashboardController(auth, $state) {
+function DashboardController(auth, $state, userProfile) {
     var vm = this;
 
     vm.test = function () {
@@ -14,24 +14,26 @@ function DashboardController(auth, $state) {
     vm.text = 'DASHBOARD';
     vm.logout = logout;
     vm.getActiveClass = getActiveClass;
-    
+
     activate();
-    
+
     function activate() {
-        if($state.current.name === 'dashboard') {
+        if ($state.current.name === 'dashboard') {
             $state.go('dashboard.overview');
         }
     }
-    
+
     function getActiveClass(stateName) {
-        if($state.current.name === stateName) {
+        if ($state.current.name === stateName) {
             return 'active';
         }
         return '';
     }
-    
+
     function logout() {
         auth.logout();
-        $state.go('home');
+        userProfile
+            .refresh()
+            .then($state.go('home'));
     }
 }

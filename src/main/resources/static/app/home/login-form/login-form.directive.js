@@ -9,7 +9,8 @@ function lopLoginForm() {
         templateUrl: "app/home/login-form/login-form.html",
         scope: {
             formClass: '@',
-            btnSize: '@'
+            btnSize: '@',
+            userProfile: '='
         },
         controller: LoginFormController,
         controllerAs: 'vm',
@@ -43,15 +44,16 @@ function LoginFormController(auth, $state) {
 
     function logIn() {
         auth.login(vm.loginForm)
-            .then(function (value) {
-                if (value) {
+            .then(
+                function () {
                     vm.error = false;
                     clear();
-                    $state.go('dashboard');
-                }
-                else {
+                    vm.userProfile
+                        .refresh()
+                        .then($state.go('dashboard'));
+                },
+                function (errors) {
                     vm.error = true;
-                }
-            });
+                });
     }
 }

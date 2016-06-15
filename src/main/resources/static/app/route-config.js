@@ -11,12 +11,28 @@ function routeConfig($stateProvider, $urlRouterProvider) {
         .state('home', {
             url: "/",
             templateUrl: "app/home/home.html",
-            controller: 'HomeController as vm'
+            controller: 'HomeController as vm',
+            resolve: {
+                accessStatus: ["access", function (access) {
+                    return access.isAnonymous();
+                }],
+                userProfile: "userProfile"
+            }
         })
         .state('dashboard', {
             url: "/dashboard",
             templateUrl: "app/dashboard/dashboard.html",
-            controller: 'DashboardController as vm'
+            controller: 'DashboardController as vm',
+            resolve: {
+                accessStatus: ["access", function (access) {
+                        return access.isAuthenticated();
+                    }],
+                userProfile: "userProfile"
+            }
+        })
+        .state('dashboard.forbidden', {
+            url: "/forbidden",
+            templateUrl: "app/dashboard/forbidden/forbidden.html"
         })
         .state('dashboard.overview', {
             url: "/overview",

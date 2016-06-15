@@ -2,14 +2,13 @@ package com.naitoreivun.lop.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.naitoreivun.lop.domain.dto.SignupForm;
+import org.hibernate.mapping.Array;
 import org.hibernate.validator.constraints.Email;
 import org.joda.time.DateTime;
 
 import javax.persistence.*;
+import java.util.*;
 import java.util.ArrayList;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 @Entity(name = "users")
@@ -102,13 +101,12 @@ public class User {
     }
 
     public List<String> getRoles() {
-        List<String> roles = new ArrayList<>();
         if (AppRole.USER.equals(appRole.getRole())) {
-            roles.add(AppRole.USER);
+            return Collections.singletonList(AppRole.USER);
         } else if (AppRole.ADMIN.equals(appRole.getRole())) {
-            roles.add(AppRole.USER);
-            roles.add(AppRole.ADMIN);
+            return Arrays.asList(AppRole.USER, AppRole.ADMIN);
         }
-        return roles;
+        return Collections.emptyList();
     }
+
 }

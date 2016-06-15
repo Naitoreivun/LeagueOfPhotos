@@ -8,7 +8,6 @@ SeasonController.$inject = ['$stateParams', '$uibModal', 'seasonsService', 'cont
 function SeasonController($stateParams, $uibModal, seasonsService, contestsService, groupsService) {
     var season = this;
 
-
     season.collapse = collapse;
     season.contests = {
         array: [],

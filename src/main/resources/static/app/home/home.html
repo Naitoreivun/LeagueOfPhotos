@@ -12,7 +12,7 @@
                 <a class="navbar-brand" href="#">League of Photos</a>
             </div>
             <div ng-if="!vm.afterSignUp" id="navbar" class="navbar-collapse collapse">
-                <lop-login-form form-class="navbar-form navbar-right"></lop-login-form>
+                <lop-login-form form-class="navbar-form navbar-right"  user-profile="vm.userProfile"></lop-login-form>
             </div><!--/.navbar-collapse -->
         </div>
     </nav>
@@ -29,7 +29,7 @@
                 <div ng-if="vm.afterSignUp">
                     <h1>Registration successful</h1>
                     <p>Sign in below</p>
-                    <lop-login-form btn-size="btn-lg"></lop-login-form>
+                    <lop-login-form btn-size="btn-lg" user-profile="vm.userProfile"></lop-login-form>
                 </div>
             </div>
         </div>

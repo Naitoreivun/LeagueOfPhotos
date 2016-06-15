@@ -3,9 +3,9 @@ angular
     .module('leagueOfPhotos')
     .controller('HomeController', HomeController);
 
-HomeController.$inject = ['$interval'];
+HomeController.$inject = ['$interval', 'userProfile'];
 
-function HomeController($interval) {
+function HomeController($interval, userProfile) {
     var vm = this;
 
     vm.afterSignUp = false;
@@ -14,6 +14,7 @@ function HomeController($interval) {
     vm.changeBackground = changeBackground;
     vm.intervalPromise = null;
     vm.stop = stop;
+    vm.userProfile = userProfile;
 
     activate();
 
