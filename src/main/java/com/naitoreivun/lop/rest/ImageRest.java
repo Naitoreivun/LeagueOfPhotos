@@ -1,9 +1,11 @@
 package com.naitoreivun.lop.rest;
 
+import com.naitoreivun.lop.domain.Contest;
 import com.naitoreivun.lop.domain.Image;
+import com.naitoreivun.lop.domain.MemberStatus;
 import com.naitoreivun.lop.domain.VotableImage;
-import com.naitoreivun.lop.domain.dto.RatedImage;
 import com.naitoreivun.lop.security.ClaimGetter;
+import com.naitoreivun.lop.security.ForGroupMember;
 import com.naitoreivun.lop.service.ImageService;
 import com.naitoreivun.lop.service.VoteService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,11 +28,12 @@ public class ImageRest {
     @Autowired
     private VoteService voteService;
 
+    @ForGroupMember(requestNr = 0, idNr = 1, idClass = Contest.class)
     @RequestMapping(value = "", method = RequestMethod.POST)
-    public ResponseEntity<?> add(@RequestBody MultipartFile file,
-                                 @RequestParam("title") String title,
+    public ResponseEntity<?> add(final HttpServletRequest request,
                                  @RequestParam("contestId") Long contestId,
-                                 final HttpServletRequest request) throws ServletException {
+                                 @RequestParam("title") String title,
+                                 @RequestBody MultipartFile file) throws ServletException {
         HttpStatus status;
         if (imageService.add(file, title, contestId, ClaimGetter.getCurrentUserId(request))) {
             status = HttpStatus.CREATED;
@@ -40,6 +43,7 @@ public class ImageRest {
         return new ResponseEntity<>(status);
     }
 
+    @ForGroupMember(requestNr = 0, idNr = 1, idClass = Contest.class, minStatus = MemberStatus.MODERATOR)
     @RequestMapping(value = "/contest/{contestId}/user/{userId}", method = RequestMethod.GET)
     public ResponseEntity<Image> getByContestIdAndUserId(@PathVariable Long contestId,
                                                          @PathVariable Long userId) {
@@ -47,26 +51,32 @@ public class ImageRest {
         return new ResponseEntity<>(image, HttpStatus.OK);
     }
 
+    @ForGroupMember(requestNr = 0, idNr = 1, idClass = Contest.class)
     @RequestMapping(value = "/contest/{contestId}/currentUser", method = RequestMethod.GET)
-    public ResponseEntity<Image> getByContestIdAndUserId(@PathVariable Long contestId,
-                                                         final HttpServletRequest request) throws ServletException {
+    public ResponseEntity<Image> getByContestIdAndCurrentUser(final HttpServletRequest request,
+                                                              @PathVariable Long contestId) throws ServletException {
         final Long currentUserId = ClaimGetter.getCurrentUserId(request);
         Image image = imageService.getByContestIdAndUserId(contestId, currentUserId);
         return new ResponseEntity<>(image, HttpStatus.OK);
     }
 
+    @ForGroupMember(requestNr = 0, idNr = 1, idClass = Contest.class)
     @RequestMapping(value = "/contest/{contestId}/votable", method = RequestMethod.GET)
-    public ResponseEntity<List<VotableImage>> getVotableImagesByContestId(@PathVariable Long contestId,
-                                                                          final HttpServletRequest request) throws ServletException {
+    public ResponseEntity<List<VotableImage>> getVotableImagesByContestId(final HttpServletRequest request,
+                                                                          @PathVariable Long contestId) throws ServletException {
         final Long currentUserId = ClaimGetter.getCurrentUserId(request);
         List<VotableImage> images = imageService.getVotableImagesByContestId(contestId, currentUserId);
         return new ResponseEntity<>(images, HttpStatus.OK);
     }
 
+    @ForGroupMember(requestNr = 0, idNr = 1, idClass = Image.class)
     @RequestMapping(value = "/vote", method = RequestMethod.POST)
-    public ResponseEntity<?> vote(@RequestBody RatedImage ratedImage, final HttpServletRequest request) throws ServletException {
+    public ResponseEntity<?> vote(final HttpServletRequest request,
+                                  @RequestParam Long imageId,
+                                  @RequestParam Short rating) throws
+            ServletException {
         final Long currentUserId = ClaimGetter.getCurrentUserId(request);
-        voteService.add(currentUserId, ratedImage.getId(), ratedImage.getRating());
+        voteService.add(currentUserId, imageId, rating);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }

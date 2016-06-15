@@ -18,8 +18,8 @@ function seasonsService(Restangular) {
 
     return service;
 
-    function add(newSeason) {
-        return seasonsObject.post(newSeason);
+    function add(newSeason, groupId) {
+        return seasonsObject.post(newSeason, {groupId: groupId});
     }
 
     function dummyErrorsHandler(errors) {

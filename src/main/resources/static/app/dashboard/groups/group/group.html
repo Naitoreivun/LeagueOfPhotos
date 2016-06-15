@@ -2,15 +2,17 @@
     <span ng-bind="group.details.name"></span><br>
     <small ng-bind="group.details.description"></small>
 </h1>
-<button class="btn btn-success" ng-click="group.createSeason()">
-    Create new season&nbsp;
-    <i class="glyphicon glyphicon-plus"></i>
-</button>
+<div ng-if="group.isCurrentUserGroupModerator">
+    <button class="btn btn-success" ng-click="group.createSeason()">
+        Create new season&nbsp;
+        <i class="glyphicon glyphicon-plus"></i>
+    </button>
 
-<button class="btn btn-warning" ng-click="group.editGroup()">
-    Edit group&nbsp;
-    <i class="glyphicon glyphicon-edit"></i>
-</button>
+    <button class="btn btn-warning" ng-click="group.editGroup()">
+        Edit group&nbsp;
+        <i class="glyphicon glyphicon-edit"></i>
+    </button>
+</div>
 
 <h2 class="sub-header clickable" ng-click="group.collapse(group.seasons)">
     <i class="pull-left glyphicon"

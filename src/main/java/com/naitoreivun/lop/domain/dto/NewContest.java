@@ -3,7 +3,6 @@ package com.naitoreivun.lop.domain.dto;
 import org.joda.time.DateTime;
 
 public class NewContest {
-    private Long seasonId;
     private String name;
     private String description;
     private DateTime startDate;
@@ -13,17 +12,13 @@ public class NewContest {
     public NewContest() {
     }
 
-    public NewContest(Long seasonId, String name, String description, DateTime startDate, DateTime finishUploadingDate, DateTime finishVotingDate) {
-        this.seasonId = seasonId;
+    public NewContest(String name, String description, DateTime startDate,
+                      DateTime finishUploadingDate, DateTime finishVotingDate) {
         this.name = name;
         this.description = description;
         this.startDate = startDate;
         this.finishUploadingDate = finishUploadingDate;
         this.finishVotingDate = finishVotingDate;
-    }
-
-    public Long getSeasonId() {
-        return seasonId;
     }
 
     public String getName() {

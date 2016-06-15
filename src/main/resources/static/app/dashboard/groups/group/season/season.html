@@ -2,15 +2,17 @@
     <span ng-bind="season.details.name"></span><br>
     <small ng-bind="season.details.description"></small>
 </h1>
-<button class="btn btn-success" ng-click="season.createContest()">
-    Create new contest&nbsp;
-    <i class="glyphicon glyphicon glyphicon-plus"></i>
-</button>
+<div ng-if="season.isCurrentUserGroupModerator">
+    <button class="btn btn-success" ng-click="season.createContest()">
+        Create new contest&nbsp;
+        <i class="glyphicon glyphicon glyphicon-plus"></i>
+    </button>
 
-<button class="btn btn-warning" ng-click="season.editSeason()">
-    Edit season&nbsp;
-    <i class="glyphicon glyphicon-edit"></i>
-</button>
+    <button class="btn btn-warning" ng-click="season.editSeason()">
+        Edit season&nbsp;
+        <i class="glyphicon glyphicon-edit"></i>
+    </button>
+</div>
 
 <h2 class="sub-header clickable" ng-click="season.collapse(season.contests)">
     <i class="pull-left glyphicon"
@@ -29,7 +31,7 @@
             <th>finish uploading date</th>
             <th>finish voting date</th>
             <th>status</th>
-            <th>actions</th>
+            <th ng-if="season.isCurrentUserGroupModerator">actions</th>
         </tr>
         </thead>
         <tbody>
@@ -48,7 +50,7 @@
                 <span class="label" ng-class="season.getContestStatusClass(contest.contestStatus)"
                       ng-bind="contest.contestStatus"></span>
             </td>
-            <td>
+            <td ng-if="season.isCurrentUserGroupModerator">
                 <button ng-if="contest.contestStatus !== 'CLOSED'"
                         class="btn btn-warning btn-xs" ng-click="season.editContest(contest)">
                     Edit&nbsp;

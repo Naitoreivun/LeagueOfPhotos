@@ -1,14 +1,17 @@
 package com.naitoreivun.lop.rest;
 
+import com.naitoreivun.lop.domain.Group;
+import com.naitoreivun.lop.domain.MemberStatus;
 import com.naitoreivun.lop.domain.dto.GroupDTO;
 import com.naitoreivun.lop.domain.dto.NewGroup;
 import com.naitoreivun.lop.domain.dto.UserInGroup;
 import com.naitoreivun.lop.security.ClaimGetter;
+import com.naitoreivun.lop.security.ForGroupMember;
 import com.naitoreivun.lop.service.GroupService;
 import com.naitoreivun.lop.service.UserService;
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -33,46 +36,60 @@ public class GroupRest {
     }
 
     @RequestMapping(value = "", method = RequestMethod.POST)
-    public ResponseEntity<?> create(@RequestBody NewGroup newGroup,
-                                 final HttpServletRequest request) throws ServletException {
+    public ResponseEntity<?> create(final HttpServletRequest request,
+                                    @RequestBody NewGroup newGroup) throws ServletException {
         Long currentUserId = ClaimGetter.getCurrentUserId(request);
         groupService.createGroupByUser(newGroup, currentUserId);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
-    @RequestMapping(value = "/{groupId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<GroupDTO> getById(@PathVariable Long groupId) {
+    @ForGroupMember(requestNr = 0, idNr = 1, idClass = Group.class)
+    @RequestMapping(value = "/{groupId}", method = RequestMethod.GET)
+    public ResponseEntity<GroupDTO> getById(final HttpServletRequest request, @PathVariable Long groupId) {
         return new ResponseEntity<>(groupService.getGroupDTOById(groupId), HttpStatus.OK);
     }
 
+    @ForGroupMember(requestNr = 0, idNr = 1, idClass = Group.class, minStatus = MemberStatus.MODERATOR)
     @RequestMapping(value = "/{groupId}", method = RequestMethod.PUT)
-    public ResponseEntity<?> updateGroup(@PathVariable Long groupId, @RequestBody NewGroup newGroup) {
+    public ResponseEntity<?> updateGroup(final HttpServletRequest request,
+                                         @PathVariable Long groupId, @RequestBody NewGroup newGroup) {
         groupService.updateGroup(groupId, newGroup);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @RequestMapping(value = "/{groupId}/users/current", method = RequestMethod.POST)
-    public ResponseEntity<?> addCurrentUserToGroup(@PathVariable Long groupId,
-                                            final HttpServletRequest request) throws ServletException {
+    public ResponseEntity<?> addCurrentUserToGroup(final HttpServletRequest request,
+                                                   @PathVariable Long groupId) throws ServletException {
         Long currentUserId = ClaimGetter.getCurrentUserId(request);
         groupService.addUserToGroup(currentUserId, groupId);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @RequestMapping(value = "/{groupId}/users/current", method = RequestMethod.DELETE)
-    public ResponseEntity<?> removeCurrentUserFromGroup(@PathVariable Long groupId,
-                                            final HttpServletRequest request) throws ServletException {
+    public ResponseEntity<?> removeCurrentUserFromGroup(final HttpServletRequest request,
+                                                        @PathVariable Long groupId) throws ServletException {
         Long currentUserId = ClaimGetter.getCurrentUserId(request);
         groupService.removeUserFromGroup(currentUserId, groupId);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
+    @ForGroupMember(requestNr = 0, idNr = 1, idClass = Group.class)
+    @RequestMapping(value = "/{groupId}/users/current/status/moderator", method = RequestMethod.GET)
+    public ResponseEntity<Boolean> isCurrentUserGroupModerator(final HttpServletRequest request,
+                                                               @PathVariable Long groupId) throws ServletException {
+        Long currentUserId = ClaimGetter.getCurrentUserId(request);
+        boolean result = groupService.isMemberOfGroupWithMinStatus(currentUserId, groupId, MemberStatus.MODERATOR);
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
+    @ForGroupMember(requestNr = 0, idNr = 1, idClass = Group.class)
     @RequestMapping(value = "/{groupId}/users", method = RequestMethod.GET)
-    public ResponseEntity<List<UserInGroup>> getAcceptedUsersByGroupId(@PathVariable Long groupId) {
+    public ResponseEntity<List<UserInGroup>> getAcceptedUsersByGroupId(final HttpServletRequest request,
+                                                                       @PathVariable Long groupId) {
         return new ResponseEntity<>(userService.getAcceptedUsersByGroupId(groupId), HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/user/{userId}", method = RequestMethod.GET)
+    @RequestMapping(value = "/user/{userId}", method = RequestMethod.GET)  // TODO: only for admin_role?
     public ResponseEntity<List<GroupDTO>> getByUserId(@PathVariable Long userId) {
         return new ResponseEntity<>(groupService.getByUserId(userId), HttpStatus.OK);
     }
@@ -84,7 +101,7 @@ public class GroupRest {
     }
 
     @RequestMapping(value = "/withoutuser/{userId}", method = RequestMethod.GET)
-    public ResponseEntity<List<GroupDTO>> getWithoutUser(@PathVariable Long userId) {
+    public ResponseEntity<List<GroupDTO>> getWithoutUser(@PathVariable Long userId) { // TODO: only for admin_role?
         return new ResponseEntity<>(groupService.getWithoutUser(userId), HttpStatus.OK);
     }
 

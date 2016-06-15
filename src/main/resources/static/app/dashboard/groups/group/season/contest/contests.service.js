@@ -19,8 +19,8 @@ function contestsService(Restangular) {
 
     return service;
 
-    function add(newContest) {
-        return contestsObject.post(newContest);
+    function add(newContest, seasonId) {
+        return contestsObject.post(newContest, {seasonId: seasonId});
     }
 
     function dummyErrorsHandler(errors) {

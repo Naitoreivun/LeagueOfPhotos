@@ -38,8 +38,8 @@ public class ContestService {
                 .collect(Collectors.toList());
     }
 
-    public void add(NewContest newContest) {
-        Season season = seasonService.getSeasonById(newContest.getSeasonId());
+    public void add(NewContest newContest, Long seasonId) {
+        Season season = seasonService.getSeasonById(seasonId);
         contestDAO.save(new Contest(newContest, season));
     }
 

@@ -3,9 +3,9 @@ angular
     .module('leagueOfPhotos')
     .controller('SeasonController', SeasonController);
 
-SeasonController.$inject = ['$stateParams', '$uibModal', 'seasonsService', 'contestsService'];
+SeasonController.$inject = ['$stateParams', '$uibModal', 'seasonsService', 'contestsService', 'groupsService'];
 
-function SeasonController($stateParams, $uibModal, seasonsService, contestsService) {
+function SeasonController($stateParams, $uibModal, seasonsService, contestsService, groupsService) {
     var season = this;
 
 
@@ -29,12 +29,14 @@ function SeasonController($stateParams, $uibModal, seasonsService, contestsServi
     season.getContestStatusClass = getContestStatusClass;
     season.groupId = $stateParams.groupId;
     season.id = $stateParams.seasonId;
+    season.isCurrentUserGroupModerator = false;
 
     activate();
 
     function activate() {
         getDetails();
         getContests();
+        isCurrentUserGroupModerator();
     }
 
     function collapse(object) {
@@ -55,8 +57,7 @@ function SeasonController($stateParams, $uibModal, seasonsService, contestsServi
         });
 
         newSeasonModal.result.then(function (newContest) {
-            newContest.seasonId = season.id;
-            contestsService.add(newContest).then(getContests);
+            contestsService.add(newContest, season.id).then(getContests);
         });
     }
 
@@ -99,7 +100,7 @@ function SeasonController($stateParams, $uibModal, seasonsService, contestsServi
     function getContests() {
         season.contests.array = [];
         contestsService
-            .getBySeasonId($stateParams.seasonId) //todo zobacz czy da sie season.id
+            .getBySeasonId(season.id)
             .then(
                 function (data) {
                     season.contests.array = data;
@@ -120,6 +121,16 @@ function SeasonController($stateParams, $uibModal, seasonsService, contestsServi
                 },
                 function (errors) {
                     console.log('ERRORS:', errors);
+                }
+            );
+    }
+
+    function isCurrentUserGroupModerator() {
+        groupsService
+            .isCurrentUserGroupModerator(season.groupId)
+            .then(
+                function (data) {
+                    season.isCurrentUserGroupModerator = data;
                 }
             );
     }

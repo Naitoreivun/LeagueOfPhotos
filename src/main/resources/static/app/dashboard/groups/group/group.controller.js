@@ -17,6 +17,8 @@ function GroupController(groupsService, $stateParams, $uibModal, seasonsService,
     group.getSeasons = getSeasons;
     group.getSeasonStatusClass = getSeasonStatusClass;
     group.getUsers = getUsers;
+    group.id = $stateParams.id;
+    group.isCurrentUserGroupModerator = false;
     group.memberStatusClassMap = {
         ADMIN: "label-danger",
         MODERATOR: "label-warning",
@@ -42,6 +44,7 @@ function GroupController(groupsService, $stateParams, $uibModal, seasonsService,
         getDetails();
         getSeasons();
         getUsers();
+        isCurrentUserGroupModerator();
     }
 
     function collapse(object) {
@@ -62,8 +65,7 @@ function GroupController(groupsService, $stateParams, $uibModal, seasonsService,
         });
 
         newSeasonModal.result.then(function (newSeason) {
-            newSeason.groupId = group.details.id;
-            seasonsService.add(newSeason).then(getSeasons);
+            seasonsService.add(newSeason, group.id).then(getSeasons);
         });
     }
 
@@ -81,7 +83,7 @@ function GroupController(groupsService, $stateParams, $uibModal, seasonsService,
         });
 
         newGroupModal.result.then(function (newGroup) {
-            groupsService.updateGroup(group.details.id, newGroup).then(getDetails);
+            groupsService.updateGroup(group.id, newGroup).then(getDetails);
         });
     }
 
@@ -106,7 +108,7 @@ function GroupController(groupsService, $stateParams, $uibModal, seasonsService,
     function getSeasons() {
         group.seasons.array = [];
         seasonsService
-            .getByGroupId($stateParams.id)
+            .getByGroupId(group.id)
             .then(
                 function (data) {
                     group.seasons.array = data;
@@ -120,10 +122,20 @@ function GroupController(groupsService, $stateParams, $uibModal, seasonsService,
     function getUsers() {
         group.users.array = [];
         usersService
-            .getAcceptedUsersByGroupId($stateParams.id)
+            .getAcceptedUsersByGroupId(group.id)
             .then(
                 function (data) {
                     group.users.array = data;
                 });
+    }
+
+    function isCurrentUserGroupModerator() {
+        groupsService
+            .isCurrentUserGroupModerator(group.id)
+            .then(
+                function (data) {
+                    group.isCurrentUserGroupModerator = data;
+                }
+            );
     }
 }

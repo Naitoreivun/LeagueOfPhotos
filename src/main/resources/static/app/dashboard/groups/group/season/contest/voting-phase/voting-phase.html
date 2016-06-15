@@ -3,12 +3,16 @@
     <small ng-bind="vp.contestDetails.description"></small>
 </h1>
 <div class="row">
-    <div class="col-xs-12 col-sm-4 col-md-3 col-lg-2" ng-repeat="image in vp.images">
+    <div class="col-xs-12 col-sm-4 col-md-3 col-lg-2" ng-repeat="image in vp.images track by $index">
         <figure>
             <h3 ng-bind="image.title">Current image:</h3>
             <img class="img-rounded clickable" ng-src="data:image/JPEG;base64,{{image.content}}" width="100%"
                  ng-click="vp.enlargeImage($index)">
-            <figcaption><span ng-bind="image.rating"></span></figcaption>
+            <figcaption class="text-center rating-text">
+                <span ng-repeat="i in vp.range(image.rating) track by $index">
+                    <i class="glyphicon glyphicon-star"></i>
+                </span>
+            </figcaption>
         </figure>
     </div>
 </div>

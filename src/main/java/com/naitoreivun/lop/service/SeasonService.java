@@ -21,8 +21,8 @@ public class SeasonService {
     @Autowired
     private GroupService groupService;
 
-    public void add(NewSeason newSeason) {
-        Group group = groupService.getGroupById(newSeason.getGroupId());
+    public void add(NewSeason newSeason, Long groupId) {
+        Group group = groupService.getGroupById(groupId);
         seasonDAO.save(new Season(newSeason, group));
     }
 

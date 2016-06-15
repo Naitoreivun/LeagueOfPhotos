@@ -50,11 +50,11 @@ function imagesService(Restangular) {
 
     function vote(imageId, rating) {
         var ratedImage = {
-            id: imageId,
+            imageId: imageId,
             rating: rating
         };
         imagesObject
-            .customPOST(ratedImage, 'vote')
+            .customPOST({}, 'vote', ratedImage)
             .then(
                 function (response) {
                     console.log(response);

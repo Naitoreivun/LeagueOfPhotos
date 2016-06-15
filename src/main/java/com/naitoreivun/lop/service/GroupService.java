@@ -8,27 +8,72 @@ import com.naitoreivun.lop.domain.dto.NewGroup;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Service
 public class GroupService {
-
     @Autowired
     private GroupDAO groupDAO;
-
     @Autowired
     private UserService userService;
-
     @Autowired
     private UserGroupDAO userGroupDAO;
-
     @Autowired
     private MemberStatusService memberStatusService;
-
     @Autowired
     private GroupTypeService groupTypeService;
+    @Autowired
+    private SeasonService seasonService;
+    @Autowired
+    private ContestService contestService;
+    @Autowired
+    private ImageService imageService;
+
+    private Map<Class<?>, Function<Long, Group>> groupIdGetters = new HashMap<>();
+
+    {
+        groupIdGetters.put(Group.class, this::getGroupById);
+        groupIdGetters.put(Season.class, this::getGroupBySeasonId);
+        groupIdGetters.put(Contest.class, this::getGroupByContestId);
+        groupIdGetters.put(Image.class, this::getGroupByImageId);
+    }
+
+    public Group getGroupBySeasonId(Long seasonId) {
+        return seasonService.getSeasonById(seasonId).getGroup();
+    }
+
+
+    public Group getGroupByContestId(Long contestId) {
+        return contestService.getContestById(contestId).getSeason().getGroup();
+    }
+
+
+    public Group getGroupByImageId(Long imageId) {
+        return imageService.getById(imageId).getContest().getSeason().getGroup();
+    }
+
+    public boolean isMemberOfGroup(Long userId, Long id, Class<?> idClass) {
+        return isMemberOfGroupWithMinStatus(userId, id, idClass, MemberStatus.MEMBER);
+    }
+
+    public boolean isMemberOfGroupWithMinStatus(Long userId, Long id, Class<?> idClass, String minStatus) {
+        Long groupId = groupIdGetters.get(idClass).apply(id).getId();
+        final Optional<UserGroup> one = userGroupDAO.findByUserIdAndGroupId(userId, groupId);
+        if (one.isPresent()) {
+            return memberStatusService.hasMinStatus(one.get(), minStatus);
+        }
+        return false;
+    }
+
+    public boolean isMemberOfGroupWithMinStatus(Long userId, Long groupId, String minStatus) {
+        final Optional<UserGroup> one = userGroupDAO.findByUserIdAndGroupId(userId, groupId);
+        if (one.isPresent()) {
+            return memberStatusService.hasMinStatus(one.get(), minStatus);
+        }
+        return false;
+    }
 
     public List<GroupDTO> getAll() {
         return mapToGroupDTO(groupDAO.findAll());

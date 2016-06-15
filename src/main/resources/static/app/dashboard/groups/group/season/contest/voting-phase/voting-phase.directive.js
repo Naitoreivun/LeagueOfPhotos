@@ -27,6 +27,7 @@ function VotingPhaseController(imagesService, $uibModal) {
     vp.enlargeImage = enlargeImage;
     vp.images = [];
     vp.getVotableImages = getVotableImages;
+    vp.range = range;
 
     function activate() {
         getVotableImages();
@@ -59,6 +60,10 @@ function VotingPhaseController(imagesService, $uibModal) {
                     console.log(data);
                 }
             );
+    }
+    
+    function range(number) {
+        return new Array(number);
     }
 
 }

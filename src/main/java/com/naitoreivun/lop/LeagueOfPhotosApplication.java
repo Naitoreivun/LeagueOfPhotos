@@ -1,7 +1,5 @@
 package com.naitoreivun.lop;
 
-import com.naitoreivun.lop.dao.SeasonDAO;
-import com.naitoreivun.lop.domain.Image;
 import com.naitoreivun.lop.security.JwtFilter;
 import com.naitoreivun.lop.service.ImageService;
 import com.naitoreivun.lop.service.VoteService;
@@ -12,9 +10,11 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.embedded.FilterRegistrationBean;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
 
 @SpringBootApplication
 @EnableConfigurationProperties(MyProperties.class)
+@EnableAspectJAutoProxy
 public class LeagueOfPhotosApplication implements CommandLineRunner {
 
     @Autowired

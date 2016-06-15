@@ -16,6 +16,7 @@ function groupsService(Restangular) {
         getById: getById,
         getCurrentUserGroups: getCurrentUserGroups,
         getGroupsWithoutCurrentUser: getGroupsWithoutCurrentUser,
+        isCurrentUserGroupModerator: isCurrentUserGroupModerator,
         removeCurrentUserFromGroup: removeCurrentUserFromGroup,
         updateGroup: updateGroup
     };
@@ -75,13 +76,28 @@ function groupsService(Restangular) {
         return groups;
     }
 
+    function isCurrentUserGroupModerator(groupId) {
+        return groupsObject
+            .one('', groupId)
+            .one('users', 'current')
+            .customGET('status/moderator')
+            .then(
+                function (response) {
+                    return response ? true : false;
+                },
+                function (errors) {
+                    return false;
+                }
+            )
+    }
+
     function removeCurrentUserFromGroup(groupId) {
         return groupsObject
             .one('', groupId)
             .one('users', 'current')
             .remove();
     }
-    
+
     function updateGroup(groupId, newGroup) {
         return groupsObject
             .customPUT(newGroup, groupId);

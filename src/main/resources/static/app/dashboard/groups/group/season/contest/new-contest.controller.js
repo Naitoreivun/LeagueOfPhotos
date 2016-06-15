@@ -64,7 +64,6 @@ function NewContestController($uibModalInstance, titlePrefix, oldContest) {
 
     function save() {
         var newContest = {
-            seasonId: null,
             name: contest.new.name,
             description: contest.new.description,
             startDate: contest.new.startDate,
