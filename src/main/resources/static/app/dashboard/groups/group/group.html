@@ -12,6 +12,12 @@
         Edit group&nbsp;
         <i class="glyphicon glyphicon-edit"></i>
     </button>
+
+    <button ng-if="group.isCurrentUserGroupAdmin"
+            class="btn btn-danger" ng-click="group.removeGroup()">
+        Delete group&nbsp;
+        <i class="glyphicon glyphicon-remove"></i>
+    </button>
 </div>
 
 <h2 class="sub-header clickable" ng-click="group.collapse(group.seasons)">

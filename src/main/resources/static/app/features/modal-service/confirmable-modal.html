@@ -1,0 +1,16 @@
+<!-- http://weblogs.asp.net/dwahlin/building-an-angularjs-modal-service -->
+
+<div class="modal-header">
+    <h3 class="modal-title" ng-bind="modalOptions.headerText"></h3>
+</div>
+<div class="modal-body">
+    <h5 ng-bind="modalOptions.bodyText"></h5>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-danger" data-ng-click="modalOptions.ok()"
+            ng-bind="modalOptions.actionButtonText">
+    </button>
+    <button type="button" class="btn btn-warning" data-ng-click="modalOptions.close()"
+            ng-bind="modalOptions.closeButtonText">
+    </button>
+</div>

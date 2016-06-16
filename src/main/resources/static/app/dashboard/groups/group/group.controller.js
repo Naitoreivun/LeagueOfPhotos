@@ -3,9 +3,11 @@ angular
     .module('leagueOfPhotos')
     .controller('GroupController', GroupController);
 
-GroupController.$inject = ['groupsService', '$stateParams', '$uibModal', 'seasonsService', 'usersService'];
+GroupController.$inject = ['groupsService', '$stateParams', '$uibModal',
+    'seasonsService', 'usersService', '$state', 'modalService'];
 
-function GroupController(groupsService, $stateParams, $uibModal, seasonsService, usersService) {
+function GroupController(groupsService, $stateParams, $uibModal, seasonsService,
+                         usersService, $state, modalService) {
     var group = this;
 
     group.collapse = collapse;
@@ -18,12 +20,14 @@ function GroupController(groupsService, $stateParams, $uibModal, seasonsService,
     group.getSeasonStatusClass = getSeasonStatusClass;
     group.getUsers = getUsers;
     group.id = $stateParams.id;
+    group.isCurrentUserGroupAdmin = false;
     group.isCurrentUserGroupModerator = false;
     group.memberStatusClassMap = {
         ADMIN: "label-danger",
         MODERATOR: "label-warning",
         MEMBER: "label-success"
     };
+    group.removeGroup = removeGroup;
     group.seasons = {
         array: [],
         isCollapsed: false
@@ -44,6 +48,7 @@ function GroupController(groupsService, $stateParams, $uibModal, seasonsService,
         getDetails();
         getSeasons();
         getUsers();
+        isCurrentUserGroupAdmin();
         isCurrentUserGroupModerator();
     }
 
@@ -129,6 +134,16 @@ function GroupController(groupsService, $stateParams, $uibModal, seasonsService,
                 });
     }
 
+    function isCurrentUserGroupAdmin() {
+        groupsService
+            .isCurrentUserGroupAdmin(group.id)
+            .then(
+                function (data) {
+                    group.isCurrentUserGroupAdmin = data;
+                }
+            );
+    }
+
     function isCurrentUserGroupModerator() {
         groupsService
             .isCurrentUserGroupModerator(group.id)
@@ -137,5 +152,23 @@ function GroupController(groupsService, $stateParams, $uibModal, seasonsService,
                     group.isCurrentUserGroupModerator = data;
                 }
             );
+    }
+
+    function removeGroup() {
+        var modalOptions = {
+            closeButtonText: 'Cancel',
+            actionButtonText: 'Delete Group',
+            headerText: 'Delete ' + group.details.name + '?',
+            bodyText: 'Are you sure you want to delete this group?'
+        };
+
+        modalService
+            .showModal({}, modalOptions)
+            .then(
+                function (result) {
+                    groupsService
+                        .removeGroup(group.id)
+                        .then($state.go('dashboard.overview'));
+                });
     }
 }

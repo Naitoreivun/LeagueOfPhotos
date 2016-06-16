@@ -1,15 +1,23 @@
 package com.naitoreivun.lop.domain;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import javax.persistence.*;
 
 @Entity(name = "group_types")
 public class GroupType {
+    @Transient
+    @JsonIgnore
+    public static final String PRIVATE = "PRIVATE";
+    @Transient
+    @JsonIgnore
+    public static final String PUBLIC = "PUBLIC";
+
     @Id
     @GeneratedValue
     private Long id;
 
+    @Column(nullable = false, unique = true, length = 20)
     private String type;
 
     public GroupType() {

@@ -8,16 +8,16 @@ import java.io.Serializable;
 public class UserGroup implements Serializable {
     @Id
     @ManyToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
     @Id
     @ManyToOne
-    @JoinColumn(name = "group_id")
+    @JoinColumn(name = "group_id", nullable = false)
     private Group group;
 
     @ManyToOne
-    @JoinColumn(name = "member_status_id")
+    @JoinColumn(name = "member_status_id", nullable = false)
     private MemberStatus memberStatus;
 
     public UserGroup() {

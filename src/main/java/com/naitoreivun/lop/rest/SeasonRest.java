@@ -38,6 +38,13 @@ public class SeasonRest {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    @ForGroupMember(requestNr = 0, idNr = 1, idClass = Season.class, minStatus = MemberStatus.MODERATOR)
+    @RequestMapping(value = "/{seasonId}", method = RequestMethod.DELETE)
+    public ResponseEntity<?> removeSeason(final HttpServletRequest request, @PathVariable Long seasonId) {
+        seasonService.removeSeason(seasonId);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
 
     @ForGroupMember(requestNr = 0, idNr = 1, idClass = Group.class)
     @RequestMapping(value = "/group/{groupId}", method = RequestMethod.GET)

@@ -4,7 +4,7 @@ import com.naitoreivun.lop.dao.ImageDAO;
 import com.naitoreivun.lop.domain.Contest;
 import com.naitoreivun.lop.domain.Image;
 import com.naitoreivun.lop.domain.User;
-import com.naitoreivun.lop.domain.VotableImage;
+import com.naitoreivun.lop.domain.dto.VotableImage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;

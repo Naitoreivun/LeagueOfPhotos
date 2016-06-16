@@ -48,4 +48,8 @@ public class SeasonService {
         season.setNewDetails(newSeason);
         seasonDAO.save(season);
     }
+
+    public void removeSeason(Long seasonId) {
+        seasonDAO.delete(seasonId);
+    }
 }

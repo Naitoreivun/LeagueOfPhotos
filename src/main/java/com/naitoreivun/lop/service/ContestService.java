@@ -65,4 +65,8 @@ public class ContestService {
         contest.setNewDetails(newContest);
         contestDAO.save(contest);
     }
+
+    public void removeContest(Long contestId) {
+        contestDAO.delete(contestId);
+    }
 }

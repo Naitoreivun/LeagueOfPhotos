@@ -3,7 +3,7 @@ package com.naitoreivun.lop.rest;
 import com.naitoreivun.lop.domain.Contest;
 import com.naitoreivun.lop.domain.Image;
 import com.naitoreivun.lop.domain.MemberStatus;
-import com.naitoreivun.lop.domain.VotableImage;
+import com.naitoreivun.lop.domain.dto.VotableImage;
 import com.naitoreivun.lop.security.ClaimGetter;
 import com.naitoreivun.lop.security.ForGroupMember;
 import com.naitoreivun.lop.service.ImageService;

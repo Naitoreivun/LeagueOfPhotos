@@ -12,6 +12,11 @@
         Edit season&nbsp;
         <i class="glyphicon glyphicon-edit"></i>
     </button>
+
+    <button class="btn btn-danger" ng-click="season.removeSeason()">
+        Delete season&nbsp;
+        <i class="glyphicon glyphicon-remove"></i>
+    </button>
 </div>
 
 <h2 class="sub-header clickable" ng-click="season.collapse(season.contests)">
@@ -31,7 +36,7 @@
             <th>finish uploading date</th>
             <th>finish voting date</th>
             <th>status</th>
-            <th ng-if="season.isCurrentUserGroupModerator">actions</th>
+            <th ng-if="season.isCurrentUserGroupModerator" class="col-md-2">actions</th>
         </tr>
         </thead>
         <tbody>
@@ -51,11 +56,15 @@
                       ng-bind="contest.contestStatus"></span>
             </td>
             <td ng-if="season.isCurrentUserGroupModerator">
-                <button ng-if="contest.contestStatus !== 'CLOSED'"
-                        class="btn btn-warning btn-xs" ng-click="season.editContest(contest)">
-                    Edit&nbsp;
-                    <i class="glyphicon glyphicon-edit"></i>
-                </button>
+                    <button ng-if="contest.contestStatus !== 'CLOSED'"
+                            class="btn btn-warning btn-xs" ng-click="season.editContest(contest)">
+                        Edit&nbsp;
+                        <i class="glyphicon glyphicon-edit"></i>
+                    </button>
+                    <button class="btn btn-danger btn-xs" ng-click="season.removeContest($index)">
+                        Remove&nbsp;
+                        <i class="glyphicon glyphicon-remove"></i>
+                    </button>
             </td>
         </tr>
         </tbody>

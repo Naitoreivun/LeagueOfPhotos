@@ -38,6 +38,13 @@ public class ContestRest {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    @ForGroupMember(requestNr = 0, idNr = 1, idClass = Contest.class, minStatus = MemberStatus.MODERATOR)
+    @RequestMapping(value = "/{contestId}", method = RequestMethod.DELETE)
+    public ResponseEntity<?> removeContest(final HttpServletRequest request, @PathVariable Long contestId) {
+        contestService.removeContest(contestId);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
     @ForGroupMember(requestNr = 0, idNr = 1, idClass = Contest.class)
     @RequestMapping(value = "/season/{seasonId}", method = RequestMethod.GET)
     public ResponseEntity<List<ContestDTO>> getBySeasonId(final HttpServletRequest request,

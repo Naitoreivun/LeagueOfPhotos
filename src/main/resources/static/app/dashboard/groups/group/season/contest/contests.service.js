@@ -14,6 +14,7 @@ function contestsService(Restangular) {
         getBySeasonId: getBySeasonId,
         getById: getById,
         getScoresByContestId: getScoresByContestId,
+        removeContest: removeContest,
         updateContest: updateContest
     };
 
@@ -58,6 +59,13 @@ function contestsService(Restangular) {
             .one("", contestId)
             .customGETLIST('scores')
             .then(getListComplete, dummyErrorsHandler);
+    }
+
+
+    function removeContest(contestId) {
+        return contestsObject
+            .one('', contestId)
+            .remove();
     }
 
     function updateContest(contestId, newContest) {

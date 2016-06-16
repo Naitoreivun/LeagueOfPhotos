@@ -57,6 +57,13 @@ public class GroupRest {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    @ForGroupMember(requestNr = 0, idNr = 1, idClass = Group.class, minStatus = MemberStatus.ADMIN)
+    @RequestMapping(value = "/{groupId}", method = RequestMethod.DELETE)
+    public ResponseEntity<?> removeGroup(final HttpServletRequest request, @PathVariable Long groupId) {
+        groupService.removeGroup(groupId);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
     @RequestMapping(value = "/{groupId}/users/current", method = RequestMethod.POST)
     public ResponseEntity<?> addCurrentUserToGroup(final HttpServletRequest request,
                                                    @PathVariable Long groupId) throws ServletException {
@@ -70,7 +77,7 @@ public class GroupRest {
                                                         @PathVariable Long groupId) throws ServletException {
         Long currentUserId = ClaimGetter.getCurrentUserId(request);
         groupService.removeUserFromGroup(currentUserId, groupId);
-        return new ResponseEntity<>(HttpStatus.CREATED);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @ForGroupMember(requestNr = 0, idNr = 1, idClass = Group.class)
@@ -79,6 +86,15 @@ public class GroupRest {
                                                                @PathVariable Long groupId) throws ServletException {
         Long currentUserId = ClaimGetter.getCurrentUserId(request);
         boolean result = groupService.isMemberOfGroupWithMinStatus(currentUserId, groupId, MemberStatus.MODERATOR);
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
+    @ForGroupMember(requestNr = 0, idNr = 1, idClass = Group.class)
+    @RequestMapping(value = "/{groupId}/users/current/status/admin", method = RequestMethod.GET)
+    public ResponseEntity<Boolean> isCurrentUserGroupAdmin(final HttpServletRequest request,
+                                                               @PathVariable Long groupId) throws ServletException {
+        Long currentUserId = ClaimGetter.getCurrentUserId(request);
+        boolean result = groupService.isMemberOfGroupWithMinStatus(currentUserId, groupId, MemberStatus.ADMIN);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 

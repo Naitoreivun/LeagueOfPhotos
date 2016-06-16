@@ -13,6 +13,7 @@ function seasonsService(Restangular) {
         add: add,
         getByGroupId: getByGroupId,
         getById: getById,
+        removeSeason: removeSeason,
         updateSeason: updateSeason
     };
 
@@ -50,6 +51,12 @@ function seasonsService(Restangular) {
 
     function getByIdComplete(response) {
         return response.plain();
+    }
+    
+    function removeSeason(seasonId) {
+        return seasonsObject
+            .one('', seasonId)
+            .remove();
     }
     
     function updateSeason(seasonId, newSeason) {

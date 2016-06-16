@@ -14,12 +14,15 @@ public class Group {
     @GeneratedValue
     private Long id;
 
+    @Column(nullable = false, unique = true, length = 30)
     private String name;
-    private String description;
+
+    @Column(nullable = false)
     private DateTime creationDate;
+    private String description;
 
     @ManyToOne
-    @JoinColumn(name = "group_type_id")
+    @JoinColumn(name = "group_type_id", nullable = false)
     private GroupType groupType;
 
     @JsonIgnore
@@ -27,8 +30,7 @@ public class Group {
     private List<UserGroup> usersGroups;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "group")
-    @Transient
+    @OneToMany(mappedBy = "group", cascade = CascadeType.REMOVE)
     private List<Season> seasons;
 
     public Group() {
@@ -42,6 +44,7 @@ public class Group {
         setNewDetails(name, description, groupType);
         this.creationDate = DateTime.now();
         this.usersGroups = new ArrayList<>();
+        this.seasons = new ArrayList<>();
     }
 
     public Long getId() {

@@ -1,4 +1,6 @@
-package com.naitoreivun.lop.domain;
+package com.naitoreivun.lop.domain.dto;
+
+import com.naitoreivun.lop.domain.Image;
 
 public class VotableImage {
     private Long id;

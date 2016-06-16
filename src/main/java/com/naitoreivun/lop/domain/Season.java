@@ -5,6 +5,7 @@ import com.naitoreivun.lop.domain.dto.NewSeason;
 import org.joda.time.DateTime;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity(name = "seasons")
@@ -13,19 +14,23 @@ public class Season {
     @GeneratedValue
     private Long id;
 
+    @Column(nullable = false, length = 30)
     private String name;
     private String description;
+    @Column(nullable = false)
     private DateTime creationDate;
+    @Column(nullable = false)
     private DateTime startDate;
+    @Column(nullable = false)
     private DateTime finishDate;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "season")
+    @OneToMany(mappedBy = "season", cascade = CascadeType.REMOVE)
     private List<Contest> contests;
 
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "group_id")
+    @JoinColumn(name = "group_id", nullable = false)
     private Group group;
 
     public Season() {
@@ -37,8 +42,9 @@ public class Season {
 
     public Season(String name, Group group, String description, DateTime startDate, DateTime finishDate) {
         this.group = group;
-        setDetails(name, description, startDate, finishDate);
         this.creationDate = DateTime.now();
+        this.contests = new ArrayList<>();
+        setDetails(name, description, startDate, finishDate);
     }
 
     public Season(NewSeason newSeason, Group group) {

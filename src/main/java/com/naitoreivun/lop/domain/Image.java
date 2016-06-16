@@ -13,25 +13,27 @@ public class Image {
     @GeneratedValue
     private Long id;
 
+    @Column(length = 30)
     private String title;
     @Lob
-    @Column(columnDefinition = "mediumblob")
+    @Column(nullable = false, columnDefinition = "mediumblob")
     private byte[] content;
 
+    @Column(nullable = false)
     private DateTime creationDate;
 
     @JsonIgnore
     @ManyToOne
-    @JoinColumn(name = "contest_id")
+    @JoinColumn(name = "contest_id", nullable = false)
     private Contest contest;
 
     @JsonIgnore
     @ManyToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "image", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "image", cascade = CascadeType.REMOVE)
     private List<Vote> votes;
 
     public Image() {

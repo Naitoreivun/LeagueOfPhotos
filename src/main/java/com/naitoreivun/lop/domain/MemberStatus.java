@@ -2,10 +2,7 @@ package com.naitoreivun.lop.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Transient;
+import javax.persistence.*;
 
 @Entity(name = "member_status")
 public class MemberStatus {
@@ -32,6 +29,7 @@ public class MemberStatus {
     @GeneratedValue
     private Long id;
 
+    @Column(nullable = false, unique = true, length = 20)
     private String status;
 
     public MemberStatus() {

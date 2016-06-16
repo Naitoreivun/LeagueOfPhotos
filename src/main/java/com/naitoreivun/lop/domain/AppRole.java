@@ -2,10 +2,7 @@ package com.naitoreivun.lop.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Transient;
+import javax.persistence.*;
 
 @Entity(name = "app_roles")
 public class AppRole {
@@ -20,6 +17,7 @@ public class AppRole {
     @GeneratedValue
     private Long id;
 
+    @Column(nullable = false, unique = true, length = 20)
     private String role;
 
     public AppRole() {

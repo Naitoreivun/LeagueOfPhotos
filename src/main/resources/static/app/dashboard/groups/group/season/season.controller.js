@@ -3,9 +3,11 @@ angular
     .module('leagueOfPhotos')
     .controller('SeasonController', SeasonController);
 
-SeasonController.$inject = ['$stateParams', '$uibModal', 'seasonsService', 'contestsService', 'groupsService'];
+SeasonController.$inject = ['$stateParams', '$uibModal', 'seasonsService',
+    'contestsService', 'groupsService', '$state', 'modalService'];
 
-function SeasonController($stateParams, $uibModal, seasonsService, contestsService, groupsService) {
+function SeasonController($stateParams, $uibModal, seasonsService, contestsService,
+                          groupsService, $state, modalService) {
     var season = this;
 
     season.collapse = collapse;
@@ -29,6 +31,8 @@ function SeasonController($stateParams, $uibModal, seasonsService, contestsServi
     season.groupId = $stateParams.groupId;
     season.id = $stateParams.seasonId;
     season.isCurrentUserGroupModerator = false;
+    season.removeSeason = removeSeason;
+    season.removeContest = removeContest;
 
     activate();
 
@@ -132,5 +136,43 @@ function SeasonController($stateParams, $uibModal, seasonsService, contestsServi
                     season.isCurrentUserGroupModerator = data;
                 }
             );
+    }
+
+    function removeSeason() {
+        var modalOptions = {
+            closeButtonText: 'Cancel',
+            actionButtonText: 'Delete Season',
+            headerText: 'Delete ' + season.details.name + '?',
+            bodyText: 'Are you sure you want to delete this season?'
+        };
+
+        modalService
+            .showModal({}, modalOptions)
+            .then(
+                function (result) {
+                    seasonsService
+                        .removeSeason(season.id)
+                        .then($state.go('dashboard.groups'));
+                });
+    }
+
+    function removeContest(index) {
+        var contest = season.contests.array[index];
+
+        var modalOptions = {
+            closeButtonText: 'Cancel',
+            actionButtonText: 'Delete Contest',
+            headerText: 'Delete ' + contest.name + '?',
+            bodyText: 'Are you sure you want to delete this contest?'
+        };
+
+        modalService
+            .showModal({}, modalOptions)
+            .then(
+                function (result) {
+                    contestsService
+                        .removeContest(contest.id)
+                        .then(season.contests.array.splice(index, 1));
+                });
     }
 }

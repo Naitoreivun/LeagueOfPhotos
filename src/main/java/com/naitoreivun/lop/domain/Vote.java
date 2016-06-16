@@ -1,5 +1,7 @@
 package com.naitoreivun.lop.domain;
 
+import org.joda.time.DateTime;
+
 import javax.persistence.*;
 import java.io.Serializable;
 
@@ -13,10 +15,14 @@ public class Vote implements Serializable {
 
     @Id
     @ManyToOne
-    @JoinColumn(name = "image_id")
+    @JoinColumn(name = "image_id", nullable = false)
     private Image image;
 
+    @Column(nullable = false)
     private Short rating;
+
+    @Column(nullable = false)
+    private DateTime creationDate;
 
     public Vote() {
     }
@@ -29,6 +35,7 @@ public class Vote implements Serializable {
         this.user = user;
         this.image = image;
         this.rating = rating;
+        this.creationDate = DateTime.now();
     }
 
     public User getUser() {
@@ -41,5 +48,9 @@ public class Vote implements Serializable {
 
     public Short getRating() {
         return rating;
+    }
+
+    public DateTime getCreationDate() {
+        return creationDate;
     }
 }

@@ -14,6 +14,7 @@ function DashboardController(auth, $state, userProfile) {
     vm.text = 'DASHBOARD';
     vm.logout = logout;
     vm.getActiveClass = getActiveClass;
+    vm.username = userProfile.name;
 
     activate();
 

@@ -3,10 +3,13 @@ package com.naitoreivun.lop.domain;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.naitoreivun.lop.domain.dto.NewContest;
 import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
 
 import javax.persistence.*;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.TimeZone;
 
 @Entity(name = "contests")
 public class Contest {
@@ -14,20 +17,26 @@ public class Contest {
     @GeneratedValue
     private Long id;
 
+    @Column(nullable = false, length = 30)
     private String name;
+
     private String description;
+    @Column(nullable = false)
     private DateTime creationDate;
+    @Column(nullable = false)
     private DateTime startDate;
+    @Column(nullable = false)
     private DateTime finishUploadingDate;
+    @Column(nullable = false)
     private DateTime finishVotingDate;
 
 
     @ManyToOne
-    @JoinColumn(name = "season_id")
+    @JoinColumn(name = "season_id", nullable = false)
     private Season season;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "contest", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "contest", cascade = CascadeType.REMOVE)
     private List<Image> images;
 
     public Contest() {

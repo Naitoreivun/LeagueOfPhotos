@@ -89,6 +89,10 @@ public class GroupService {
 
     public List<GroupDTO> getByUserId(Long userId) {
         List<UserGroup> userGroups = userService.getById(userId).getUsersGroups(); // TODO: 2016-06-11 zrob userGroupDAO
+        userGroups = userGroups
+                .stream()
+                .filter(memberStatusService::isAcceptedUser)
+                .collect(Collectors.toList());
         List<Group> groups = groupDAO.findByUsersGroupsIn(userGroups);
         return mapToGroupDTO(groups);
     }
@@ -145,5 +149,9 @@ public class GroupService {
         GroupType groupType = groupTypeService.getByType(newGroup.getType());
         group.setNewDetails(newGroup.getName(), newGroup.getDescription(), groupType);
         groupDAO.save(group);
+    }
+
+    public void removeGroup(Long groupId) {
+        groupDAO.delete(groupId);
     }
 }

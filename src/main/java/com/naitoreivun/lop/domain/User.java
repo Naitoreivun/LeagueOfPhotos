@@ -17,19 +17,23 @@ public class User {
     @GeneratedValue
     private Long id;
 
+    @Column(nullable = false, unique = true, length = 30)
     private String username;
 
     @JsonIgnore
+    @Column(nullable = false, length = 50)
     private String password;
 
     @Email
+    @Column(nullable = false, unique = true, length = 50)
     private String email;
 
     @JsonIgnore
     @ManyToOne
-    @JoinColumn(name = "app_role_id")
+    @JoinColumn(name = "app_role_id", nullable = false)
     private AppRole appRole;
 
+    @Column(nullable = false)
     private DateTime creationDate;
 
     @JsonIgnore
@@ -47,6 +51,7 @@ public class User {
         this.appRole = appRole;
         this.creationDate = DateTime.now();
         this.usersGroups = new ArrayList<>();
+        this.images = new ArrayList<>();
     }
 
     public User(SignupForm signupForm, AppRole appRole) {
@@ -108,5 +113,4 @@ public class User {
         }
         return Collections.emptyList();
     }
-
 }
