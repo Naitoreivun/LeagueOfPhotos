@@ -40,10 +40,10 @@ CREATE TABLE `member_status` (
 
 CREATE TABLE `users` (
   `id`            BIGINT(20)  NOT NULL             AUTO_INCREMENT,
-  `creation_date` DATETIME    NOT NULL,
+  `username`      VARCHAR(30) NOT NULL UNIQUE,
   `email`         VARCHAR(50) NOT NULL UNIQUE,
   `password`      VARCHAR(50) NOT NULL,
-  `username`      VARCHAR(30) NOT NULL UNIQUE,
+  `creation_date` DATETIME    NOT NULL,
   `app_role_id`   BIGINT(20)  NOT NULL,
   PRIMARY KEY (`id`),
   CONSTRAINT `FK_users_app_role_id` FOREIGN KEY (`app_role_id`) REFERENCES `app_roles` (`id`)
@@ -53,9 +53,9 @@ CREATE TABLE `users` (
 
 CREATE TABLE `groups` (
   `id`            BIGINT(20)  NOT NULL AUTO_INCREMENT,
-  `creation_date` DATETIME    NOT NULL,
-  `description`   VARCHAR(255)         DEFAULT '',
   `name`          VARCHAR(30) NOT NULL UNIQUE,
+  `description`   VARCHAR(255)         DEFAULT '',
+  `creation_date` DATETIME    NOT NULL,
   `group_type_id` BIGINT(20)  NOT NULL,
   PRIMARY KEY (`id`),
   CONSTRAINT `FK_groups_group_type_id` FOREIGN KEY (`group_type_id`) REFERENCES `group_types` (`id`)
@@ -79,11 +79,11 @@ CREATE TABLE `users_groups` (
 
 CREATE TABLE `seasons` (
   `id`            BIGINT(20)  NOT NULL AUTO_INCREMENT,
-  `creation_date` DATETIME    NOT NULL,
-  `description`   VARCHAR(255)         DEFAULT '',
-  `finish_date`   DATETIME    NOT NULL,
   `name`          VARCHAR(30) NOT NULL,
+  `description`   VARCHAR(255)         DEFAULT '',
   `start_date`    DATETIME    NOT NULL,
+  `finish_date`   DATETIME    NOT NULL,
+  `creation_date` DATETIME    NOT NULL,
   `group_id`      BIGINT(20)  NOT NULL,
   PRIMARY KEY (`id`),
   CONSTRAINT `FK_seasons_group_id` FOREIGN KEY (`group_id`) REFERENCES `groups` (`id`)
@@ -94,12 +94,12 @@ CREATE TABLE `seasons` (
 
 CREATE TABLE `contests` (
   `id`                    BIGINT(20)  NOT NULL AUTO_INCREMENT,
-  `creation_date`         DATETIME    NOT NULL,
+  `name`                  VARCHAR(30) NOT NULL,
   `description`           VARCHAR(255)         DEFAULT '',
+  `start_date`            DATETIME    NOT NULL,
   `finish_uploading_date` DATETIME    NOT NULL,
   `finish_voting_date`    DATETIME    NOT NULL,
-  `name`                  VARCHAR(30) NOT NULL,
-  `start_date`            DATETIME    NOT NULL,
+  `creation_date`         DATETIME    NOT NULL,
   `season_id`             BIGINT(20)  NOT NULL,
   PRIMARY KEY (`id`),
   CONSTRAINT `FK_contests_season_id` FOREIGN KEY (`season_id`) REFERENCES `seasons` (`id`)
@@ -110,9 +110,9 @@ CREATE TABLE `contests` (
 
 CREATE TABLE `images` (
   `id`            BIGINT(20) NOT NULL AUTO_INCREMENT,
+  `title`         VARCHAR(30)         DEFAULT '',
   `content`       MEDIUMBLOB NOT NULL,
   `creation_date` DATETIME   NOT NULL,
-  `title`         VARCHAR(30)         DEFAULT '',
   `contest_id`    BIGINT(20) NOT NULL,
   `user_id`       BIGINT(20) NOT NULL,
   PRIMARY KEY (`id`),
@@ -126,7 +126,7 @@ CREATE TABLE `images` (
 CREATE TABLE `votes` (
   `image_id`      BIGINT(20)  NOT NULL,
   `user_id`       BIGINT(20)  NOT NULL,
-  `rating`        SMALLINT(6) NOT NULL CHECK (`rating` BETWEEN 0 AND 5),
+  `rating`        SMALLINT(6) NOT NULL,
   `creation_date` DATETIME    NOT NULL,
   PRIMARY KEY (`image_id`, `user_id`),
   CONSTRAINT `FK_votes_image_id` FOREIGN KEY (`image_id`) REFERENCES `images` (`id`)

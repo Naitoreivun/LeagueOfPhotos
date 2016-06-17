@@ -13,6 +13,8 @@ spring:
         properties:
             hibernate.dialect: org.hibernate.dialect.MySQL5Dialect
             jadira.usertype.autoRegisterUserTypes: true
-    devtools.livereload.enabled: true
+    devtools:
+        livereload.enabled: true
+        restart.additional-exclude: sql/**
 multipart.max-file-size: 8Mb
 #security.user.password: passw0rd
