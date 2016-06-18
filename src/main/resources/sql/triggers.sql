@@ -329,6 +329,49 @@ DELIMITER ;
 #**********************************************#
 
 DELIMITER $$
+DROP FUNCTION IF EXISTS count_user_in_group $$
+
+CREATE FUNCTION count_user_in_group(_group_id BIGINT(20))
+  RETURNS INTEGER
+  BEGIN
+    RETURN coalesce((SELECT count(*)
+                     FROM users_groups ug
+                       JOIN member_status ms ON ug.member_status_id = ms.id
+                     WHERE ug.group_id = _group_id
+                           AND ms.status IN ('MEMBER', 'MODERATOR', 'ADMIN')),
+                    0);
+  END $$
+
+DELIMITER ;
+
+DELIMITER $$
+DROP TRIGGER IF EXISTS safely_remove_users_from_group;
+
+CREATE TRIGGER safely_remove_users_from_group
+BEFORE DELETE ON groups
+FOR EACH ROW
+  BEGIN
+    DECLARE admin_id BIGINT(20);
+    IF count_user_in_group(old.id) > 0
+    THEN
+      SET admin_id = (SELECT ug.user_id
+                      FROM users_groups ug
+                        JOIN member_status ms ON ug.member_status_id = ms.id
+                      WHERE ug.group_id = old.id AND ms.status LIKE 'ADMIN'
+                      LIMIT 1);
+
+      DELETE FROM users_groups
+      WHERE group_id = old.id AND user_id <> admin_id;
+
+      DELETE FROM users_groups
+      WHERE group_id = old.id AND user_id = admin_id;
+    END IF;
+  END;
+$$
+DELIMITER ;
+
+
+DELIMITER $$
 DROP TRIGGER IF EXISTS prevent_last_admin_from_leaving_group;
 
 CREATE TRIGGER prevent_last_admin_from_leaving_group
@@ -342,10 +385,12 @@ FOR EACH ROW
                   FROM member_status ms
                   WHERE ms.id = old.member_status_id)
     AND
-    1 = (SELECT count(*)
+    count_user_in_group(old.group_id) > 1
+    AND
+    1 = (SELECT COUNT(*)
          FROM users_groups ug
            JOIN member_status ms ON ug.member_status_id = ms.id
-         WHERE ug.group_id = old.group_id AND ms.status = 'ADMIN')
+         WHERE ug.group_id = old.group_id AND ms.status LIKE 'ADMIN')
     THEN
       SIGNAL my_error
       SET MESSAGE_TEXT = 'the last admin of group can''t leave the group';

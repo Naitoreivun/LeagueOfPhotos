@@ -26,7 +26,7 @@ public class Group {
     private GroupType groupType;
 
     @JsonIgnore
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "group", cascade = CascadeType.REMOVE)
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "group")
     private List<UserGroup> usersGroups;
 
     @JsonIgnore

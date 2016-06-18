@@ -2,6 +2,7 @@ package com.naitoreivun.lop.rest;
 
 import com.naitoreivun.lop.domain.Contest;
 import com.naitoreivun.lop.domain.MemberStatus;
+import com.naitoreivun.lop.domain.Season;
 import com.naitoreivun.lop.domain.dto.ContestDTO;
 import com.naitoreivun.lop.domain.dto.NewContest;
 import com.naitoreivun.lop.domain.dto.Score;
@@ -45,7 +46,7 @@ public class ContestRest {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @ForGroupMember(requestNr = 0, idNr = 1, idClass = Contest.class)
+    @ForGroupMember(requestNr = 0, idNr = 1, idClass = Season.class)
     @RequestMapping(value = "/season/{seasonId}", method = RequestMethod.GET)
     public ResponseEntity<List<ContestDTO>> getBySeasonId(final HttpServletRequest request,
                                                           @PathVariable Long seasonId) {

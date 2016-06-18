@@ -69,8 +69,7 @@ CREATE TABLE `users_groups` (
   `member_status_id` BIGINT(20) NOT NULL,
   PRIMARY KEY (`group_id`, `user_id`),
   CONSTRAINT `FK_member_status_id` FOREIGN KEY (`member_status_id`) REFERENCES `member_status` (`id`),
-  CONSTRAINT `FK_users_groups_group_id` FOREIGN KEY (`group_id`) REFERENCES `groups` (`id`)
-    ON DELETE CASCADE,
+  CONSTRAINT `FK_users_groups_group_id` FOREIGN KEY (`group_id`) REFERENCES `groups` (`id`),
   CONSTRAINT `FK_users_groups_user_id` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
     ON DELETE CASCADE
 )
