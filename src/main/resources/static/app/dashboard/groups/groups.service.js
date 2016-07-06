@@ -10,6 +10,7 @@ function groupsService(Restangular) {
     var groupsObject = Restangular.all('groups');
 
     var service = {
+        acceptRequester: acceptRequester,
         add: add,
         addCurrentUserToGroup: addCurrentUserToGroup,
         getAll: getAll,
@@ -18,12 +19,20 @@ function groupsService(Restangular) {
         getGroupsWithoutCurrentUser: getGroupsWithoutCurrentUser,
         isCurrentUserGroupAdmin: isCurrentUserGroupAdmin,
         isCurrentUserGroupModerator: isCurrentUserGroupModerator,
+        rejectRequester: rejectRequester,
         removeCurrentUserFromGroup: removeCurrentUserFromGroup,
         removeGroup: removeGroup,
         updateGroup: updateGroup
     };
 
     return service;
+
+    function acceptRequester(groupId, requesterId) {
+        return groupsObject
+            .one(groupId)
+            .one('requesters', requesterId)
+            .customPUT({}, 'accept');
+    }
 
     function add(newGroup) {
         return groupsService.post(newGroup);
@@ -107,6 +116,13 @@ function groupsService(Restangular) {
                     return false;
                 }
             )
+    }
+
+    function rejectRequester(groupId, requesterId) {
+        return groupsObject
+            .one(groupId)
+            .one('requesters', requesterId)
+            .customPUT({}, 'reject');
     }
 
     function removeCurrentUserFromGroup(groupId) {

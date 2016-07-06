@@ -84,3 +84,41 @@
         </tbody>
     </table>
 </div>
+
+<div ng-if="group.isCurrentUserGroupModerator">
+    <h2 class="sub-header clickable" ng-click="group.collapse(group.requesters)">
+        <i class="pull-left glyphicon"
+           ng-class="
+           {'glyphicon-chevron-down': group.requesters.isCollapsed,
+            'glyphicon-chevron-right': !group.requesters.isCollapsed}">
+        </i>
+        &nbsp;Requesters
+    </h2>
+    <div uib-collapse="group.requesters.isCollapsed" class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th class="col-xs-9">username</th>
+                <th>action</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="requester in group.requesters.array">
+                <td>
+                    <strong ng-bind="requester.username"></strong>
+                </td>
+                <td>
+                    <button class="btn btn-success btn-xs" ng-click="group.acceptRequester(requester.id)">
+                        Accept&nbsp;
+                        <i class="glyphicon glyphicon-ok"></i>
+                    </button>
+                    <button class="btn btn-danger btn-xs" ng-click="group.rejectRequester(requester.id)">
+                        Reject&nbsp;
+                        <i class="glyphicon glyphicon-remove"></i>
+                    </button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

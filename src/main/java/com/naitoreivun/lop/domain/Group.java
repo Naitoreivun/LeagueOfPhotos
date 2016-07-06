@@ -88,4 +88,8 @@ public class Group {
         this.description = description;
         this.groupType = groupType;
     }
+
+    public boolean isPrivate() {
+        return GroupType.PRIVATE.equals(groupType.getType());
+    }
 }

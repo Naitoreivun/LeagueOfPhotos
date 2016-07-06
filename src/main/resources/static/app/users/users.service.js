@@ -12,7 +12,8 @@ function usersService(Restangular) {
 
     var service = {
         create: create,
-        getAcceptedUsersByGroupId: getAcceptedUsersByGroupId
+        getAcceptedUsersByGroupId: getAcceptedUsersByGroupId,
+        getRequestersByGroupId: getRequestersByGroupId
     };
     
     return service;
@@ -40,6 +41,13 @@ function usersService(Restangular) {
         return groupsObject
             .one(groupId)
             .customGETLIST('users')
+            .then(getUsersComplete, dummyErrorsHandler);
+    }
+    
+    function getRequestersByGroupId(groupId) {
+        return groupsObject
+            .one(groupId)
+            .customGETLIST('requesters')
             .then(getUsersComplete, dummyErrorsHandler);
     }
 

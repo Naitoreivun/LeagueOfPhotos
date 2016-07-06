@@ -112,7 +112,9 @@ public class GroupService {
     }
 
     public void addUserToGroup(Long userId, Long groupId) {
-        addUserToGroupWithStatus(userId, groupId, MemberStatus.MEMBER);
+        Group group = getGroupById(groupId);
+        String memberStatus = group.isPrivate() ? MemberStatus.REQUESTER : MemberStatus.MEMBER;
+        addUserToGroupWithStatus(userId, group, memberStatus);
     }
 
     public void addUserToGroupWithStatus(Long userId, Long groupId, String status) {
@@ -153,5 +155,23 @@ public class GroupService {
 
     public void removeGroup(Long groupId) {
         groupDAO.delete(groupId);
+    }
+
+    public void acceptRequester(Long groupId, Long requesterId) {
+        changeMemberStatus(groupId, requesterId, MemberStatus.MEMBER);
+    }
+
+    public void rejectRequester(Long groupId, Long requesterId) {
+        changeMemberStatus(groupId, requesterId, MemberStatus.BANNED);
+    }
+
+    private void changeMemberStatus(Long groupId, Long userId, String newStatus) {
+        Optional<UserGroup> userGroupOptional = userGroupDAO.findByUserIdAndGroupId(userId, groupId);
+        if (userGroupOptional.isPresent()) {
+            final UserGroup userGroup = userGroupOptional.get();
+            final MemberStatus newMemberStatus = memberStatusService.getByStatus(newStatus);
+            userGroup.setMemberStatus(newMemberStatus);
+            userGroupDAO.save(userGroup);
+        }
     }
 }

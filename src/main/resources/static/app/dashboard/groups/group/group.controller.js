@@ -10,12 +10,14 @@ function GroupController(groupsService, $stateParams, $uibModal, seasonsService,
                          usersService, $state, modalService) {
     var group = this;
 
+    group.acceptRequester = acceptRequester;
     group.collapse = collapse;
     group.createSeason = createSeason;
     group.details = {};
     group.getDetails = getDetails;
     group.editGroup = editGroup;
     group.getMemberStatusClass = getMemberStatusClass;
+    group.getRequesters = getRequesters;
     group.getSeasons = getSeasons;
     group.getSeasonStatusClass = getSeasonStatusClass;
     group.getUsers = getUsers;
@@ -27,7 +29,12 @@ function GroupController(groupsService, $stateParams, $uibModal, seasonsService,
         MODERATOR: "label-warning",
         MEMBER: "label-success"
     };
+    group.rejectRequester = rejectRequester;
     group.removeGroup = removeGroup;
+    group.requesters = {
+        array: [],
+        isCollapsed: true
+    };
     group.seasons = {
         array: [],
         isCollapsed: false
@@ -48,8 +55,20 @@ function GroupController(groupsService, $stateParams, $uibModal, seasonsService,
         getDetails();
         getSeasons();
         getUsers();
+        getRequesters();
         isCurrentUserGroupAdmin();
         isCurrentUserGroupModerator();
+    }
+
+    function acceptRequester(requesterId) {
+        groupsService
+            .acceptRequester(group.id, requesterId)
+            .then(
+                function () {
+                    getUsers();
+                    getRequesters();
+                }
+            );
     }
 
     function collapse(object) {
@@ -110,6 +129,16 @@ function GroupController(groupsService, $stateParams, $uibModal, seasonsService,
         return group.memberStatusClassMap[user.memberStatus];
     }
 
+    function getRequesters() {
+        group.requesters.array = [];
+        usersService
+            .getRequestersByGroupId(group.id)
+            .then(
+                function (data) {
+                    group.requesters.array = data;
+                });
+    }
+
     function getSeasons() {
         group.seasons.array = [];
         seasonsService
@@ -152,6 +181,12 @@ function GroupController(groupsService, $stateParams, $uibModal, seasonsService,
                     group.isCurrentUserGroupModerator = data;
                 }
             );
+    }
+
+    function rejectRequester(requesterId) {
+        groupsService
+            .rejectRequester(group.id, requesterId)
+            .then(getRequesters);
     }
 
     function removeGroup() {

@@ -40,4 +40,8 @@ public class UserGroup implements Serializable {
     public MemberStatus getMemberStatus() {
         return memberStatus;
     }
+
+    public void setMemberStatus(MemberStatus memberStatus) {
+        this.memberStatus = memberStatus;
+    }
 }

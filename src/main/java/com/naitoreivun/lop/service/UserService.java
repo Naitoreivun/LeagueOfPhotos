@@ -37,4 +37,15 @@ public class UserService {
                 .sorted(Comparator.comparing(UserInGroup::getUsername))
                 .collect(Collectors.toList());
     }
+
+    public List<UserInGroup> getRequestersByGroupId(Long groupId) {
+        final Group group = groupService.getGroupById(groupId);
+
+        return group.getUsersGroups()
+                .stream()
+                .filter(memberStatusService::isRequester)
+                .map(UserInGroup::new)
+                .sorted(Comparator.comparing(UserInGroup::getUsername))
+                .collect(Collectors.toList());
+    }
 }

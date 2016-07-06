@@ -9,7 +9,6 @@ import com.naitoreivun.lop.security.ClaimGetter;
 import com.naitoreivun.lop.security.ForGroupMember;
 import com.naitoreivun.lop.service.GroupService;
 import com.naitoreivun.lop.service.UserService;
-import com.sun.org.apache.xpath.internal.operations.Bool;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -92,7 +91,7 @@ public class GroupRest {
     @ForGroupMember(requestNr = 0, idNr = 1, idClass = Group.class)
     @RequestMapping(value = "/{groupId}/users/current/status/admin", method = RequestMethod.GET)
     public ResponseEntity<Boolean> isCurrentUserGroupAdmin(final HttpServletRequest request,
-                                                               @PathVariable Long groupId) throws ServletException {
+                                                           @PathVariable Long groupId) throws ServletException {
         Long currentUserId = ClaimGetter.getCurrentUserId(request);
         boolean result = groupService.isMemberOfGroupWithMinStatus(currentUserId, groupId, MemberStatus.ADMIN);
         return new ResponseEntity<>(result, HttpStatus.OK);
@@ -103,6 +102,31 @@ public class GroupRest {
     public ResponseEntity<List<UserInGroup>> getAcceptedUsersByGroupId(final HttpServletRequest request,
                                                                        @PathVariable Long groupId) {
         return new ResponseEntity<>(userService.getAcceptedUsersByGroupId(groupId), HttpStatus.OK);
+    }
+
+    @ForGroupMember(requestNr = 0, idNr = 1, idClass = Group.class, minStatus = MemberStatus.MODERATOR)
+    @RequestMapping(value = "/{groupId}/requesters", method = RequestMethod.GET)
+    public ResponseEntity<List<UserInGroup>> getRequestersByGroupId(final HttpServletRequest request,
+                                                                    @PathVariable Long groupId) {
+        return new ResponseEntity<>(userService.getRequestersByGroupId(groupId), HttpStatus.OK);
+    }
+
+    @ForGroupMember(requestNr = 0, idNr = 1, idClass = Group.class, minStatus = MemberStatus.MODERATOR)
+    @RequestMapping(value = "/{groupId}/requesters/{requesterId}/accept", method = RequestMethod.PUT)
+    public ResponseEntity<?> acceptRequester(final HttpServletRequest request,
+                                             @PathVariable Long groupId,
+                                             @PathVariable Long requesterId) {
+        groupService.acceptRequester(groupId, requesterId);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @ForGroupMember(requestNr = 0, idNr = 1, idClass = Group.class, minStatus = MemberStatus.MODERATOR)
+    @RequestMapping(value = "/{groupId}/requesters/{requesterId}/reject", method = RequestMethod.PUT)
+    public ResponseEntity<?> rejectRequester(final HttpServletRequest request,
+                                             @PathVariable Long groupId,
+                                             @PathVariable Long requesterId) {
+        groupService.rejectRequester(groupId, requesterId);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @RequestMapping(value = "/user/{userId}", method = RequestMethod.GET)  // TODO: only for admin_role?

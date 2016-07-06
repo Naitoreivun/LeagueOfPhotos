@@ -32,6 +32,10 @@ public class MemberStatusService {
         return acceptableStatuses.contains(userGroup.getMemberStatus().getStatus());
     }
 
+    public boolean isRequester(UserGroup userGroup) {
+        return MemberStatus.REQUESTER.equals(userGroup.getMemberStatus().getStatus());
+    }
+
     public MemberStatus getByStatus(String status) {
         return memberStatusDAO.findByStatus(status).get();
     }
