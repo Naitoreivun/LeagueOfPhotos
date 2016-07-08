@@ -174,4 +174,18 @@ public class GroupService {
             userGroupDAO.save(userGroup);
         }
     }
+
+    public void updateUserMemberStatusInGroup(Long groupId, Long userId, String newStatus) {
+        final MemberStatus memberStatus = memberStatusService.getByStatus(newStatus);
+        final UserGroup userGroup = getByUserIdAndGroupId(userId, groupId);
+        if(!userGroup.getMemberStatus().getStatus().equals(memberStatus.getStatus())) {
+            userGroup.setMemberStatus(memberStatus);
+            userGroupDAO.save(userGroup);
+        }
+    }
+
+    public UserGroup getByUserIdAndGroupId(Long userId, Long groupId) {
+        final Optional<UserGroup> userGroup = userGroupDAO.findByUserIdAndGroupId(userId, groupId);
+        return userGroup.get();
+    }
 }

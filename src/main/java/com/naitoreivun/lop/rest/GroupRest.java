@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
+import java.util.Objects;
 
 @RestController
 @RequestMapping("/api/groups")
@@ -76,6 +77,20 @@ public class GroupRest {
                                                         @PathVariable Long groupId) throws ServletException {
         Long currentUserId = ClaimGetter.getCurrentUserId(request);
         groupService.removeUserFromGroup(currentUserId, groupId);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @ForGroupMember(requestNr = 0, idNr = 1, idClass = Group.class, minStatus = MemberStatus.ADMIN)
+    @RequestMapping(value = "/{groupId}/users/{userId}/status/{newStatus}", method = RequestMethod.PUT)
+    public ResponseEntity<?> appoint(final HttpServletRequest request,
+                                     @PathVariable Long groupId,
+                                     @PathVariable Long userId,
+                                     @PathVariable String newStatus) throws ServletException {
+
+        Long currentUserId = ClaimGetter.getCurrentUserId(request);
+        if (!currentUserId.equals(userId)) {
+            groupService.updateUserMemberStatusInGroup(groupId, userId, newStatus);
+        }
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

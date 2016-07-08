@@ -74,6 +74,7 @@
                 <tr>
                     <th>username</th>
                     <th>role</th>
+                    <th ng-if="group.isCurrentUserGroupAdmin">appoint</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -81,8 +82,19 @@
                     <td>
                         <strong ng-bind="user.username"></strong>
                     </td>
-                    <td><span class="label" ng-class="group.getMemberStatusClass(user)"
-                              ng-bind="user.memberStatus"></span>
+                    <td>
+                        <span ng-bind="user.memberStatus" class="label"
+                              ng-class="group.getMemberStatusClass(user)"></span>
+                    </td>
+                    <td ng-if="group.isCurrentUserGroupAdmin" >
+                        <div class="btn-group btn-group-xs">
+                            <label class="btn btn-success" ng-model="user.memberStatus"
+                                   uib-btn-radio="'MEMBER'" ng-click="group.appoint(user)">Member</label>
+                            <label class="btn btn-warning" ng-model="user.memberStatus"
+                                   uib-btn-radio="'MODERATOR'" ng-click="group.appoint(user)">Moderator</label>
+                            <label class="btn btn-danger" ng-model="user.memberStatus"
+                                   uib-btn-radio="'ADMIN'" ng-click="group.appoint(user)">Admin</label>
+                        </div>
                     </td>
                 </tr>
                 </tbody>

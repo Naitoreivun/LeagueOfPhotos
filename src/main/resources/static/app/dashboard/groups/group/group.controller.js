@@ -4,13 +4,14 @@ angular
     .controller('GroupController', GroupController);
 
 GroupController.$inject = ['groupsService', '$stateParams', '$uibModal',
-    'seasonsService', 'usersService', '$state', 'modalService'];
+    'seasonsService', 'usersService', '$state', 'modalService', 'auth'];
 
 function GroupController(groupsService, $stateParams, $uibModal, seasonsService,
-                         usersService, $state, modalService) {
+                         usersService, $state, modalService, auth) {
     var group = this;
 
     group.acceptRequester = acceptRequester;
+    group.appoint = appoint;
     group.collapse = collapse;
     group.createSeason = createSeason;
     group.details = {};
@@ -24,6 +25,7 @@ function GroupController(groupsService, $stateParams, $uibModal, seasonsService,
     group.id = $stateParams.id;
     group.isCurrentUserGroupAdmin = false;
     group.isCurrentUserGroupModerator = false;
+    group.MEMBER_STATUSES = ['MEMBER', 'MODERATOR', 'ADMIN'];
     group.memberStatusClassMap = {
         ADMIN: "label-danger",
         MODERATOR: "label-warning",
@@ -67,6 +69,19 @@ function GroupController(groupsService, $stateParams, $uibModal, seasonsService,
                 function () {
                     getUsers();
                     getRequesters();
+                }
+            );
+    }
+
+    function appoint(user) {
+        auth.getProfile()
+            .then(
+                function (profile) {
+                    if (profile.name !== user.username) {
+                        groupsService.appoint(group.id, user);
+                    } else {
+                        user.memberStatus = 'ADMIN';
+                    }
                 }
             );
     }

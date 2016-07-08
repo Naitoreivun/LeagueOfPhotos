@@ -13,6 +13,7 @@ function groupsService(Restangular) {
         acceptRequester: acceptRequester,
         add: add,
         addCurrentUserToGroup: addCurrentUserToGroup,
+        appoint: appoint,
         getAll: getAll,
         getById: getById,
         getCurrentUserGroups: getCurrentUserGroups,
@@ -43,6 +44,14 @@ function groupsService(Restangular) {
             .one('', groupId)
             .one('users', 'current')
             .post();
+    }
+
+    function appoint(groupId, user) {
+        return groupsObject
+            .one('', groupId)
+            .one('users', user.id)
+            .one('status', user.memberStatus)
+            .put();
     }
 
     function dummyErrorsHandler(errors) {
