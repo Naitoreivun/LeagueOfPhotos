@@ -2,14 +2,25 @@ package com.naitoreivun.lop.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.naitoreivun.lop.domain.dto.SignupForm;
-import org.hibernate.mapping.Array;
 import org.hibernate.validator.constraints.Email;
 import org.joda.time.DateTime;
 
 import javax.persistence.*;
-import java.util.*;
 import java.util.ArrayList;
-import java.util.stream.Collectors;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
+@NamedStoredProcedureQueries({
+        @NamedStoredProcedureQuery(
+                name = "validatePassword",
+                procedureName = "validate_password",
+                parameters = {
+                        @StoredProcedureParameter(name = "password", type = String.class, mode = ParameterMode.IN),
+                        @StoredProcedureParameter(name = "userId", type = Long.class, mode = ParameterMode.IN),
+                        @StoredProcedureParameter(name = "isValid", type = Boolean.class, mode = ParameterMode.OUT)
+                }
+        )})
 
 @Entity(name = "users")
 public class User {
@@ -46,7 +57,7 @@ public class User {
 
     public User(String username, String password, String email, AppRole appRole) {
         this.username = username;
-        this.password = encode(password);
+        this.password = password;
         this.email = email;
         this.appRole = appRole;
         this.creationDate = DateTime.now();
@@ -59,14 +70,6 @@ public class User {
     }
 
     public User() {
-    }
-
-    private String encode(String text) { //Szyfr cezara +4 :DDDD
-        return text
-                .chars()
-                .mapToObj(i -> (char) (i + 4))
-                .map(Object::toString)
-                .collect(Collectors.joining());
     }
 
     public Long getId() {
@@ -99,10 +102,6 @@ public class User {
 
     public String getEmail() {
         return email;
-    }
-
-    public boolean validatePassword(String password) {
-        return this.password.equals(encode(password));
     }
 
     public List<String> getRoles() {

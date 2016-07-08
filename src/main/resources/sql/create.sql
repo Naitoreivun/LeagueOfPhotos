@@ -42,7 +42,7 @@ CREATE TABLE `users` (
   `id`            BIGINT(20)  NOT NULL             AUTO_INCREMENT,
   `username`      VARCHAR(30) NOT NULL UNIQUE,
   `email`         VARCHAR(50) NOT NULL UNIQUE,
-  `password`      VARCHAR(50) NOT NULL,
+  `password`      VARCHAR(64) NOT NULL,
   `creation_date` DATETIME    NOT NULL,
   `app_role_id`   BIGINT(20)  NOT NULL,
   PRIMARY KEY (`id`),
@@ -150,5 +150,45 @@ INSERT INTO member_status VALUES
   (4, 'BANNED'),
   (5, 'LEAVER'),
   (6, 'REQUESTER');
+
+#**********************************************#
+#                                              #
+#                HASH PASSWORDS:               #
+#                                              #
+#**********************************************#
+
+DELIMITER $$
+DROP TRIGGER IF EXISTS hash_user_password;
+
+CREATE TRIGGER hash_user_password
+BEFORE INSERT ON users
+FOR EACH ROW
+  BEGIN
+    SET new.password = sha2(new.password, 0);
+  END;
+$$
+DELIMITER ;
+
+DELIMITER $$
+DROP PROCEDURE IF EXISTS validate_password $$
+
+CREATE PROCEDURE validate_password(IN p_password VARCHAR(64), IN p_user_id BIGINT(20), OUT is_valid BOOL)
+  BEGIN
+    DECLARE hashed_password VARCHAR(64);
+
+    SET hashed_password = sha2(p_password, 0);
+
+    IF hashed_password = (SELECT u.password
+                          FROM users u
+                          WHERE u.id = p_user_id)
+    THEN
+      SET is_valid = TRUE;
+    ELSE
+      SET is_valid = FALSE;
+    END IF;
+
+  END $$
+
+DELIMITER ;
 
 COMMIT;

@@ -21,14 +21,14 @@ INSERT INTO contests VALUES
    now() - INTERVAL 15 DAY, 1);
 
 INSERT INTO users VALUES
-  (1, 'naitoreivun', 'user1@email.com', '\\H', now(), 1), # XD
-  (2, 'stefan', 'user2@email.com', 'wxijer', now(), 2), # stefan
-  (3, 'opos3', 'user3@email.com', 'lewps567', now(), 2), # haslo123
-  (4, 'opos4', 'user4@email.com', 'lewps567', now(), 2), # haslo123
-  (5, 'opos5', 'user5@email.com', 'lewps567', now(), 2), # haslo123
-  (6, 'a', 'a6@email.com', 'e', now(), 2), # a
-  (7, 'opos7', 'user7@email.com', 'lewps567', now(), 2), # haslo123
-  (8, 'opos8', 'user8@email.com', 'lewps567', now(), 2); # haslo123
+  (1, 'naitoreivun', 'user1@email.com', 'XD', now(), 1),
+  (2, 'stefan', 'user2@email.com', 'stefan', now(), 2),
+  (3, 'opos3', 'user3@email.com', 'haslo123', now(), 2),
+  (4, 'opos4', 'user4@email.com', 'haslo123', now(), 2),
+  (5, 'opos5', 'user5@email.com', 'haslo123', now(), 2),
+  (6, 'a', 'a6@email.com', 'a', now(), 2),
+  (7, 'opos7', 'user7@email.com', 'haslo123', now(), 2),
+  (8, 'opos8', 'user8@email.com', 'haslo123', now(), 2);
 
 INSERT INTO users_groups VALUES
   (2, 1, 1),

@@ -1,5 +1,7 @@
 BEGIN;
 
+#################################################################
+
 DELIMITER $$
 DROP PROCEDURE IF EXISTS validate_dates $$
 
@@ -398,5 +400,8 @@ FOR EACH ROW
   END;
 $$
 DELIMITER ;
+
+
+#################################################################
 
 COMMIT;

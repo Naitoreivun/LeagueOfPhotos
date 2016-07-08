@@ -4,11 +4,14 @@ import com.naitoreivun.lop.dao.UserDAO;
 import com.naitoreivun.lop.domain.Group;
 import com.naitoreivun.lop.domain.User;
 import com.naitoreivun.lop.domain.dto.UserInGroup;
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.ServletException;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -47,5 +50,21 @@ public class UserService {
                 .map(UserInGroup::new)
                 .sorted(Comparator.comparing(UserInGroup::getUsername))
                 .collect(Collectors.toList());
+    }
+
+    public User getByUsername(String username) throws ServletException {
+        Optional<User> u = userDAO.findByUsername(username);// TODO: 2016-04-27 do not ignore case
+        if (!u.isPresent()) {
+            throw new ServletException("Invalid login");
+        }
+
+        return u.get();
+    }
+
+    public void validatePassword(String password, Long userId) throws ServletException {
+        if(!userDAO.validatePassword(password, userId))
+        {
+            throw new ServletException("Invalid password");
+        }
     }
 }
