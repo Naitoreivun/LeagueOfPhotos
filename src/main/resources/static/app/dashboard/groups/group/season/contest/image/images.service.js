@@ -18,7 +18,6 @@ function imagesService(Restangular) {
     return service;
 
     function dummyErrorsHandler(errors) {
-        console.log('IMAGES ERRORS:', errors);
         return null;
     }
 
@@ -53,14 +52,7 @@ function imagesService(Restangular) {
             imageId: imageId,
             rating: rating
         };
-        imagesObject
-            .customPOST({}, 'vote', ratedImage)
-            .then(
-                function (response) {
-                    console.log(response);
-                }
-                , dummyErrorsHandler
-            )
+        imagesObject.customPOST({}, 'vote', ratedImage);
     }
 
 }

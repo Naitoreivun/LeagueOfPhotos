@@ -13,6 +13,6 @@ import java.util.Optional;
 public interface VoteDAO extends CrudRepository<Vote, VotePK> {
     Optional<Vote> findByUserAndImage(User user, Image image);
 
-    @Query(value = "SELECT sum(v.rating) FROM votes v WHERE v.image = :image")
+    @Query(value = "SELECT coalesce(sum(v.rating), 0) FROM votes v WHERE v.image = :image")
     Short getTotalRatingByImage(@Param("image") Image image);
 }

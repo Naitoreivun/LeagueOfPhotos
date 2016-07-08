@@ -8,10 +8,6 @@ DashboardController.$inject = ['auth', '$state', 'userProfile'];
 function DashboardController(auth, $state, userProfile) {
     var vm = this;
 
-    vm.test = function () {
-        auth.isLoggedIn();
-    };
-    vm.text = 'DASHBOARD';
     vm.logout = logout;
     vm.getActiveClass = getActiveClass;
     vm.username = userProfile.name;

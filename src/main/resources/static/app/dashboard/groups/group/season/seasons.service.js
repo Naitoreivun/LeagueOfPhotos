@@ -24,7 +24,6 @@ function seasonsService(Restangular) {
     }
 
     function dummyErrorsHandler(errors) {
-        console.log('SEASONS ERRORS:', errors);
     }
 
     function getByGroupId(groupId) {
@@ -39,7 +38,6 @@ function seasonsService(Restangular) {
         _.forEach(response, function (val) {
             seasons.push(val.plain());
         });
-        console.log(seasons);
         return seasons;
     }
 

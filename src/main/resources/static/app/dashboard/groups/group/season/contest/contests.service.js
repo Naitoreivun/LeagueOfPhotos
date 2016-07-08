@@ -25,7 +25,6 @@ function contestsService(Restangular) {
     }
 
     function dummyErrorsHandler(errors) {
-        console.log('SEASONS ERRORS:', errors);
     }
 
     function getById(contestId) {
@@ -50,7 +49,6 @@ function contestsService(Restangular) {
         _.forEach(response, function (val) {
             array.push(val.plain());
         });
-        console.log(array);
         return array;
     }
     

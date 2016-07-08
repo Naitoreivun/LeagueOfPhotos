@@ -23,18 +23,15 @@ function usersService(Restangular) {
             .post(signupForm)
             .then(
                 function (response) {
-                    console.log(response);
                     return true;
                 },
                 function (errors) {
-                    console.log('SIGNUP ERROR', errors);
                     return false;
                 }
             );
     }
 
     function dummyErrorsHandler(errors) {
-        console.log('ERRORS:', errors);
     }
 
     function getAcceptedUsersByGroupId(groupId) {

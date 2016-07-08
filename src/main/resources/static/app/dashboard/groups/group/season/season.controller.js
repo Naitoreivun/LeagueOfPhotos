@@ -121,9 +121,6 @@ function SeasonController($stateParams, $uibModal, seasonsService, contestsServi
             .then(
                 function (data) {
                     season.details = data;
-                },
-                function (errors) {
-                    console.log('ERRORS:', errors);
                 }
             );
     }

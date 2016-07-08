@@ -11,8 +11,7 @@ function auth(AuthRestangular, Restangular, jwtHelper, store, authConst, $q) {
     return {
         getProfile: getProfile,
         login: login,
-        logout: logout,
-        isLoggedIn: isLoggedIn
+        logout: logout
     };
 
     function login(loginForm) {
@@ -53,14 +52,4 @@ function auth(AuthRestangular, Restangular, jwtHelper, store, authConst, $q) {
         //todo remove token from server
     }
 
-    function isLoggedIn() {
-        var token = store.get(authConst.TOKEN);
-        console.log('token: ', token);
-        if (token) {
-            console.log(jwtHelper.decodeToken(token));
-            console.log(jwtHelper.getTokenExpirationDate(token));
-            console.log(jwtHelper.isTokenExpired(token));
-        }
-        return token !== null;
-    }
 }

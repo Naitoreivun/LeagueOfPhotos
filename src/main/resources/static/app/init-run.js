@@ -19,7 +19,6 @@ function runBlock($rootScope, store, Restangular, authConst, access, $state) {
     $rootScope.$on("$stateChangeError", stateChangeErrorHandler);
 
     function stateChangeErrorHandler(event, toState, toParams, fromState, fromParams, error) {
-        console.log("stateChangeError:   ", error);
         if (error == access.UNAUTHORIZED) {
             $state.go("home");
         } else if (error == access.FORBIDDEN) {

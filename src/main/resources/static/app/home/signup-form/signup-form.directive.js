@@ -43,7 +43,6 @@ function SignupFormController(usersService, focus) {
     }
 
     function correctPassword() {
-        console.log(vm.signupForm.password === vm.signupForm.confirmPassword);
         return vm.signupForm.password === vm.signupForm.confirmPassword;
     }
 
@@ -57,9 +56,6 @@ function SignupFormController(usersService, focus) {
                         vm.afterSignUp = true;
                         focus('login-form-username');
                     }
-                },
-                function () {
-                    console.log('SIGNUP ERROR');
                 }
             );
     }

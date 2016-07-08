@@ -57,7 +57,6 @@ function VotingPhaseController(imagesService, $uibModal) {
             .then(
                 function (data) {
                     vp.images = data;
-                    console.log(data);
                 }
             );
     }

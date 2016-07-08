@@ -118,9 +118,6 @@ function GroupController(groupsService, $stateParams, $uibModal, seasonsService,
             .then(
                 function (data) {
                     group.details = data;
-                },
-                function (errors) {
-                    console.log('ERRORS:', errors);
                 }
             )
     }

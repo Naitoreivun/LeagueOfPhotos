@@ -27,9 +27,6 @@ function ContestController($stateParams, contestsService) {
             .then(
                 function (data) {
                     contest.details = data;
-                },
-                function (errors) {
-                    console.log('ERRORS:', errors);
                 }
             )
     }

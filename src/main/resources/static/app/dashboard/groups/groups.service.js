@@ -46,9 +46,8 @@ function groupsService(Restangular) {
     }
 
     function dummyErrorsHandler(errors) {
-        console.log('ERRORS:', errors);
     }
-
+    
     function getAll() {
         return groupsService
             .getList()
