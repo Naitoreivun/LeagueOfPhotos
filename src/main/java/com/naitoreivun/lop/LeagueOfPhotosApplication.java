@@ -1,8 +1,6 @@
 package com.naitoreivun.lop;
 
 import com.naitoreivun.lop.security.JwtFilter;
-import com.naitoreivun.lop.service.ImageService;
-import com.naitoreivun.lop.service.VoteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -19,10 +17,6 @@ public class LeagueOfPhotosApplication implements CommandLineRunner {
 
     @Autowired
     private MyProperties properties;
-    @Autowired
-    private VoteService voteService;
-    @Autowired
-    private ImageService imageService;
 
     @Bean
     public FilterRegistrationBean jwtFilter() {

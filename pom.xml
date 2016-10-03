@@ -21,6 +21,8 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.version>1.8</java.version>
+        <tomcat.version>8.0.3</tomcat.version>
+        <start-class>com.naitoreivun.lop.LeagueOfPhotosApplication</start-class>
     </properties>
 
     <dependencies>

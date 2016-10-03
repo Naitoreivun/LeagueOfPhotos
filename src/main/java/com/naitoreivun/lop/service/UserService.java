@@ -4,7 +4,6 @@ import com.naitoreivun.lop.dao.UserDAO;
 import com.naitoreivun.lop.domain.Group;
 import com.naitoreivun.lop.domain.User;
 import com.naitoreivun.lop.domain.dto.UserInGroup;
-import com.sun.org.apache.xpath.internal.operations.Bool;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -62,8 +61,7 @@ public class UserService {
     }
 
     public void validatePassword(String password, Long userId) throws ServletException {
-        if(!userDAO.validatePassword(password, userId))
-        {
+        if(!userDAO.validatePassword(password, userId)) {
             throw new ServletException("Invalid password");
         }
     }
