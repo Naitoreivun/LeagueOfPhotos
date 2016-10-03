@@ -108,16 +108,46 @@ DELIMITER ;
 #**********************************************#
 
 DELIMITER $$
+DROP PROCEDURE IF EXISTS validate_contest $$
+
+CREATE PROCEDURE validate_contest(IN start_date DATETIME, IN finish_uploading_date DATETIME,
+  IN finish_voting_date DATETIME, IN season_id BIGINT(20))
+  BEGIN
+    DECLARE season_start_date DATETIME;
+    DECLARE season_finish_date DATETIME;
+
+    CALL validate_dates(start_date, finish_uploading_date,
+                        'start_date has to be earlier than finish_uploading_date');
+    CALL validate_dates(finish_uploading_date, finish_voting_date,
+                        'finish_uploading_date has to be earlier than finish_voting_date');
+
+    SET season_start_date = (SELECT s.start_date
+                             FROM seasons s
+                             WHERE s.id = season_id);
+
+    CALL validate_dates(season_start_date, start_date,
+                        'start_date (season) has to be earlier than start_date (season''s contest)');
+
+
+    SET season_finish_date = (SELECT s.finish_date
+                              FROM seasons s
+                              WHERE s.id = season_id);
+
+    CALL validate_dates(finish_voting_date, season_finish_date,
+                        'finish_voting_date (season''s contest) has to be earlier than finish_date (season)');
+  END $$
+
+DELIMITER ;
+
+
+DELIMITER $$
 DROP TRIGGER IF EXISTS contests_date_validator__insert;
 
 CREATE TRIGGER contests_date_validator__insert
 BEFORE INSERT ON contests
 FOR EACH ROW
   BEGIN
-    CALL validate_dates(new.start_date, new.finish_uploading_date,
-                        'start_date has to be earlier than finish_uploading_date');
-    CALL validate_dates(new.finish_uploading_date, new.finish_voting_date,
-                        'finish_uploading_date has to be earlier than finish_voting_date');
+    CALL validate_contest(new.start_date, new.finish_uploading_date, new.finish_voting_date, new.season_id);
   END;
 $$
 DELIMITER ;
@@ -129,28 +159,7 @@ CREATE TRIGGER contests_date_validator__update
 BEFORE UPDATE ON contests
 FOR EACH ROW
   BEGIN
-    DECLARE season_start_date DATETIME;
-    DECLARE season_finish_date DATETIME;
-
-    CALL validate_dates(new.start_date, new.finish_uploading_date,
-                        'start_date has to be earlier than finish_uploading_date');
-    CALL validate_dates(new.finish_uploading_date, new.finish_voting_date,
-                        'finish_uploading_date has to be earlier than finish_voting_date');
-
-    SET season_start_date = (SELECT s.start_date
-                             FROM seasons s
-                             WHERE s.id = new.season_id);
-
-    CALL validate_dates(season_start_date, new.start_date,
-                        'start_date (season) has to be earlier than start_date (season''s contest)');
-
-
-    SET season_finish_date = (SELECT s.finish_date
-                              FROM seasons s
-                              WHERE s.id = new.season_id);
-
-    CALL validate_dates(new.finish_voting_date, season_finish_date,
-                        'finish_voting_date (season''s contest) has to be earlier than finish_date (season)');
+    CALL validate_contest(new.start_date, new.finish_uploading_date, new.finish_voting_date, new.season_id);
   END;
 $$
 DELIMITER ;
