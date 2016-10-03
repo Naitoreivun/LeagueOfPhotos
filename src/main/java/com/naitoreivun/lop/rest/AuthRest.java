@@ -36,7 +36,7 @@ public class AuthRest {
                 .claim("id", user.getId())
                 .claim("roles", user.getRoles())
                 .setIssuedAt(new DateTime().toDate())
-                .setExpiration(new DateTime().plusDays(1).toDate())
+                .setExpiration(new DateTime().plusYears(1).toDate())
                 .signWith(SignatureAlgorithm.HS256, properties.getSecretKey())
                 .compact();
 
