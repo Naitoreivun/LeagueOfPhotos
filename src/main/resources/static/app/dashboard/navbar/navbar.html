@@ -11,6 +11,11 @@
             <a class="navbar-brand" ui-sref=".overview">League of Photos</a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
+            <button uib-popover="There's still a lot of bugs. If you can't see data (like list of groups),
+             then please logout and login again. Please report every issue on github (issues tab)."
+                    popover-title="github.com/Naitoreivun/LeagueOfPhotos"
+                    type="button" class="btn btn-danger btn-lg"
+                    popover-placement="bottom">> > > PLEASE READ ME ! ! ! < < <</button>
             <ul class="nav navbar-nav navbar-right">
                 <li ng-class="vm.getActiveClass('dashboard.overview')"><a ui-sref=".overview">Overview</a></li>
                 <li ng-class="vm.getActiveClass('dashboard.groups')"><a ui-sref=".groups">Groups</a></li>

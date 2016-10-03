@@ -12,6 +12,11 @@
                 <a class="navbar-brand" href="#">League of Photos</a>
             </div>
             <div ng-if="!vm.afterSignUp" id="navbar" class="navbar-collapse collapse">
+                <button uib-popover="There's still a lot of bugs. If you can't see data (like list of groups),
+             then please logout and login again. Please report every issue on github (issues tab)."
+                        popover-title="github.com/Naitoreivun/LeagueOfPhotos"
+                        type="button" class="btn btn-danger btn-lg"
+                        popover-placement="bottom">> > > PLEASE READ ME ! ! ! < < <</button>
                 <lop-login-form form-class="navbar-form navbar-right"  user-profile="vm.userProfile"></lop-login-form>
             </div><!--/.navbar-collapse -->
         </div>
