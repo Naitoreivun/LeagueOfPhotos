@@ -3,5 +3,3 @@
 <b>Languages:</b> Java, JavaScript <br>
 <b>Frameworks:</b>	SpringBoot, AngularJS, Hibernate <br>
 <b>Database:</b> MySQL <br>
-<br>
-<b>Website:</b> http://leagueofphotos.com/ <br>
